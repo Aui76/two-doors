@@ -1,0 +1,17 @@
+# The museum's harness. Every exhibit is a Foundry test that forks a public chain
+# at a named block and prints what it finds.
+
+[profile.default]
+src = "src"
+test = "exhibits"
+out = "out"
+libs = ["lib"]
+solc = "0.8.20"
+optimizer = true
+optimizer_runs = 200
+remappings = ["forge-std/=lib/forge-std/src/"]
+
+[rpc_endpoints]
+# Archive access. eth.drpc.org answers state reads at 2022 blocks without a key,
+# which is how the day-one provenance was pulled; override it with your own.
+mainnet = "${MAINNET_ARCHIVE_RPC_URL}"
