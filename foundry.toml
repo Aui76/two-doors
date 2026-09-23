@@ -11,6 +11,15 @@ optimizer = true
 optimizer_runs = 200
 remappings = ["forge-std/=lib/forge-std/src/"]
 
+# The provenance test reads the spec and the specimens and re-hashes them. Specimens
+# sit outside src and test on purpose: they are Beanstalk's 0.7.6 sources, on display,
+# not code this project compiles.
+fs_permissions = [
+  { access = "read", path = "./exhibits" },
+  { access = "read", path = "./specimens" },
+]
+
+
 [rpc_endpoints]
 # Archive access. eth.drpc.org answers state reads at 2022 blocks without a key,
 # which is how the day-one provenance was pulled; override it with your own.

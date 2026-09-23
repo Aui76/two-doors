@@ -1,0 +1,98 @@
+{
+  "version": "1",
+  "description": "Beanstalk governance as its own public words described it before the hack. Every invariant below was read from the whitepaper at version 1.16.0 (modified 11 April 2022) or from the contract sources at commit e9f49910e287e7a7afaa6db8f536b7194728b0af, the last commit to BeanstalkFarms/Beanstalk before block 14,595,905. Nothing dated after the hack was read. spec/SOURCES.md names the line each one came from. Writer shape: RealDeal/notebook/8-integration/book/04-spec-scope-and-quality.md.",
+  "target": {
+    "kind": "contract",
+    "name": "Beanstalk governance (GovernanceFacet, VotingBooth, Bip)",
+    "chainId": 1,
+    "address": "0xC1E088fC1323b20BCBee9bd1B9fC9546db5624C5",
+    "block": 14595905,
+    "codehash": "0x2ff59388cd5e1842a3d057338010945a779a6c7d57abfb5e9ddc697838700870"
+  },
+  "invariants": [
+    {
+      "id": "propose-requires-threshold-stake",
+      "statement": "propose reverts unless the caller's share of total Roots is strictly greater than the 0.1% proposal threshold",
+      "scope": ["ACCESS-CONTROL"],
+      "_source": "whitepaper 6.5.1; GovernanceFacet.sol:43; Bip.sol:161; C.sol:52"
+    },
+    {
+      "id": "propose-caps-active-propositions",
+      "statement": "propose reverts when the caller already has 5 active BIPs",
+      "scope": ["ACCESS-CONTROL", "STATE-LIFECYCLE"],
+      "_source": "GovernanceFacet.sol:44; Bip.sol:169; C.sol:54"
+    },
+    {
+      "id": "propose-rejects-empty-proposition",
+      "statement": "propose reverts when the init address, the diamond cut and the pause flag are all empty",
+      "scope": ["INPUT-VALIDATION"],
+      "_source": "GovernanceFacet.sol:45-48; whitepaper 6.5.4"
+    },
+    {
+      "id": "proposer-votes-and-is-bound",
+      "statement": "proposing casts the proposer's vote in the same call, and the proposer may not unvote their own BIP",
+      "scope": ["STATE-LIFECYCLE"],
+      "_source": "whitepaper 6.5.1 closing paragraph; GovernanceFacet.sol:62, :109, :129, :152"
+    },
+    {
+      "id": "vote-requires-silo-membership",
+      "statement": "vote reverts when the caller's Roots balance is zero",
+      "scope": ["ACCESS-CONTROL"],
+      "_source": "whitepaper 6.5.1; GovernanceFacet.sol:70"
+    },
+    {
+      "id": "vote-only-while-nominated-and-active",
+      "statement": "vote reverts on a BIP that was never proposed, already executed, or whose voting period has ended, and reverts on a second vote from the same account",
+      "scope": ["STATE-LIFECYCLE"],
+      "_source": "GovernanceFacet.sol:71-73; Bip.sol:139, :143; whitepaper 6.5.2"
+    },
+    {
+      "id": "vote-weight-is-proportional-to-stalk",
+      "statement": "a vote adds exactly the voter's Roots balance to the BIP's tally, and Roots track the voter's share of Stalk; only votes in favour are recorded",
+      "scope": ["BALANCE-ACCOUNTING"],
+      "_source": "whitepaper 6.5.1, the participation paragraph; VotingBooth.sol:32; Bip.sol:188"
+    },
+    {
+      "id": "voting-locks-the-voter-until-the-period-ends",
+      "statement": "voting raises the voter's votedUntil to the end of the BIP's voting period, and unvoting recomputes it from the voter's remaining active votes",
+      "scope": ["TIME-LOGIC"],
+      "_source": "VotingBooth.sol:42-60; whitepaper 6.5.1 closing paragraph"
+    },
+    {
+      "id": "commit-requires-ended-period-and-majority",
+      "statement": "commit reverts while the voting period is still open, reverts once the BIP has expired, and otherwise requires more than half of the Roots outstanding at the end of the period",
+      "scope": ["STATE-LIFECYCLE", "TIME-LOGIC"],
+      "_source": "whitepaper 6.5.2; GovernanceFacet.sol:170-176; Bip.sol:147, :155; C.sol:48, :51"
+    },
+    {
+      "id": "emergency-commit-requires-day-and-supermajority",
+      "statement": "emergencyCommit reverts before 24 hours have passed since the BIP was submitted, reverts after the voting period has ended, and otherwise requires at least two-thirds of the total outstanding Roots",
+      "scope": ["TIME-LOGIC", "GOVERNANCE-DRAIN-PATH"],
+      "_source": "whitepaper 6.5.2, the supermajority sentence quoted in full in SOURCES.md; GovernanceFacet.sol:181-189; C.sol:47, :49-50"
+    },
+    {
+      "id": "pause-bip-carries-no-code",
+      "statement": "pauseOrUnpause reverts on any BIP that carries a diamond cut or an init address, and otherwise requires the same two-thirds supermajority",
+      "scope": ["PAUSE-EMERGENCY", "ACCESS-CONTROL"],
+      "_source": "whitepaper 6.5.3 and 6.5.4; GovernanceFacet.sol:194-200; Bip.sol:60"
+    },
+    {
+      "id": "owner-pause-is-the-only-unilateral-power",
+      "statement": "ownerPause and ownerUnpause revert for every caller except the diamond owner, and no other function in the facet changes the paused flag without a committed BIP",
+      "scope": ["ACCESS-CONTROL", "PAUSE-EMERGENCY"],
+      "_source": "whitepaper 6.5.4 closing paragraph; GovernanceFacet.sol:225-233, :252-255"
+    },
+    {
+      "id": "a-bip-executes-at-most-once",
+      "statement": "execution sets the BIP executed and removes it from the active list, after which every governance entry point rejects it",
+      "scope": ["STATE-LIFECYCLE"],
+      "_source": "GovernanceFacet.sol:205-213; Bip.sol:107, :139"
+    },
+    {
+      "id": "the-only-mint-is-the-commit-incentive",
+      "statement": "the sole Bean mint reachable from the governance facet is the committer's award, 100 Beans compounding 1% per six seconds elapsed past the end of the voting period, capped at 1800 seconds",
+      "scope": ["SUPPLY-CONSERVATION"],
+      "_source": "whitepaper 6.5.5; GovernanceFacet.sol:215-219; Bip.sol:183; C.sol:53"
+    }
+  ]
+}
