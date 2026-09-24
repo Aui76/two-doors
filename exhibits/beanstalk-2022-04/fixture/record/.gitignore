@@ -1,0 +1,4 @@
+# Only the Base Sepolia record is the museum's. Dry runs and anvil rehearsals are
+# per-run and per-node.
+*.dryrun.json
+31337.json

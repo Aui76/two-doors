@@ -39,9 +39,14 @@ skip = ["*.orig.sol"]
 # The provenance test reads the spec and the specimens and re-hashes them. Specimens
 # sit outside src and test on purpose: they are Beanstalk's 0.7.6 sources, on display,
 # not code this project compiles.
+#
+# One directory is writable: Room 2's fixture record (VD-270(iv)), written by the
+# fixture's own deploy so its addresses are printed, never typed. Nothing else in
+# the tree can be written from a script, including the hull's deployments/.
 fs_permissions = [
   { access = "read", path = "./exhibits" },
   { access = "read", path = "./specimens" },
+  { access = "read-write", path = "./exhibits/beanstalk-2022-04/fixture/record" },
 ]
 
 
