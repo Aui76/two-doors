@@ -9,7 +9,8 @@ DAN.
 ## Footing (confirmed 2026-09-23)
 
 - Archive RPC `https://eth.drpc.org` serves block 14,595,905 live
-  (`eth_getBlockByNumber 0xDEBA41` returned the block). One free endpoint is the
+  (`eth_getBlockByNumber 0xdeb741` returned the block; the first draft of this line
+  wrote `0xDEBA41`, which is 14,596,673 — a number typed, not printed). One free endpoint is the
   museum's single point of failure; a paid archive key goes in before 12 October.
 - `forge 1.7.1` present.
 - The fork harness (`../Fork.t.sol`) already proves the block, the 5547 diamond
