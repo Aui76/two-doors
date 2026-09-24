@@ -10,6 +10,12 @@ solc = "0.8.20"
 optimizer = true
 optimizer_runs = 200
 remappings = ["forge-std/=lib/forge-std/src/"]
+# The raw fetched reference (replay/*.orig.sol) is a transient, hash-pinned copy of
+# public history brought in by the README's curl step — display, not this project's
+# code. It carries the upstream file's own imports (interface.sol), which do not
+# resolve here, so compiling it would break the build (PC-131). It is skipped from
+# compilation and gitignored; the compiled artifact is the transcribed Replay.t.sol.
+skip = ["*.orig.sol"]
 
 # The provenance test reads the spec and the specimens and re-hashes them. Specimens
 # sit outside src and test on purpose: they are Beanstalk's 0.7.6 sources, on display,

@@ -1,3 +1,6 @@
 out/
 cache/
 .env
+
+# The raw fetched reference is kept out of git and out of compilation (PC-131).
+*.orig.sol

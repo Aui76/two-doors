@@ -35,9 +35,20 @@ sha256sum exhibits/beanstalk-2022-04/replay/Beanstalk_exp.orig.sol
 The sha256 must read `07c9396063f71acd5e6b4e688adb7bc1ebdd1022083cb05cfc997b3312b42256`
 (the byte-for-byte file recorded in `../../../PROVENANCE.md`). If the file has moved
 in the upstream repo, fetch it by that hash from the repository's history rather
-than trusting a moved path. Once fetched, the port adapts only the imports and the
-RPC alias (`mainnet` → `${MAINNET_ARCHIVE_RPC_URL}`) — never a line of the attack —
-and the room prints every number the run produces (VD-224: no number typed by hand).
+than trusting a moved path.
+
+The `*.orig.sol` reference is a **transient**: it is gitignored and `foundry.toml`
+skips `*.orig.sol` from compilation (PC-131 — without that skip the fetched file's
+own `interface.sol` import breaks `forge build`, since `test = "exhibits"` compiles
+every `.sol` under this tree). So the fetch is safe to run from a green tree and the
+raw copy is never committed. The **compiled** artifact is `Replay.t.sol`, transcribed
+from the reference and living in this compiled directory.
+
+Transcribing `Replay.t.sol` from the reference is the one step that adapts imports —
+provide the `interface.sol` the source expects — but **not the RPC alias**: that is
+already mapped at config level (`foundry.toml` → `mainnet = "${MAINNET_ARCHIVE_RPC_URL}"`),
+so no port edit touches it. Never a line of the attack is adapted, and the room prints
+every number the run produces (VD-224: no number typed by hand).
 
 ## What it proves
 
