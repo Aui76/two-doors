@@ -1,0 +1,50 @@
+{
+  "version": "1",
+  "description": "The Bybit cold wallet as Safe's own public words described it before 21 February 2025. The wallet is a Safe v1.1.1 proxy whose slot 0 held the v1.1.1 singleton. Every invariant below was read from the contract sources at commit 892448e93f6203b530630f20de45d8a55fde7463 of safe-global/safe-smart-account, the v1.1.1 tag, dated 2019-12-13. Nothing dated after the fork block was read. spec/SOURCES.md names the line each one came from. Writer shape: RealDeal/notebook/8-integration/book/04-spec-scope-and-quality.md.",
+  "target": {
+    "kind": "contract",
+    "name": "Bybit cold wallet 1 (Safe v1.1.1 proxy over the v1.1.1 singleton)",
+    "chainId": 1,
+    "address": "0x1Db92e2EeBC8E0c075a02BeA49a2935BcD2dFCF4",
+    "block": 21895237,
+    "codehash": "0xaea7d4252f6245f301e540cfbee27d3a88de543af8e49c5c62405d5499fab7e5"
+  },
+  "invariants": [
+    {
+      "id": "proxy-forwards-to-slot-zero",
+      "statement": "every call other than masterCopy() is delegatecalled to the address held in storage slot 0, and its return data or revert is passed back unchanged",
+      "scope": ["UPGRADE-PROXY"],
+      "_source": "Proxy.sol:14-16, :27-44"
+    },
+    {
+      "id": "exec-requires-threshold-owner-signatures",
+      "statement": "execTransaction reverts unless the first threshold signatures each recover to an owner over the hash of this transaction and the current nonce, in strictly ascending owner order",
+      "scope": ["ACCESS-CONTROL"],
+      "_source": "GnosisSafe.sol:102, :129-140, :189-258"
+    },
+    {
+      "id": "exec-consumes-the-nonce",
+      "statement": "each execTransaction that passes the signature check increments the nonce before it executes, so one set of signatures executes at most once",
+      "scope": ["STATE-LIFECYCLE"],
+      "_source": "GnosisSafe.sol:137-140"
+    },
+    {
+      "id": "operation-one-is-delegatecall",
+      "statement": "operation 0 calls the destination; operation 1 runs the destination's code against the wallet's own storage, so that code can write any slot the wallet has, slot 0 included",
+      "scope": ["UPGRADE-PROXY", "ACCESS-CONTROL"],
+      "_source": "Enum.sol:6-11; Executor.sol:9-19, :31-39; GnosisSafe.sol:107; Proxy.sol:14-16"
+    },
+    {
+      "id": "upgrade-only-by-safe-transaction",
+      "statement": "the master copy changes only through a Safe transaction: changeMasterCopy may be called by the wallet itself and by no one else",
+      "scope": ["UPGRADE-PROXY", "ACCESS-CONTROL"],
+      "_source": "MasterCopy.sol:16-25; SelfAuthorized.sol:7-10"
+    },
+    {
+      "id": "owners-and-threshold-change-only-by-safe-transaction",
+      "statement": "owners and the threshold change only through a Safe transaction, and the threshold can never exceed the owner count or fall to zero",
+      "scope": ["ACCESS-CONTROL"],
+      "_source": "OwnerManager.sol:52-54, :74-76, :97-99, :115-128; SelfAuthorized.sol:7-10"
+    }
+  ]
+}
