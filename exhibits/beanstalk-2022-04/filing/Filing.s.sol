@@ -16,9 +16,10 @@ import {Room2} from "./Room2.sol";
 /// The hull decides how many keys. The discoverer may be neither the row's protocol
 /// (FilerCannotBeProtocol) nor its auditor (FilerCannotBeOriginalAuditor), and the
 /// fixture key may not audit its own fixture (PC-86). So the fixture key takes one
-/// seat, the protocol or the discoverer, and a second key takes the other. Which
-/// seat the fixture key takes is the operator's choice (VD-270), made with
-/// FIXTURE_SEAT and never defaulted here.
+/// seat, the protocol or the discoverer, and a second key takes the other. The
+/// fixture key takes the protocol's seat unless FIXTURE_SEAT says discoverer: the
+/// fixture is the museum's own spec under audit, so the owner funds the bounty and a
+/// fresh key files as the discoverer (VD-273(2)). The operator may override it.
 ///
 /// The fixture key was minted exactly one of Room 1's bounties and the claim stake
 /// against it. It spends the one and hands the other to the second key, so it ends
@@ -95,7 +96,7 @@ abstract contract FilingCore is FixtureCore {
         console.log("  discoverer              ", f.discoverer);
         console.log("  fixture key's seat      ", f.fixtureIsProtocol ? "protocol" : "discoverer");
         console.log("  row state               ", uint256(d.cell.auditStateOf(f.auditId)));
-        console.log("  gap status (1 = Filed)  ", uint256(s));
+        console.log("  gap status              ", _statusName(s));
         console.log("  filing stake (wei)      ", f.stake);
         if (mined) {
             console.log("  filed at                ", f.filedAt);
@@ -141,6 +142,28 @@ abstract contract FilingCore is FixtureCore {
         console.log("  record                  ", path);
     }
 
+    /// gap.json is frozen at the stand (VD-273(4)). Words that differ from the ones
+    /// the stand recorded are a second exhibit, never an edit of this one.
+    function _requireTheWordsTheStandFroze(string memory stood) internal view {
+        Room2.Gap memory g = Room2.gap();
+        string memory why = "gap.json differs from the words the stand froze (VD-273(4)): a changed gap is a second exhibit";
+        require(g.classId == vm.parseJsonBytes32(stood, ".gapClassId"), why);
+        require(g.invariantId == vm.parseJsonBytes32(stood, ".gapInvariantId"), why);
+        require(g.location == vm.parseJsonBytes32(stood, ".gapLocation"), why);
+        require(g.witness == vm.parseJsonBytes32(stood, ".gapWitness"), why);
+        require(g.context == vm.parseJsonBytes32(stood, ".gapContext"), why);
+    }
+
+    function _statusName(SpecGapLib.Status s) internal pure returns (string memory) {
+        if (s == SpecGapLib.Status.Filed) return "Filed";
+        if (s == SpecGapLib.Status.Confirmed) return "Confirmed";
+        if (s == SpecGapLib.Status.False) return "False";
+        if (s == SpecGapLib.Status.Adopted) return "Adopted";
+        if (s == SpecGapLib.Status.Declined) return "Declined";
+        if (s == SpecGapLib.Status.Expired) return "Expired";
+        return "None";
+    }
+
     function _filingFromRecord(string memory json) internal view returns (Filing memory f) {
         f.auditId = vm.parseJsonUint(json, ".auditId");
         f.protocol = vm.parseJsonAddress(json, ".protocol");
@@ -161,15 +184,18 @@ abstract contract FilingCore is FixtureCore {
 contract FileTheGap is FilingCore {
     /// Env: FIXTURE_KEY, the key that stood the fixture. AUDITOR_KEY, the fixture's
     /// genesis auditor. SECOND_KEY, the seat the fixture key does not take.
-    /// FIXTURE_SEAT, "protocol" or "discoverer": which seat the fixture key takes.
+    /// FIXTURE_SEAT, "protocol" (the default, VD-273(2)) or "discoverer": which seat
+    /// the fixture key takes.
     function file() external returns (Filing memory) {
         _requireFixtureChain();
-        (Deployed memory d, address key, address named) = _fromRecord(vm.readFile(_recordPath(true)));
+        string memory stood = vm.readFile(_recordPath(true));
+        _requireTheWordsTheStandFroze(stood);
+        (Deployed memory d, address key, address named) = _fromRecord(stood);
         _readBack(d, key, named);
-        bytes32 seat = keccak256(bytes(vm.envOr("FIXTURE_SEAT", string(""))));
+        bytes32 seat = keccak256(bytes(vm.envOr("FIXTURE_SEAT", string("protocol"))));
         require(
             seat == keccak256("protocol") || seat == keccak256("discoverer"),
-            "FIXTURE_SEAT required: protocol or discoverer, the seat the fixture key takes (VD-270)"
+            "FIXTURE_SEAT is protocol (the default) or discoverer: the seat the fixture key takes (VD-273(2))"
         );
         return fileWith(
             d, vm.envUint("FIXTURE_KEY"), vm.envUint("AUDITOR_KEY"), vm.envUint("SECOND_KEY"), seat == keccak256("protocol")

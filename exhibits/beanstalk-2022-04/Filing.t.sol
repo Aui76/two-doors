@@ -11,6 +11,13 @@ import {FileTheGap, FilingCore} from "./filing/Filing.s.sol";
 import {Room1} from "./verdict/Room1.sol";
 import {Room2} from "./filing/Room2.sol";
 
+/// The filing's freeze check, reached from a test (VD-273(4)).
+contract FrozenWords is FileTheGap {
+    function check(string memory stood) external view {
+        _requireTheWordsTheStandFroze(stood);
+    }
+}
+
 /// Door two, proven in memory before any node sees it: the fixture stood as the
 /// stand stands it, then the filing run from each seat the fixture key can take.
 /// The filing reads itself back on every run (Filing.s.sol, _readBackFiling);
@@ -187,6 +194,23 @@ contract FilingTest is Test {
         DeployCell.Deployed memory d = _stand();
         vm.expectRevert(bytes("FIXTURE_KEY is not the key that stood this fixture"));
         filing.fileWith(d, secondKey, auditorKey, KEY, true);
+    }
+
+    /// The stand records the gap's words; the filing refuses any that differ.
+    function test_refusesGapWordsTheStandDidNotFreeze() public {
+        FrozenWords frozen = new FrozenWords();
+        Room2.Gap memory g = Room2.gap();
+        vm.serializeBytes32("stood", "gapClassId", g.classId);
+        vm.serializeBytes32("stood", "gapInvariantId", g.invariantId);
+        vm.serializeBytes32("stood", "gapLocation", g.location);
+        vm.serializeBytes32("stood", "gapContext", g.context);
+        frozen.check(vm.serializeBytes32("stood", "gapWitness", g.witness));
+
+        string memory moved = vm.serializeBytes32("stood", "gapWitness", keccak256("a witness edited after the stand"));
+        vm.expectRevert(
+            bytes("gap.json differs from the words the stand froze (VD-273(4)): a changed gap is a second exhibit")
+        );
+        frozen.check(moved);
     }
 
     function test_filesOnce() public {

@@ -195,6 +195,18 @@ abstract contract FixtureCore is DeployCell {
         vm.serializeAddress(r, "fixtureKey", key);
         vm.serializeAddress(r, "genesisAuditor", auditor);
         vm.serializeUint(r, "genesisMint", mint);
+        // The words the stand froze (VD-273(4)): the commit the stand ran from, and
+        // the keccak256 of each gap word, as the class on chain and the filing carry
+        // them. The filing refuses words that differ from these.
+        string memory commit = vm.envOr("STAND_COMMIT", string(""));
+        vm.serializeString(r, "standCommit", bytes(commit).length == 0 ? "none: a rehearsal" : commit);
+        Room2.Gap memory g = Room2.gap();
+        vm.serializeString(r, "gapWords", Room2.GAP_PATH);
+        vm.serializeBytes32(r, "gapClassId", g.classId);
+        vm.serializeBytes32(r, "gapInvariantId", g.invariantId);
+        vm.serializeBytes32(r, "gapLocation", g.location);
+        vm.serializeBytes32(r, "gapWitness", g.witness);
+        vm.serializeBytes32(r, "gapContext", g.context);
         vm.serializeBytes32(r, "auditCellRuntimeCodehash", address(d.cell).codehash);
         vm.serializeUint(r, "auditCellRuntimeBytes", address(d.cell).code.length);
         vm.serializeAddress(r, "CellToken", address(d.token));
@@ -239,7 +251,16 @@ contract StandTheFixture is FixtureCore {
     /// Env: FIXTURE_KEY, the fresh museum key. The genesis-auditor seat is a choice,
     /// as on the network (PC-85): FIXTURE_GENESIS_AUDITOR names it, or
     /// FIXTURE_GENESIS_AUDITOR_OPEN=1 leaves it open on purpose.
+    ///
+    /// STAND_COMMIT, the commit the stand runs from, is required on Base Sepolia:
+    /// gap.json's words are frozen there and the record cites it (VD-273(4)).
     function stand() external returns (Deployed memory) {
+        if (block.chainid == BASE_SEPOLIA) {
+            require(
+                bytes(vm.envOr("STAND_COMMIT", string(""))).length == 40,
+                "STAND_COMMIT required on Base Sepolia: the commit gap.json is frozen at (VD-273(4))"
+            );
+        }
         address auditor = _optionalAddress("FIXTURE_GENESIS_AUDITOR", address(0));
         bool open = _optionalUint("FIXTURE_GENESIS_AUDITOR_OPEN", 0) == 1;
         return standWith(vm.envUint("FIXTURE_KEY"), auditor, open);

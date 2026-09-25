@@ -16,7 +16,9 @@ one is that sentence run on the fork.
 - `gap.json` holds the gap in words: its class, the missing invariant, the
   location in the specimens, the witness and the context. The cell receives only
   hashes, and each is the keccak256 of one of these strings, read at run time.
-  Change a word and every hash follows.
+  Change a word and every hash follows. The stand freezes the words and records
+  their hashes, and the filing refuses words that differ. A changed gap after
+  the stand is a second exhibit (VD-273(4)).
 - `Room2.sol` reads those words, names the finder and evaluator labels, and
   builds the result root the cell checks the filing against.
 - `Filing.s.sol` holds two scripts.
@@ -34,10 +36,10 @@ the row's protocol nor its auditor, and the fixture key may not audit its own
 fixture. So the fixture's named genesis auditor audits, the fixture key takes one
 of the other two seats, and a second key takes the last one.
 
-Which seat the fixture key takes is the operator's choice (VD-270), and the
-script asks for it with `FIXTURE_SEAT=protocol` or `FIXTURE_SEAT=discoverer`. It
-has no default. Whichever seat the second key takes, the fixture key hands it what
-that seat spends: the bounty to a protocol, the claim stake to a discoverer. The
+The fixture key takes the protocol's seat and a fresh second key files as the
+discoverer (VD-273(2)). The operator may override that with
+`FIXTURE_SEAT=discoverer`. Whichever seat the second key takes, the fixture key
+hands it what that seat spends: the bounty to a protocol, the claim stake to a discoverer. The
 fixture key ends the filing holding nothing and sends nothing after it
 (VD-270(ii)).
 
@@ -76,7 +78,7 @@ account 0 as the fixture key, account 1 as the auditor the stand named, and
 account 2 as the second key:
 
 ```bash
-FIXTURE_KEY=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 AUDITOR_KEY=$(cast wallet private-key "test test test test test test test test test test test junk" 1) SECOND_KEY=$(cast wallet private-key "test test test test test test test test test test test junk" 2) FIXTURE_SEAT=protocol forge script exhibits/beanstalk-2022-04/filing/Filing.s.sol:FileTheGap --sig "file()" --rpc-url http://127.0.0.1:8545 --broadcast --slow
+FIXTURE_KEY=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 AUDITOR_KEY=$(cast wallet private-key "test test test test test test test test test test test junk" 1) SECOND_KEY=$(cast wallet private-key "test test test test test test test test test test test junk" 2) forge script exhibits/beanstalk-2022-04/filing/Filing.s.sol:FileTheGap --sig "file()" --rpc-url http://127.0.0.1:8545 --broadcast --slow
 ```
 
 ```bash
@@ -107,12 +109,13 @@ capitals.
 Each of these is the operator's keystroke (VD-270). The session runs none of them.
 
 1. **Stand the fixture and commit its record**, as `../fixture/README.md` says.
-2. **Choose the seat and make a second fresh key.** Neither the second key
+2. **Make a second fresh key.** It files the gap as the discoverer, or files the
+   row as the protocol under `FIXTURE_SEAT=discoverer`. Neither the second key
    nor the auditor key is ever a network key; the script refuses them all.
 3. **Fund the auditor key and the second key with gas** from a faucet. The script
    refuses to start while either holds none.
 4. **File.** This is the same command as the rehearsal, pointed at Base
-   Sepolia, with the three keys and the chosen seat:
+   Sepolia, with the three keys:
 
    ```bash
    forge script exhibits/beanstalk-2022-04/filing/Filing.s.sol:FileTheGap --sig "file()" --rpc-url https://sepolia.base.org --broadcast --slow

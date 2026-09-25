@@ -6,12 +6,14 @@
 > network's cell is `0xb034F198869726c36965B95879eCB65Bdb1076c9` on Base Sepolia
 > since 2026-09-13; it is this entry's provenance and holds no exhibit. The
 > fixture holds no value, sits in no deployment record, and is read by no DAN tool.
+> Before the filing, its admin, the museum's key, registered the gap's class and
+> flagged door two's evaluator canonical.
 
 That paragraph goes wherever the fixture's address is printed: here, on the
 plaque, and on the entry's Room 2 line (VD-270(iii)). The hull needs three keys
-for the filing, so the fixture key takes the protocol's seat or the
-discoverer's and a second key takes the other. Which seat the fixture key takes
-is not decided yet; when it is, the plaque says so.
+for the filing. The fixture key takes the protocol's seat and a fresh second key
+files as the discoverer (VD-273(2)), unless the operator sets
+`FIXTURE_SEAT=discoverer`; the plaque says which seat it took.
 
 Door two is the discoverer's seat. The spec gap is filed on DAN, the window
 pays, the fix supersedes. The filing is a real transaction on Base, and this
@@ -108,17 +110,29 @@ Each of these is the operator's keystroke (VD-270). The session runs none of the
    Sepolia, with the fresh key and the chosen auditor seat:
 
    ```bash
-   forge script exhibits/beanstalk-2022-04/fixture/Fixture.s.sol:StandTheFixture --sig "stand()" --rpc-url https://sepolia.base.org --broadcast --slow
+   git diff --quiet HEAD && STAND_COMMIT=$(git rev-parse HEAD) forge script exhibits/beanstalk-2022-04/fixture/Fixture.s.sol:StandTheFixture --sig "stand()" --rpc-url https://sepolia.base.org --broadcast --slow
    ```
+
+   It runs only from a clean tree, and the record cites that commit. The stand
+   freezes `../filing/gap.json` at that commit: the record holds the keccak256
+   of each gap word, and the filing refuses words that differ (VD-273(4)).
 
 4. **Basescan verification**, against the public export.
 5. **The record is committed**: `record/84532.json`, with the transaction and the
-   block printed by the command below.
+   block printed by the command below, and `record/84532.admin-acts.json`, which
+   the second command below writes from the same log. That file lists every
+   call the fixture key made at the stand by function, transaction and block,
+   the class registration and the canonical flag among them (VD-273(1)). The
+   command refuses to overwrite a file that is already there.
 
 The deploy transaction and its block are read from forge's broadcast log:
 
 ```bash
 node -e "const b=require('./broadcast/Fixture.s.sol/84532/stand-latest.json');const r=Object.fromEntries(b.receipts.map(x=>[x.transactionHash,x]));for(const t of b.transactions.filter(t=>t.contractName==='AuditCell'&&t.transactionType==='CREATE'))console.log(t.contractAddress,t.hash,parseInt(r[t.hash].blockNumber,16))"
+```
+
+```bash
+node -e "const b=require('./broadcast/Fixture.s.sol/84532/stand-latest.json');const r=Object.fromEntries(b.receipts.map(x=>[x.transactionHash,x]));const acts=b.transactions.filter(t=>t.transactionType==='CALL').map(t=>({contract:t.contractName,to:t.contractAddress,from:t.transaction.from,function:t.function,arguments:t.arguments,tx:t.hash,block:parseInt(r[t.hash].blockNumber,16)}));require('fs').writeFileSync('exhibits/beanstalk-2022-04/fixture/record/84532.admin-acts.json',JSON.stringify({what:'Every call the fixture key made at the stand, from forge broadcast log (VD-273(1))',acts},null,2)+String.fromCharCode(10),{flag:'wx'});console.log(acts.length,'calls written')"
 ```
 
 The filing and its transaction are door two's, in `../filing/README.md`.
