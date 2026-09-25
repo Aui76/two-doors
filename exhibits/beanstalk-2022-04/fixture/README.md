@@ -8,9 +8,10 @@
 > fixture holds no value, sits in no deployment record, and is read by no DAN tool.
 
 That paragraph goes wherever the fixture's address is printed: here, on the
-plaque, and on the entry's Room 2 line (VD-270(iii)). Which key files the
-discoverer's row, the fixture key or a second one, is not decided yet; when it
-is, the plaque says so.
+plaque, and on the entry's Room 2 line (VD-270(iii)). The hull needs three keys
+for the filing, so the fixture key takes the protocol's seat or the
+discoverer's and a second key takes the other. Which seat the fixture key takes
+is not decided yet; when it is, the plaque says so.
 
 Door two is the discoverer's seat. The spec gap is filed on DAN, the window
 pays, the fix supersedes. The filing is a real transaction on Base, and this
@@ -20,9 +21,10 @@ directory stands the hull it lands on.
 
 - `Fixture.s.sol` holds two scripts.
   - `StandTheFixture` deploys and wires the hull in one broadcast from a fresh
-    museum key. It applies the network's own testnet profile, registers the two
-    tools, funds the stake, attaches the minter, reads everything back and writes
-    the record.
+    museum key. It applies the network's own testnet profile, registers the
+    network's two tools and the museum's four, flags door two's evaluator
+    canonical, registers the gap's class, funds the stake, attaches the minter,
+    reads everything back and writes the record.
   - `ReadTheFixture` reads the recorded fixture back from any node and sends
     nothing.
 - `../Fixture.t.sol` proves the stand in memory. It shows the stake funding is
@@ -82,10 +84,12 @@ anvil
 ```
 
 Stand the fixture from anvil's account 0, with account 1 named as the genesis
-auditor, then read it back:
+auditor, then read it back. The stand is sent with `--slow`, one transaction at a
+time, as on Base Sepolia. Sent as one batch on 2026-09-25, anvil mined the first
+eleven and left the rest queued with nothing to mine them:
 
 ```bash
-FIXTURE_KEY=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 FIXTURE_GENESIS_AUDITOR=0x70997970C51812dc3A010C7d01b50e0d17dc79C8 forge script exhibits/beanstalk-2022-04/fixture/Fixture.s.sol:StandTheFixture --sig "stand()" --rpc-url http://127.0.0.1:8545 --broadcast
+FIXTURE_KEY=0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 FIXTURE_GENESIS_AUDITOR=0x70997970C51812dc3A010C7d01b50e0d17dc79C8 forge script exhibits/beanstalk-2022-04/fixture/Fixture.s.sol:StandTheFixture --sig "stand()" --rpc-url http://127.0.0.1:8545 --broadcast --slow
 ```
 
 ```bash
@@ -117,4 +121,4 @@ The deploy transaction and its block are read from forge's broadcast log:
 node -e "const b=require('./broadcast/Fixture.s.sol/84532/stand-latest.json');const r=Object.fromEntries(b.receipts.map(x=>[x.transactionHash,x]));for(const t of b.transactions.filter(t=>t.contractName==='AuditCell'&&t.transactionType==='CREATE'))console.log(t.contractAddress,t.hash,parseInt(r[t.hash].blockNumber,16))"
 ```
 
-The filing transaction joins the record when door two's filing script exists.
+The filing and its transaction are door two's, in `../filing/README.md`.

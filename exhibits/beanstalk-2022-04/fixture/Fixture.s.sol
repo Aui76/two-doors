@@ -17,6 +17,7 @@ import {FmeaRegistry} from "dan/FmeaRegistry.sol";
 import {AssignmentModule} from "dan/AssignmentModule.sol";
 import {BlockhashEntropy} from "dan/BlockhashEntropy.sol";
 import {Room1} from "../verdict/Room1.sol";
+import {Room2} from "../filing/Room2.sol";
 
 /// Room 2's fixture (VD-270): an instance of the DAN hull at 0f3eaf8, deployed on
 /// Base Sepolia by the museum for one filing. It is not the network's cell. It holds
@@ -150,6 +151,16 @@ abstract contract FixtureCore is DeployCell {
         (, bool verdictIsSpec,,, bool verdictExists,,) = c.tools(VERDICT_TOOL_ID);
         require(specExists && specIsSpec, "spec tool");
         require(verdictExists && !verdictIsSpec, "verdict tool");
+
+        (, bool r1SpecIsSpec,,, bool r1SpecExists,,) = c.tools(Room1.SPEC_TOOL);
+        (, bool r1VerdictIsSpec,,, bool r1VerdictExists,,) = c.tools(Room1.VERDICT_TOOL);
+        (, bool finderIsSpec,,, bool finderExists,,) = c.tools(Room2.FINDER_TOOL);
+        (, bool evalIsSpec, bool evalIsEval, bool evalCanon, bool evalExists,,) = c.tools(Room2.EVALUATOR_TOOL);
+        require(r1SpecExists && r1SpecIsSpec, "Room 1 spec tool");
+        require(r1VerdictExists && !r1VerdictIsSpec, "Room 1 verdict tool");
+        require(finderExists && !finderIsSpec, "door two finder tool");
+        require(evalExists && !evalIsSpec && evalIsEval && evalCanon, "door two evaluator: canonical");
+        require(d.specGapModule.vulnerabilityClassRegistered(Room2.gap().classId), "door two gap class");
     }
 
     function _print(Deployed memory d, address key, address auditor) internal view {
@@ -221,8 +232,9 @@ abstract contract FixtureCore is DeployCell {
 }
 
 /// Stand the fixture. One broadcast from the fixture key: deploy, wire, the testnet
-/// profile, the tools, the stake funding, the minter. Nothing after it touches the
-/// fixture's governance (VD-270(ii), VD-260).
+/// profile, the tools with door two's evaluator flagged and its class registered,
+/// the stake funding, the minter. Nothing after it touches the fixture's governance
+/// (VD-270(ii), VD-260).
 contract StandTheFixture is FixtureCore {
     /// Env: FIXTURE_KEY, the fresh museum key. The genesis-auditor seat is a choice,
     /// as on the network (PC-85): FIXTURE_GENESIS_AUDITOR names it, or
@@ -307,6 +319,17 @@ contract StandTheFixture is FixtureCore {
         // --- tools (lines 235-236), then the stake funding before the minter ---
         d.cell.registerTool(SPEC_TOOL_ID, true);
         d.cell.registerTool(VERDICT_TOOL_ID, false);
+        // The museum's own: Room 1's two labels, so the row door two files against is
+        // Room 1's row, and door two's finder and evaluator. Flagging the evaluator
+        // canonical and registering the gap's class are admin acts, and the stand is
+        // the fixture's only admin broadcast, so they are made here. The canonical
+        // flag can never be cleared (ToolUseLib, monotone).
+        d.cell.registerTool(Room1.SPEC_TOOL, true);
+        d.cell.registerTool(Room1.VERDICT_TOOL, false);
+        d.cell.registerTool(Room2.FINDER_TOOL, false);
+        d.cell.registerTool(Room2.EVALUATOR_TOOL, false);
+        d.cell.setToolWitnessFlags(Room2.EVALUATOR_TOOL, true, true);
+        d.specGapModule.registerClass(Room2.gap().classId);
         // One row of Room 1's bounty and the claim stake a filer is asked against it.
         // setMinter follows at once and closes genesisMint for good, so this is the
         // only AUDIT on the fixture that its own lifecycle did not pay out.
@@ -326,7 +349,7 @@ contract StandTheFixture is FixtureCore {
 /// Read the recorded fixture back from whatever node serves it: every seat, wire and
 /// profile value asserted against the chain. Sends nothing.
 contract ReadTheFixture is FixtureCore {
-    function check() external {
+    function check() external view {
         _requireFixtureChain();
         string memory path = _recordPath(true);
         (Deployed memory d, address key, address auditor) = _fromRecord(vm.readFile(path));
