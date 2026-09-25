@@ -5,3 +5,6 @@ specimens/beanstalk-2022-04/*.sol -text
 # The specs and the gap are hashed as bytes, and the hash is what a row carries on chain. A checkout
 # that turned LF into CRLF would give a different hash on Windows than on Linux for the same commit.
 exhibits/**/*.json -text
+
+# The exit hands out dan-check, pinned by sha256 to the network's committed blobs. Same reason as above.
+exhibits/exit/dan-check/*.mjs -text

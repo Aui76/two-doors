@@ -95,7 +95,7 @@ Ask the door. `--block` pins the code read to the room's block, so the claim has
 time in it and an archive node answers it again.
 
 ```
-node ../network/body/tools/dan-check.mjs --target 0xC1E088fC1323b20BCBee9bd1B9fC9546db5624C5 --cell $CELL --home-rpc http://127.0.0.1:8545 --block 14595905
+node exhibits/exit/dan-check/dan-check.mjs --target 0xC1E088fC1323b20BCBee9bd1B9fC9546db5624C5 --cell $CELL --home-rpc http://127.0.0.1:8545 --block 14595905
 ```
 
 ```

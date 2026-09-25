@@ -94,7 +94,7 @@ Put the printed cell in `CELL`, close the window, confirm the row, and ask the d
 cast rpc evm_increaseTime 1209601 --rpc-url http://127.0.0.1:8545
 cast rpc evm_mine --rpc-url http://127.0.0.1:8545
 cast send $CELL "confirmAudit(uint256)" 0 --unlocked --from 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266 --rpc-url http://127.0.0.1:8545
-node ../network/body/tools/dan-check.mjs --target 0x1Db92e2EeBC8E0c075a02BeA49a2935BcD2dFCF4 --cell $CELL --home-rpc http://127.0.0.1:8545
+node exhibits/exit/dan-check/dan-check.mjs --target 0x1Db92e2EeBC8E0c075a02BeA49a2935BcD2dFCF4 --cell $CELL --home-rpc http://127.0.0.1:8545
 ```
 
 Now send the two transactions as they were sent. The calldata is fetched from the chain, and anvil lets you
