@@ -11,9 +11,10 @@ import {CellToken} from "dan/CellToken.sol";
 /// row is filed against the diamond's code, and the door is asked.
 ///
 /// The fork is the one Fork.t.sol proves. The hull is the cured one at 0f3eaf8,
-/// compiled from the cell tree with its own settings. Nothing about the row is a
-/// promise: `InBlock` means settled, window closed, nothing claimed as of this
-/// block, and the door's own table says exactly that (body/tools/dan-check.mjs).
+/// compiled from the public export in lib/dan with its own settings. Nothing about
+/// the row is a promise: `InBlock` means settled, window closed, nothing claimed as
+/// of this block, and the door's own table says exactly that
+/// (exhibits/exit/dan-check/dan-check.mjs).
 ///
 /// Every number is read at run time and printed. The one constant, the code hash,
 /// is checked against the bytes on the fork before it is used.

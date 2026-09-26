@@ -2,7 +2,7 @@
 pragma solidity ^0.8.20;
 
 import {Test} from "forge-std/Test.sol";
-import {DeployCell} from "lib/dan/script/DeployCell.s.sol";
+import {DeployCell} from "lib/dan/cell/script/DeployCell.s.sol";
 import {StandTheFixture} from "./fixture/Fixture.s.sol";
 import {Room1} from "./verdict/Room1.sol";
 

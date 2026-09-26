@@ -8,7 +8,7 @@ out = "out"
 libs = ["lib"]
 solc = "0.8.20"
 optimizer = true
-# The hull's own build settings (network/cell/foundry.toml), not the museum's
+# The hull's own build settings (cell/foundry.toml in lib/dan), not the museum's
 # preference: the point of Room 1 is to stand the cured hull at 0f3eaf8 beside the
 # artifact, so it is compiled the way it ships. AuditCell needs via_ir and a low
 # runs count to fit under EIP-170; at runs = 200 it would not deploy.
@@ -16,17 +16,19 @@ optimizer_runs = 1
 via_ir = true
 remappings = [
   "forge-std/=lib/forge-std/src/",
-  # The hull. lib/dan is a link INSIDE this tree (a directory junction on Windows,
-  # a symlink elsewhere) to the cell tree checked out beside it — see
-  # exhibits/beanstalk-2022-04/verdict/README.md for the one command that makes it.
-  # Inside, not beside: a remapping that points outside the project root makes
-  # foundry compile every hull source twice, under a relative and an absolute
-  # spelling of one path, and the two AuditCell artifacts cannot be linked. The
-  # pinned public export replaces the link as a submodule when it exists
-  # (VD-239(3)); the bytes are the same either way because cell/contracts/ has not
-  # moved since 0f3eaf8. Not vendored: the hull is BUSL-1.1 and this tree is MIT.
-  "dan/=lib/dan/contracts/",
-  "genesis-tools/=lib/dan/contracts/tools/",
+  # The hull. lib/dan is a submodule of DAN's public repository,
+  # Aui76/decentralized-audit-network, pinned at 0561a4b (VD-239(3)). It replaced a
+  # local link to the private cell tree, which a clone of this repo could not follow.
+  # Its cell/contracts/ are the cured hull at 0f3eaf8 with one difference: the 8
+  # interfaces carry an MIT licence line where the private tree has BUSL-1.1. That
+  # line goes into the compiled metadata, so AuditCell's bytes here differ from a
+  # build of the private tree. No exhibit compares against those bytes.
+  # Inside the tree, not beside it: a remapping that points outside the project root
+  # makes foundry compile every hull source twice, under a relative and an absolute
+  # spelling of one path, and the two AuditCell artifacts cannot be linked.
+  # Not vendored: the hull is BUSL-1.1 and this tree is MIT.
+  "dan/=lib/dan/cell/contracts/",
+  "genesis-tools/=lib/dan/cell/contracts/tools/",
 ]
 auto_detect_remappings = false
 # The raw fetched reference (replay/*.orig.sol) is a transient, hash-pinned copy of

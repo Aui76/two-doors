@@ -7,8 +7,3 @@ cache/
 
 # Broadcast records from the Room 1 script are per-run and per-node, not the exhibit.
 broadcast/
-
-# The hull is reached through a link to the cell tree, made by the reader once
-# (exhibits/beanstalk-2022-04/verdict/README.md). A submodule of the pinned public
-# export takes this entry's place when that export exists.
-lib/dan

@@ -67,10 +67,11 @@ after.
 
 ## Before any key touches Base
 
-The hull behind `lib/dan` must be the hull at `0f3eaf8`:
+The hull behind `lib/dan` must be the public export at `0561a4b`, whose contracts
+are the hull at `0f3eaf8` with an MIT licence line on the 8 interfaces:
 
 ```bash
-git -C lib/dan diff --quiet 0f3eaf8 -- contracts script/DeployCell.s.sol script/EnvReads.s.sol && echo HULL-AT-0f3eaf8
+git -C lib/dan diff --quiet 0561a4b -- cell/contracts cell/script/DeployCell.s.sol cell/script/EnvReads.s.sol && echo HULL-AT-0561a4b
 ```
 
 The tests, in memory:
@@ -102,8 +103,8 @@ forge script exhibits/beanstalk-2022-04/fixture/Fixture.s.sol:ReadTheFixture --s
 
 Each of these is the operator's keystroke (VD-270). The session runs none of them.
 
-1. **The export refresh at `0f3eaf8` is public first** (VD-270(i)). If it is not
-   public by the 2 October check, Room 2 files locally and nothing below runs.
+1. **The export refresh at `0f3eaf8` is public first** (VD-270(i)). It is: it
+   went public on 26 September 2026 as `0561a4b`, and `lib/dan` is pinned to it.
 2. **A fresh key, funded from a faucet for gas only.** It is never the network's
    deployer and never its genesis auditor. The script refuses both.
 3. **The deploy.** This is the same command as the rehearsal, pointed at Base
