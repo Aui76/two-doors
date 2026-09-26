@@ -5,7 +5,7 @@ import {Test} from "forge-std/Test.sol";
 
 /// The exit hands the visitor one command, and the command is only worth handing
 /// over if it is the tool the rooms were read with. The two files under dan-check/
-/// are copied byte for byte from the network repository's committed blobs; this test
+/// are copied byte for byte from the public DAN repository at 0561a4b; this test
 /// re-hashes them and fails if a single byte has moved.
 ///
 /// It runs offline, like Room 1's provenance test.
@@ -16,9 +16,9 @@ contract ExitTest is Test {
         return sha256(vm.readFileBinary(string.concat(DIR, name)));
     }
 
-    /// The hashes are the ones README.md records: dan-check.mjs as committed at
-    /// network 54d3765 (the PC-132 cure, its oracle 65 passed, 0 failed), and
-    /// keccak256.mjs as committed at network 9c54690.
+    /// The hashes are the ones README.md records: tools/dan-check.mjs (the row 0
+    /// fix, its oracle 65 passed, 0 failed) and tools/keccak256.mjs, both as
+    /// published in Aui76/decentralized-audit-network at 0561a4b.
     function test_theToolIsTheNetworksTool() public view {
         assertEq(
             _sha256Of("dan-check.mjs"),

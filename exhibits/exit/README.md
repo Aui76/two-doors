@@ -57,11 +57,20 @@ an auditor passes it, the way Room 1 does on its fork.
 
 ## Where the tool came from
 
-The two files in `dan-check/` are the network repository's own, copied byte for byte from its committed
-blobs. `body/tools/dan-check.mjs` as committed at `54d3765`, 34,152 bytes, sha256
-`f009360f507b50e7d2703c6251abf061b94905b15430486a410bb1f84a696d85`. That commit is the PC-132 cure, and its
-tests read 65 passed, 0 failed. `body/tools/keccak256.mjs` as committed at `9c54690`, 4,494 bytes, sha256
-`195c078551e580b099ccdc49a15212373d3eb31f87649aded1b8d3dc1922824b`.
+The two files in `dan-check/` are DAN's own, copied byte for byte from the public repository
+[`Aui76/decentralized-audit-network`](https://github.com/Aui76/decentralized-audit-network) at commit `0561a4b`.
+`tools/dan-check.mjs` is 34,152 bytes, sha256 `f009360f507b50e7d2703c6251abf061b94905b15430486a410bb1f84a696d85`,
+and `tools/keccak256.mjs` is 4,494 bytes, sha256 `195c078551e580b099ccdc49a15212373d3eb31f87649aded1b8d3dc1922824b`.
+You can check both against GitHub yourself:
+
+```
+curl -s https://raw.githubusercontent.com/Aui76/decentralized-audit-network/0561a4b/tools/dan-check.mjs | sha256sum
+```
+
+This version of the tool has the fix for row 0, the first row any cell files. Before it, the tool said a
+contract had never been audited when its row was row 0. Its own tests read 65 passed, 0 failed in my private
+tree, where the tool is built. The test file isn't in the public repo, because it reads paths that only
+exist there.
 
 `Exit.t.sol` hashes both files again and fails if one byte has moved. When I changed one character in
 `dan-check.mjs`, it went red. Rooms 1 and 3 run this same copy, so the tool the rooms were read with is the
