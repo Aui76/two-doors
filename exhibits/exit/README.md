@@ -50,8 +50,10 @@ The Bybit wallet from Room 3, asked on mainnet with `--target-rpc https://eth.dr
 The cell itself gets the same answer, and so does an address with no code at all (`REFUSE: target has no
 code`). The dashes in those lines are the tool's own output.
 
-So the pedestal is empty. Almost any address you try will come back REFUSE, because nobody has filed a row for
-it yet, and the tool says that instead of guessing. The rows in Rooms 1 and 3 sit on local forks, so this cell
+So the pedestal is empty. A story the record can already show does not get a frame. An address with a settled
+row reads CLEAN, and the row is its record. The pedestal is for the address with no row, and today that is
+almost any address you try. It comes back REFUSE because nobody has filed a row for it yet, and the tool says
+that instead of guessing. The rows in Rooms 1 and 3 sit on local forks, so this cell
 doesn't know about them. The first row with your contract's hash in it gets there when someone files it and
 an auditor passes it, the way Room 1 does on its fork.
 
