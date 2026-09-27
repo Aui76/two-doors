@@ -35,6 +35,8 @@ directory stands the hull it lands on.
 - `record/` is the museum's record of the fixture, and the only place it lives
   (VD-270(iv)). The script writes `record/84532.json` on the real broadcast.
   Dry runs and anvil rehearsals write files that git ignores.
+- `verify.py` verifies the sixteen contracts on Basescan. It compiles each one
+  here first and submits only what equals the bytes the stand sent.
 
 ## How it is built
 
@@ -135,7 +137,39 @@ Each of these is the operator's keystroke (VD-270). The session runs none of the
    freezes `../filing/gap.json` at that commit: the record holds the keccak256
    of each gap word, and the filing refuses words that differ (VD-273(4)).
 
-4. **Basescan verification**, against the public export.
+4. **Basescan verification**, against the public export. The hull is built with
+   via_ir, and under via_ir a contract's code depends on every source compiled
+   beside it. DAN found this on its own cell on 13 September 2026:
+   `forge verify-contract` submits only the target's imports, and Basescan
+   refused CellLogicLib. `verify.py` rebuilds each input from the build that
+   deployed the fixture, compiles it with the same solc, and submits a contract
+   only when that compile equals the creation code in forge's broadcast log. The
+   key is an Etherscan API key, read from `BASESCAN_API_KEY`:
+
+   ```bash
+   python exhibits/beanstalk-2022-04/fixture/verify.py --check
+   python exhibits/beanstalk-2022-04/fixture/verify.py
+   ```
+
+   The first command is the local proof and sends nothing.
+
+   I ran it on 27 September 2026 and Basescan verified 15 of the 16. AuditCell
+   is the one it did not verify. The only input I found that reproduces its
+   deployed code is the 59 sources the stand's build numbered at or before it,
+   with their imports.
+   The museum's own files sort before the hull, and the stand script, the filing
+   script and the two tests among them pull in forge-std, so that input is
+   1.4 MB. I tried smaller sets here and none compiled to the deployed body.
+   Basescan answered "Other Exception" to the 59 sources twice. Here, solc
+   compiles AuditCell from them in 14 seconds. Asked for every contract in the
+   same input, it was still running after 25 minutes, and I stopped it. DAN got
+   the same answer on 13 September 2026 when it sent CellLogicLib as 2.1 MB, and
+   Basescan passed CellLogicLib from 17 sources. So AuditCell stays unverified on Basescan,
+   and anyone can rerun the proof from this repo:
+
+   ```bash
+   python exhibits/beanstalk-2022-04/fixture/verify.py --check AuditCell
+   ```
 5. **The record is committed**: `record/84532.json`, with the transaction and the
    block printed by the command below, and `record/84532.admin-acts.json`, which
    the second command below writes from the same log. That file lists every
