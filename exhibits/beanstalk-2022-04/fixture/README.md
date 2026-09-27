@@ -38,6 +38,8 @@ What the filing moved is on the plaque, in `../filing/README.md`.
   Dry runs and anvil rehearsals write files that git ignores.
 - `verify.py` verifies the sixteen contracts on Basescan. It compiles each one
   here first and submits only what equals the bytes the stand sent.
+- `transactions.js` writes `record/84532.transactions.json`, every transaction
+  the stand and the filing sent, from forge's broadcast logs, which git ignores.
 
 ## How it is built
 
@@ -171,12 +173,15 @@ Each of these is the operator's keystroke (VD-270). The session runs none of the
    ```bash
    python exhibits/beanstalk-2022-04/fixture/verify.py --check AuditCell
    ```
-5. **The record is committed**: `record/84532.json`, with the transaction and the
-   block printed by the command below, and `record/84532.admin-acts.json`, which
-   the second command below writes from the same log. That file lists every
-   call the fixture key made at the stand by function, transaction and block,
-   the class registration and the canonical flag among them (VD-273(1)). The
-   command refuses to overwrite a file that is already there.
+5. **The record is committed**: `record/84532.json`, which the stand wrote, and
+   `record/84532.admin-acts.json`, which the second command below writes from
+   forge's broadcast log. That file lists every call the fixture key made at the
+   stand by function, transaction and block, the class registration and the
+   canonical flag among them (VD-273(1)). The command refuses to overwrite a
+   file that is already there. The deploy transactions and their blocks went in
+   later, with the filing's, in `record/84532.transactions.json`, which
+   `transactions.js` writes from both broadcast logs (`../filing/README.md`,
+   step 5).
 
 The deploy transaction and its block are read from forge's broadcast log:
 

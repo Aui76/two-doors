@@ -14,8 +14,8 @@ one is that sentence run on the fork.
 ## The plaque
 
 Every number here is in a receipt on Base Sepolia or a read of the chain. The
-records in `../fixture/record/` hold them, and the commands under the plaque read
-them back.
+transactions, their blocks and their times are in `../fixture/record/`, and the
+commands under the plaque print them and read the rest back from the chain.
 
 > **Exhibit fixture.** This is an instance of the DAN hull at `0f3eaf8`, deployed
 > on Base Sepolia by the museum for one filing. It is not the network's cell. The
@@ -51,25 +51,40 @@ sent the 10 AUDIT stake back to the discoverer, and the gap reads Confirmed.
 So the discoverer got back what they staked and nothing more. A reward is the
 protocol's to give by adopting the gap, and the protocol never adopted it. The
 row's own window closed at 20:03:16 UTC. Nobody had sent `confirmAudit` for it
-when I read the chain at 21:23 UTC, so row 0 still read AwaitingWindow, the cell
-still held the 40 AUDIT bounty, and the auditor held none. No row carries a
-corrected spec, so nothing on the fixture supersedes row 0. The museum's key
-holds 0 AUDIT, and its nonce was 71 at the filing's block and 71 after it.
+when I read the chain at block 47,389,403, 22:11:34 UTC, so row 0 still read
+AwaitingWindow, the cell still held the 40 AUDIT bounty, and the auditor held
+none. The fixture holds one row, so nothing on it supersedes row 0. The museum's
+key holds 0 AUDIT, and its nonce was 71 at the filing's block and 71 after it.
+
+This prints the gap's status, the row's state, bounty and window, what the cell,
+the auditor, the discoverer and the museum's key hold, the key's nonce, and the
+block and second it read at. State 4 is AwaitingWindow and 6 is InBlock. Times
+are unix seconds and amounts are wei, 18 decimals to the AUDIT. If someone has
+sent `confirmAudit` since I read it, the row and the balances will have moved,
+and this shows where to.
 
 ```bash
 forge script exhibits/beanstalk-2022-04/filing/Filing.s.sol:ReadTheFiling --sig "check()" --rpc-url https://sepolia.base.org
 ```
 
-```bash
-cast call 0x2f5005C69C1da917AF5C47118BBCa9a8f0f1Ffb2 "auditStateOf(uint256)(uint8)" 0 --rpc-url https://sepolia.base.org
-```
-
-State 4 is AwaitingWindow and 6 is InBlock. The balances, cell first, then the
-auditor, the discoverer and the museum's key:
+The number of rows on the fixture, and the key's nonce at the filing's block:
 
 ```bash
-for a in 0x2f5005C69C1da917AF5C47118BBCa9a8f0f1Ffb2 0xEdB37f4C862fC94A63Fe826baCefF2fF17016839 0xfEE57981D498a5b3882ac464344687A12c8d4cC9 0x85F9549e4fdCa52fF56742B27b6C037ae5B06966; do cast call 0x9C667B21C072D2Cf816fF458D6698be8D21f6A33 "balanceOf(address)(uint256)" $a --rpc-url https://sepolia.base.org; done
+cast call 0x2f5005C69C1da917AF5C47118BBCa9a8f0f1Ffb2 "nextAuditId()(uint256)" --rpc-url https://sepolia.base.org
 ```
+
+```bash
+cast nonce 0x85F9549e4fdCa52fF56742B27b6C037ae5B06966 --block 47385257 --rpc-url https://sepolia.base.org
+```
+
+The stand's and the filing's transactions, with their blocks and times, from the
+record:
+
+```bash
+node -e "const j=require('./exhibits/beanstalk-2022-04/fixture/record/84532.transactions.json');for(const t of j.transactions)if((t.contract==='AuditCell'&&t.type==='CREATE')||/^(setToolWitnessFlags|registerClass|submitArtifactAudit|provePass|openSpecGap)\(/.test(t.function||''))console.log(t.function||'deploy '+t.contract,t.tx,t.block,new Date(t.timestamp*1000).toISOString())"
+```
+
+The confirm is in `../fixture/record/84532.confirm.json`.
 
 ## What is in this directory
 
@@ -128,8 +143,9 @@ by adopting the gap, and it is paid from the protocol's own AUDIT. On the fixtur
 the protocol holds none after the bounty, so adoption fails until something funds
 it. The test shows both halves.
 
-The row's own window runs beside the gap. When it closes the row settles, the
-cell pays its auditor, and the gap stays where it was.
+The row's own window runs beside the gap. Once it closes, anyone may send
+`confirmAudit`. Then the row settles, the cell pays its auditor, and the gap
+stays where it was.
 
 ## The rehearsal on anvil
 
@@ -181,11 +197,16 @@ Each of these is the operator's keystroke (VD-270). The session runs none of the
    forge script exhibits/beanstalk-2022-04/filing/Filing.s.sol:FileTheGap --sig "file()" --rpc-url https://sepolia.base.org --broadcast --slow
    ```
 
-5. **Commit the record**, `../fixture/record/84532.filing.json`, with the filing
-   transaction and its block as the command below prints them.
+5. **Commit the records**: `../fixture/record/84532.filing.json`, which the
+   filing wrote, and `../fixture/record/84532.transactions.json`, which the
+   command below writes from forge's broadcast logs of the stand and the filing,
+   with each block's time read from the node. The logs are gitignored and live on
+   the machine that sent the transactions, so this file is the only copy the
+   repository has of the stand's and the filing's transactions. The command
+   refuses to overwrite it, and with `--check` it compares the file with the logs.
 
 ```bash
-node -e "const b=require('./broadcast/Filing.s.sol/84532/file-latest.json');const r=Object.fromEntries(b.receipts.map(x=>[x.transactionHash,x]));for(const t of b.transactions.filter(t=>(t.function||'').startsWith('openSpecGap(')))console.log(t.hash,parseInt(r[t.hash].blockNumber,16))"
+node exhibits/beanstalk-2022-04/fixture/transactions.js
 ```
 
 6. **Confirm by silence** once the window has passed. `ReadTheFiling` against

@@ -307,11 +307,24 @@ contract FileTheGap is FilingCore {
 contract ReadTheFiling is FilingCore {
     function check() external view {
         _requireFixtureChain();
-        (Deployed memory d,,) = _fromRecord(vm.readFile(_recordPath(true)));
+        (Deployed memory d, address key,) = _fromRecord(vm.readFile(_recordPath(true)));
         string memory path = _filingPath(true);
         Filing memory f = _filingFromRecord(vm.readFile(path));
         SpecGapLib.Status s = _readBackFiling(d, f);
         _printFiling(d, f, s, true);
+        // The row's own window, and who holds what now: the plaque's last paragraph.
+        CellTypeDefs.Audit memory a = d.cell.getAudit(f.auditId);
+        console.log("  row bounty (wei)        ", a.bounty);
+        console.log("  row window opened       ", a.windowStart);
+        console.log("  row window (s)          ", a.auditWindow);
+        console.log("  row window closed       ", a.windowStart + a.auditWindow);
+        console.log("  cell holds (wei)        ", d.token.balanceOf(address(d.cell)));
+        console.log("  auditor holds (wei)     ", d.token.balanceOf(f.auditor));
+        console.log("  discoverer holds (wei)  ", d.token.balanceOf(f.discoverer));
+        console.log("  fixture key holds (wei) ", d.token.balanceOf(key));
+        console.log("  fixture key's nonce     ", uint256(vm.getNonce(key)));
+        console.log("  read at block           ", block.number);
+        console.log("  read at (unix s)        ", block.timestamp);
         console.log("  read back from          ", path);
     }
 }
