@@ -85,7 +85,7 @@ contract FixtureTest is Test {
     }
 
     function test_refusesEveryNetworkKeyInTheAuditorSeat() public {
-        address[9] memory k = [
+        address[13] memory k = [
             0xc9da07eC949261bAD9ffE51f11177A7a011D5708,
             0xDC4d0BBBF1Da2B54326B804FcF95A3B2F55c8fB3,
             0xb6494d7a2e7eBF3C2Fd4CA4AD5b17A235b58E8e7,
@@ -94,7 +94,11 @@ contract FixtureTest is Test {
             0x44ed2FDaf7e313B23f3777aA60Cb6902E7Df58eF,
             0xB909cA5651c1893486a1EAFB1189E4Db9d15f071,
             0x75A2B69a187A0527fe13248fEcfb88c5a7E98bFe,
-            0xb034F198869726c36965B95879eCB65Bdb1076c9
+            0xb034F198869726c36965B95879eCB65Bdb1076c9,
+            0x3EA29eA8b7aB19Ca2C6f7BD409f1d8d1Ef7b4A37,
+            0x216D23BBa1Fb785853d3D0f219BAE71C8D60a3AF,
+            0x4B9B66A6603e27098a3Ff4b806D973391Fa324Cd,
+            0x67890D4cbD646AD78F72241CA591b9a60456C64E
         ];
         for (uint256 i; i < k.length; ++i) {
             vm.expectRevert(

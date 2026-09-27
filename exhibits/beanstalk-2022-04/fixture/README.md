@@ -50,12 +50,29 @@ attached. After that, `genesisMint` is closed for good. The amount is one row of
 Room 1's bounty plus the claim stake the cell asks against such a row, read from
 the cell's own getters.
 
-The fixture refuses every key the network's deployment records name, in every
-seat. The list was pulled from the cell tree with this command:
+The fixture refuses every key the network has used, in every seat. The list is
+every address in the network repo's tracked `cell/` and `body/` records that
+holds no contract code and has sent a transaction on Base Sepolia. Run from the
+network repo:
 
 ```bash
-grep -hoE '"(admin|deployer|genesisAuditor|auditor[A-Za-z]*|protocol[A-Za-z]*)"\s*:\s*"0x[0-9a-fA-F]{40}"' deployments/*.json | sort -u
+git ls-files 'cell/*.json' 'body/*.json' | xargs grep -ohiE '0x[0-9a-fA-F]{40}' | tr A-F a-f | sort -u | while read a; do c=$(cast code $a --rpc-url https://sepolia.base.org); case $c in 0x|0xef0100*) n=$(cast nonce $a --rpc-url https://sepolia.base.org); [ "$n" -gt 0 ] && echo $a $n;; esac; done
 ```
+
+A delegated key (EIP-7702, code starting `0xef0100`) is still a key. On
+27 September 2026 the command printed 13 lines. Eleven are the network's keys, and
+the fixture refuses them. The other two are not the network's: the zero address, and anvil's first dev key
+`0xf39F…2266`, whose private key is public and which the rehearsal below uses.
+The list also refuses two addresses the command cannot see: the live cell itself,
+and `0x75A2…8bFe`, the deployer of the network's local rehearsal, which has
+never sent a transaction on Base Sepolia.
+
+The first list, of 25 September, matched five field names in `cell/deployments`
+alone. It missed four keys. Three sit in the same folder under other roles
+(`originalAuditor`, `gapFiler`, `disputeAuditor`, `canonAuditor`,
+`assignedAuditor`). The fourth is the predecessor's admin after its rotation,
+named in `body/`. Asking the chain which addresses have sent transactions does
+not depend on how a record names its fields.
 
 `DeployCell.run` is inherited too and cannot be overridden. Always name the
 entry point with `--sig "stand()"`. Called here by mistake, `run()` sends

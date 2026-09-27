@@ -41,13 +41,20 @@ abstract contract FixtureCore is DeployCell {
     uint256 internal constant ANVIL = 31337;
     string internal constant RECORD_DIR = "exhibits/beanstalk-2022-04/fixture/record/";
 
-    /// Every key the network's own deployment records name, as deployer, admin,
-    /// protocol or genesis auditor, and the live cell's own address. The fixture
-    /// takes a fresh key and refuses all of them in every seat (VD-270(ii)).
-    /// Pulled from network/cell with the command in this directory's README.
-    /// The first is the live cell's admin() and the second holds auditor position 1
-    /// on it, both read from Base Sepolia on 2026-09-25.
-    function _networkKeys() internal pure returns (address[9] memory k) {
+    /// Every key the network's own records name that has sent a transaction on
+    /// Base Sepolia, and the live cell's own address. The fixture takes a fresh key
+    /// and refuses all of them in every seat (VD-270(ii)). Pulled with the command
+    /// in this directory's README. The first is the live cell's admin() and the
+    /// second holds auditor position 1 on it, both read from Base Sepolia on
+    /// 2026-09-25.
+    ///
+    /// The last four were missed by the first pull of 2026-09-25, which matched five
+    /// field names in cell/deployments only. Three sit there under other roles
+    /// (originalAuditor, gapFiler, disputeAuditor, canonAuditor, assignedAuditor);
+    /// the fourth is the predecessor's admin after its rotation, named in body/.
+    /// Found on 2026-09-27 by asking the chain which named addresses have sent
+    /// transactions, which does not depend on how a record names its fields.
+    function _networkKeys() internal pure returns (address[13] memory k) {
         k[0] = 0xc9da07eC949261bAD9ffE51f11177A7a011D5708;
         k[1] = 0xDC4d0BBBF1Da2B54326B804FcF95A3B2F55c8fB3;
         k[2] = 0xb6494d7a2e7eBF3C2Fd4CA4AD5b17A235b58E8e7;
@@ -57,10 +64,14 @@ abstract contract FixtureCore is DeployCell {
         k[6] = 0xB909cA5651c1893486a1EAFB1189E4Db9d15f071;
         k[7] = 0x75A2B69a187A0527fe13248fEcfb88c5a7E98bFe;
         k[8] = 0xb034F198869726c36965B95879eCB65Bdb1076c9;
+        k[9] = 0x3EA29eA8b7aB19Ca2C6f7BD409f1d8d1Ef7b4A37;
+        k[10] = 0x216D23BBa1Fb785853d3D0f219BAE71C8D60a3AF;
+        k[11] = 0x4B9B66A6603e27098a3Ff4b806D973391Fa324Cd;
+        k[12] = 0x67890D4cbD646AD78F72241CA591b9a60456C64E;
     }
 
     function _refuseNetworkKey(address a, string memory seat) internal pure {
-        address[9] memory k = _networkKeys();
+        address[13] memory k = _networkKeys();
         for (uint256 i; i < k.length; ++i) {
             require(a != k[i], string.concat(seat, " is a network key; the fixture takes a fresh key (VD-270(ii))"));
         }
