@@ -11,6 +11,66 @@ the instant of the vote and counts its one time gate from the proposal, so a
 position acquired after the proposal votes with full weight. The replay behind door
 one is that sentence run on the fork.
 
+## The plaque
+
+Every number here is in a receipt on Base Sepolia or a read of the chain. The
+records in `../fixture/record/` hold them, and the commands under the plaque read
+them back.
+
+> **Exhibit fixture.** This is an instance of the DAN hull at `0f3eaf8`, deployed
+> on Base Sepolia by the museum for one filing. It is not the network's cell. The
+> network's cell is `0xb034F198869726c36965B95879eCB65Bdb1076c9` on Base Sepolia
+> since 2026-09-13; it is this entry's provenance and holds no exhibit. The
+> fixture holds no value, sits in no deployment record, and is read by no DAN tool.
+> Before the filing, its admin, the museum's key, registered the gap's class and
+> flagged door two's evaluator canonical.
+
+The stand. On 27 September 2026 at 19:42:40 UTC, block 47,384,936, the museum's
+key `0x85F9549e4fdCa52fF56742B27b6C037ae5B06966` deployed the fixture's AuditCell
+at `0x2f5005C69C1da917AF5C47118BBCa9a8f0f1Ffb2`, in transaction
+`0x171d5aed…b8d6`. It flagged door two's evaluator canonical at block 47,384,993
+and registered the gap's class at 47,384,994. Basescan verified 15 of the
+fixture's 16 contracts. AuditCell is the one it did not, and
+`../fixture/README.md` says why.
+
+The row. The museum's key took the protocol's seat and filed Room 1's row as row
+0, with a bounty of 40 AUDIT. `0xEdB37f4C862fC94A63Fe826baCefF2fF17016839`
+audited it and passed it, and the row's window opened at 19:53:16 UTC for 600
+seconds.
+
+The gap. At 19:53:22 UTC, block 47,385,257, the discoverer
+`0xfEE57981D498a5b3882ac464344687A12c8d4cC9`, a second fresh key, filed the gap
+against row 0 in transaction `0x7ac4a1f5…b5ac` and staked 10 AUDIT. The protocol
+had until 19:58:22 to answer and said nothing.
+
+The confirm. I sent it from the discoverer's key at 20:00:14 UTC, block
+47,385,463, 112 seconds after the protocol's window closed, in transaction
+`0x36d26fe400734e1c4b1ce2efdf6c1297f5f348519510ea1e7019cf1ea43712b4`. The module
+sent the 10 AUDIT stake back to the discoverer, and the gap reads Confirmed.
+
+So the discoverer got back what they staked and nothing more. A reward is the
+protocol's to give by adopting the gap, and the protocol never adopted it. The
+row's own window closed at 20:03:16 UTC. Nobody had sent `confirmAudit` for it
+when I read the chain at 21:23 UTC, so row 0 still read AwaitingWindow, the cell
+still held the 40 AUDIT bounty, and the auditor held none. No row carries a
+corrected spec, so nothing on the fixture supersedes row 0. The museum's key
+holds 0 AUDIT, and its nonce was 71 at the filing's block and 71 after it.
+
+```bash
+forge script exhibits/beanstalk-2022-04/filing/Filing.s.sol:ReadTheFiling --sig "check()" --rpc-url https://sepolia.base.org
+```
+
+```bash
+cast call 0x2f5005C69C1da917AF5C47118BBCa9a8f0f1Ffb2 "auditStateOf(uint256)(uint8)" 0 --rpc-url https://sepolia.base.org
+```
+
+State 4 is AwaitingWindow and 6 is InBlock. The balances, cell first, then the
+auditor, the discoverer and the museum's key:
+
+```bash
+for a in 0x2f5005C69C1da917AF5C47118BBCa9a8f0f1Ffb2 0xEdB37f4C862fC94A63Fe826baCefF2fF17016839 0xfEE57981D498a5b3882ac464344687A12c8d4cC9 0x85F9549e4fdCa52fF56742B27b6C037ae5B06966; do cast call 0x9C667B21C072D2Cf816fF458D6698be8D21f6A33 "balanceOf(address)(uint256)" $a --rpc-url https://sepolia.base.org; done
+```
+
 ## What is in this directory
 
 - `gap.json` holds the gap in words: its class, the missing invariant, the

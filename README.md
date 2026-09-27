@@ -15,8 +15,10 @@ check reads CLEAN. That's the right answer, because the contract does exactly wh
 job is to find what the rule forgot to say. [`exhibits/beanstalk-2022-04/verdict/`](exhibits/beanstalk-2022-04/verdict/README.md)
 
 **Room 2, the two doors.** You found it, now pick a door. Door two is the discoverer's: you file the gap on DAN
-and the window pays. It's built and rehearsed on a local node, and the filing on Base Sepolia hasn't happened
-yet. Door one replays the real attack and drains the pool. It's built: the ported transaction runs against the fork at block
+with a stake, and if the protocol stays silent the stake comes back. I filed it on 27 September 2026 on Base
+Sepolia, on a fixture the museum deployed for this one filing, an instance of DAN's hull that isn't the network's
+cell. The protocol said nothing, silence confirmed the gap, and the 10 AUDIT stake came back. Nobody paid a
+reward, and the plaque says so. Door one replays the real attack and drains the pool. It's built: the ported transaction runs against the fork at block
 14,595,905, step by step, and reproduces the drain. [`filing/`](exhibits/beanstalk-2022-04/filing/README.md), [`fixture/`](exhibits/beanstalk-2022-04/fixture/README.md),
 [`replay/`](exhibits/beanstalk-2022-04/replay/README.md)
 
@@ -50,4 +52,5 @@ DAN's contracts are not copied in here. They come in as a submodule at `lib/dan`
 The settlement core there is BUSL-1.1, and the interfaces and tools are MIT. This repository is MIT.
 
 The network's live cell is `0xb034F198869726c36965B95879eCB65Bdb1076c9` on Base Sepolia. It has filed one row,
-its genesis audit. The rows in Rooms 1 and 3 live on local forks, so the live cell doesn't know about them.
+its genesis audit. The rows in Rooms 1 and 3 live on local forks, and Room 2's row lives on the fixture, so the
+live cell doesn't know about any of them.

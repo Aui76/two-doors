@@ -15,9 +15,10 @@ for the filing. The fixture key takes the protocol's seat and a fresh second key
 files as the discoverer (VD-273(2)), unless the operator sets
 `FIXTURE_SEAT=discoverer`; the plaque says which seat it took.
 
-Door two is the discoverer's seat. The spec gap is filed on DAN, the window
-pays, the fix supersedes. The filing is a real transaction on Base, and this
-directory stands the hull it lands on.
+Door two is the discoverer's seat. The discoverer files the spec gap on DAN with
+a stake, and if the protocol stays silent the stake comes back. The filing is a
+real transaction on Base Sepolia, and this directory stands the hull it lands on.
+What the filing moved is on the plaque, in `../filing/README.md`.
 
 ## What is in this directory
 
