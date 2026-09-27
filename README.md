@@ -16,8 +16,8 @@ job is to find what the rule forgot to say. [`exhibits/beanstalk-2022-04/verdict
 
 **Room 2, the two doors.** You found it, now pick a door. Door two is the discoverer's: you file the gap on DAN
 and the window pays. It's built and rehearsed on a local node, and the filing on Base Sepolia hasn't happened
-yet. Door one replays the real attack and drains the pool. It isn't built yet, and its directory says what it
-will hold. [`filing/`](exhibits/beanstalk-2022-04/filing/README.md), [`fixture/`](exhibits/beanstalk-2022-04/fixture/README.md),
+yet. Door one replays the real attack and drains the pool. It's built: the ported transaction runs against the fork at block
+14,595,905, step by step, and reproduces the drain. [`filing/`](exhibits/beanstalk-2022-04/filing/README.md), [`fixture/`](exhibits/beanstalk-2022-04/fixture/README.md),
 [`replay/`](exhibits/beanstalk-2022-04/replay/README.md)
 
 **Room 3, the room with no seat.** Bybit, February 2025. Three of six owners signed, the wallet did what it was

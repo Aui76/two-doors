@@ -51,7 +51,6 @@ fs_permissions = [
   { access = "read-write", path = "./exhibits/beanstalk-2022-04/fixture/record" },
 ]
 
-
 [rpc_endpoints]
 # Archive access. eth.drpc.org answers state reads at 2022 blocks without a key,
 # which is how the day-one provenance was pulled; override it with your own.
