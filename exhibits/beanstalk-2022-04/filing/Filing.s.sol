@@ -233,9 +233,12 @@ contract FileTheGap is FilingCore {
 
         bool live = _isLive();
         string memory path = _filingPath(live);
+        // A filing already on chain is refused above: the fixture holds a row. The
+        // record file is no guard. Forge can run this script twice when it
+        // broadcasts, and the first run writes the record before anything is sent
+        // (Fixture.s.sol, standWith).
         if (live) {
             require(f.auditor.balance > 0 && second.balance > 0, "AUDITOR_KEY and SECOND_KEY need gas first");
-            if (block.chainid == BASE_SEPOLIA) require(!vm.exists(path), "door two is already recorded on Base Sepolia");
         }
 
         // 1. A second key in the protocol's seat is handed the bounty first.

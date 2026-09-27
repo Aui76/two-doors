@@ -290,11 +290,18 @@ contract StandTheFixture is FixtureCore {
 
         // One fixture per Base Sepolia record. A second deploy is the reopen case
         // (VD-270): the old record is marked superseded by hand first, then moved.
+        // The record counts only if the chain holds the cell it names. Forge runs
+        // this script twice when it broadcasts: once, then again after it deploys
+        // the hull's libraries for the fixture key. The first run has already
+        // written the record by then, and nothing is on chain yet. On 27 September
+        // 2026 a guard that asked only whether the file existed refused the
+        // second run, so nothing was sent.
         bool live = _isLive();
         string memory path = _recordPath(live);
-        if (live && block.chainid == BASE_SEPOLIA) {
+        if (live && block.chainid == BASE_SEPOLIA && vm.exists(path)) {
+            (Deployed memory recorded,,) = _fromRecord(vm.readFile(path));
             require(
-                !vm.exists(path),
+                address(recorded.cell).code.length == 0,
                 "a fixture is already recorded on Base Sepolia; supersede it by hand first (VD-270 reopen)"
             );
         }
