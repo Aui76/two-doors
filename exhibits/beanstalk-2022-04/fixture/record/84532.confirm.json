@@ -1,0 +1,14 @@
+{
+  "what": "Room 2, door two: silence confirmed the spec gap on the fixture, an instance of the DAN hull at 0f3eaf8 on Base Sepolia. Not the network's cell.",
+  "chainId": 84532,
+  "SpecGapModule": "0xd17E1b67F438532036F279b08b34DEb264338a9C",
+  "auditId": 0,
+  "classId": "0xf265280a77ba6123996963ca5c8304643796f2443d1c448144d3f41c86c139b3",
+  "status": "Confirmed",
+  "confirmedBy": "0xfEE57981D498a5b3882ac464344687A12c8d4cC9",
+  "tx": "0x36d26fe400734e1c4b1ce2efdf6c1297f5f348519510ea1e7019cf1ea43712b4",
+  "block": 47385463,
+  "timestamp": 1790539214,
+  "stakeReturnedTo": "0xfEE57981D498a5b3882ac464344687A12c8d4cC9",
+  "stakeReturnedWei": "10000000000000000000"
+}

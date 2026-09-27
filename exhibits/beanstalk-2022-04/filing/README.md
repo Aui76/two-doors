@@ -127,3 +127,20 @@ Each of these is the operator's keystroke (VD-270). The session runs none of the
 ```bash
 node -e "const b=require('./broadcast/Filing.s.sol/84532/file-latest.json');const r=Object.fromEntries(b.receipts.map(x=>[x.transactionHash,x]));for(const t of b.transactions.filter(t=>(t.function||'').startsWith('openSpecGap(')))console.log(t.hash,parseInt(r[t.hash].blockNumber,16))"
 ```
+
+6. **Confirm by silence** once the window has passed. `ReadTheFiling` against
+   Base Sepolia prints the second. Any key with gas may send the confirm, and the
+   operator sent it from the second key. Sent before that second, the module
+   reverts with `ProtocolWindowOpen` (`0x44e2ade4`) and nothing lands on chain.
+
+   ```bash
+   cast send SPEC_GAP_MODULE "confirmSpecGapSilence(uint256,bytes32)" ROW GAP_CLASS --private-key $SECOND_KEY --rpc-url https://sepolia.base.org
+   ```
+
+7. **Commit the confirm's record**, `../fixture/record/84532.confirm.json`, read
+   from the confirm's receipt: the sender, the block and its second, and the
+   stake's transfer back to the discoverer.
+
+```bash
+cast receipt CONFIRM_TX --json --rpc-url https://sepolia.base.org
+```
