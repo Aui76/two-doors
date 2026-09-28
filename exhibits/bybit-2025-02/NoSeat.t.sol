@@ -135,6 +135,7 @@ contract BybitNoSeatTest is Test {
     /// delegatecall. The multisig was told, correctly, by the required number.
     function test_threeOwnersSignedThisTransaction() public {
         assertTrue(_contains(_record(Room3.TX_SIGNED), Room3.signedCalldata()), "the rebuilt calldata is not the chain's");
+        emit log_named_bytes32("signed transaction", Room3.TX_SIGNED);
 
         ISafe111Hash safe = ISafe111Hash(Room3.WALLET);
         assertEq(safe.nonce(), Room3.SIGNED_NONCE, "not the nonce the signers signed");
@@ -146,7 +147,8 @@ contract BybitNoSeatTest is Test {
         uint256 threshold = safe.getThreshold();
         assertEq(Room3.SIGNATURES.length, threshold * 65, "not one signature per required owner");
         address last;
-        emit log_named_bytes32("Safe transaction hash (nonce 71)", safeTxHash);
+        emit log_named_uint("Safe nonce", safe.nonce());
+        emit log_named_bytes32("Safe transaction hash", safeTxHash);
         emit log_named_uint("operation (1 = delegatecall)", Room3.SIGNED_OPERATION);
         emit log_named_address("destination", Room3.SIGNED_TO);
         for (uint256 i = 0; i < threshold; i++) {
@@ -163,6 +165,7 @@ contract BybitNoSeatTest is Test {
     /// passes after, because the bytes it reads are the same bytes.
     function test_theCheckPassesAndTheMoneyLeaves() public {
         assertTrue(_contains(_record(Room3.TX_SWEEP), Room3.sweepCalldata()), "the sweep is not the chain's");
+        emit log_named_bytes32("sweep transaction", Room3.TX_SWEEP);
 
         uint256 id = _settledRow();
         assertTrue(_theDoorSaysClean(id), "the row did not settle");
@@ -188,6 +191,7 @@ contract BybitNoSeatTest is Test {
         assertEq(Room3.WALLET.balance, 0, "the wallet was not emptied");
         assertEq(Room3.SWEEP_TO.balance - destBefore, held, "the ETH did not all go to one place");
         emit log_named_decimal_uint("wallet holds after the sweep (ETH)", Room3.WALLET.balance, 18);
+        emit log_named_address("sweep destination", Room3.SWEEP_TO);
         emit log_named_decimal_uint("moved to the sweep's destination (ETH)", Room3.SWEEP_TO.balance - destBefore, 18);
 
         bytes32 codeAfter = keccak256(Room3.WALLET.code);
