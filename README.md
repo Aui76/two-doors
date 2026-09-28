@@ -47,8 +47,8 @@ is slow to build. After that a run takes seconds.
 
 ## Where DAN is
 
-DAN's contracts are not copied in here. They come in as a submodule at `lib/dan`, pinned to
-[`Aui76/decentralized-audit-network`](https://github.com/Aui76/decentralized-audit-network) at commit `0561a4b`.
+DAN's contracts are not copied in here. They come in as a submodule at `deps/dan`, pinned to
+[`Aui76/decentralized-audit-network`](https://github.com/Aui76/decentralized-audit-network) at commit `5f2012b`.
 The settlement core there is BUSL-1.1, and the interfaces and tools are MIT. This repository is MIT.
 
 The network's live cell is `0xb034F198869726c36965B95879eCB65Bdb1076c9` on Base Sepolia. It has filed one row,

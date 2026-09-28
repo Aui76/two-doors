@@ -29,9 +29,9 @@ about it is the code it names.
 ## Setup, once
 
 The hull is not vendored (it is BUSL-1.1; this tree is MIT). It comes in as a git
-submodule at `lib/dan`: DAN's public repository,
+submodule at `deps/dan`: DAN's public repository,
 [`Aui76/decentralized-audit-network`](https://github.com/Aui76/decentralized-audit-network),
-pinned at commit `0561a4b`. Inside the project, not beside it: a remapping that
+pinned at commit `5f2012b`. Inside the project, not beside it: a remapping that
 points outside the root makes foundry compile every hull source twice under two
 spellings of one path, and the two `AuditCell` artifacts cannot be linked.
 
@@ -41,8 +41,8 @@ From the repository root, once after cloning:
 git submodule update --init
 ```
 
-That fetches `lib/dan` and `lib/forge-std`. A clone made with `--recurse-submodules`
-already has both. The hull's contracts sit under `lib/dan/cell/contracts/`.
+That fetches `deps/dan` and `deps/forge-std`. A clone made with `--recurse-submodules`
+already has both. The hull's contracts sit under `deps/dan/cell/contracts/`.
 
 The contracts there are the cured hull at the network's commit `0f3eaf8`, with one
 difference: the 8 interfaces carry an MIT licence line where the network's own tree

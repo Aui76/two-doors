@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.20;
 
-import {DeployCell} from "lib/dan/cell/script/DeployCell.s.sol";
+import {DeployCell} from "deps/dan/cell/script/DeployCell.s.sol";
 import {VmSafe} from "forge-std/Vm.sol";
 import {console} from "forge-std/console.sol";
 import {AuditCell} from "dan/AuditCell.sol";

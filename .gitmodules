@@ -1,6 +1,6 @@
 [submodule "lib/forge-std"]
-	path = lib/forge-std
+	path = deps/forge-std
 	url = https://github.com/foundry-rs/forge-std
 [submodule "lib/dan"]
-	path = lib/dan
+	path = deps/dan
 	url = https://github.com/Aui76/decentralized-audit-network

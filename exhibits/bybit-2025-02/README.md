@@ -68,7 +68,7 @@ cast tx 0xb61413c495fdad6114a7aa863a00b2e3c28945979a10885b12b30316ea9f072c --rpc
 
 ## The tests
 
-Setup is Room 1's, the `lib/dan` submodule and an archive endpoint (`../beanstalk-2022-04/verdict/README.md`).
+Setup is Room 1's, the `deps/dan` submodule and an archive endpoint (`../beanstalk-2022-04/verdict/README.md`).
 
 ```
 forge test --match-path "exhibits/bybit-2025-02/*" -vv

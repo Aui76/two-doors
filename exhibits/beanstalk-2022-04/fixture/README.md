@@ -45,7 +45,7 @@ What the filing moved is on the plaque, in `../filing/README.md`.
 
 The testnet profile is inherited, not copied. `StandTheFixture` extends the
 hull's own `DeployCell`, so the windows, the stake floors, the spec-challenge fee
-and the PC-88(a) window check are the network's, at the commit `lib/dan` points
+and the PC-88(a) window check are the network's, at the commit `deps/dan` points
 to. Only the deploy and wiring lines are repeated, because `DeployCell.run`
 reads the network's environment and writes the network's deployment record. The
 fixture key takes the deployer's place in every seat.
@@ -89,11 +89,13 @@ after.
 
 ## Before any key touches Base
 
-The hull behind `lib/dan` must be the public export at `0561a4b`, whose contracts
-are the hull at `0f3eaf8` with an MIT licence line on the 8 interfaces:
+The hull behind `deps/dan` must hold the public export's contracts at `0561a4b`,
+which are the hull at `0f3eaf8` with an MIT licence line on the 8 interfaces. The
+submodule is pinned at `5f2012b`, three commits later, and none of the three
+touches these files:
 
 ```bash
-git -C lib/dan diff --quiet 0561a4b -- cell/contracts cell/script/DeployCell.s.sol cell/script/EnvReads.s.sol && echo HULL-AT-0561a4b
+git -C deps/dan diff --quiet 0561a4b -- cell/contracts cell/script/DeployCell.s.sol cell/script/EnvReads.s.sol && echo HULL-AT-0561a4b
 ```
 
 The tests, in memory:
@@ -126,7 +128,8 @@ forge script exhibits/beanstalk-2022-04/fixture/Fixture.s.sol:ReadTheFixture --s
 Each of these is the operator's keystroke (VD-270). The session runs none of them.
 
 1. **The export refresh at `0f3eaf8` is public first** (VD-270(i)). It is: it
-   went public on 26 September 2026 as `0561a4b`, and `lib/dan` is pinned to it.
+   went public on 26 September 2026 as `0561a4b`, and the fixture on Base Sepolia
+   was stood with `lib/dan` pinned to it.
 2. **A fresh key, funded from a faucet for gas only.** It is never the network's
    deployer and never its genesis auditor. The script refuses both.
 3. **The deploy.** This is the same command as the rehearsal, pointed at Base
@@ -167,12 +170,20 @@ Each of these is the operator's keystroke (VD-270). The session runs none of the
    compiles AuditCell from them in 14 seconds. Asked for every contract in the
    same input, it was still running after 25 minutes, and I stopped it. DAN got
    the same answer on 13 September 2026 when it sent CellLogicLib as 2.1 MB, and
-   Basescan passed CellLogicLib from 17 sources. So AuditCell stays unverified on Basescan,
-   and anyone can rerun the proof from this repo:
+   Basescan passed CellLogicLib from 17 sources. So AuditCell stays unverified on Basescan.
 
-   ```bash
-   python exhibits/beanstalk-2022-04/fixture/verify.py --check AuditCell
-   ```
+   I ran that proof on my own machine at `86781e1`, and a clone cannot rerun it.
+   `verify.py` reads the creation code from forge's broadcast log, which git
+   ignores. The tree has moved since as well. `062ba6c` changed the filing
+   script, which sorted ahead of the hull, and AuditCell's body moved with it.
+   Then the hull moved from `lib/` to `deps/`, which changes every contract's
+   metadata.
+
+   The move to `deps/` is for the next stand. With the hull ahead of the
+   museum's own files, AuditCell compiles from its 14 sources, 188 KB and no
+   forge-std, to the same body as the hull built alone. I measured that on
+   28 September 2026 with the stand's settings, against the files the stand
+   was built from.
 5. **The record is committed**: `record/84532.json`, which the stand wrote, and
    `record/84532.admin-acts.json`, which the second command below writes from
    forge's broadcast log. That file lists every call the fixture key made at the

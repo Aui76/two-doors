@@ -2,7 +2,7 @@
 pragma solidity ^0.8.20;
 
 import {Test} from "forge-std/Test.sol";
-import {DeployCell} from "lib/dan/cell/script/DeployCell.s.sol";
+import {DeployCell} from "deps/dan/cell/script/DeployCell.s.sol";
 import {AuditCell} from "dan/AuditCell.sol";
 import {SpecGapModule} from "dan/SpecGapModule.sol";
 import {SpecGapLib} from "dan/SpecGapLib.sol";
