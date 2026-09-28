@@ -48,8 +48,16 @@ from the reference and living in this compiled directory.
 Transcribing `Replay.t.sol` from the reference is the one step that adapts imports —
 provide the `interface.sol` the source expects — but **not the RPC alias**: that is
 already mapped at config level (`foundry.toml` → `mainnet = "${MAINNET_ARCHIVE_RPC_URL}"`),
-so no port edit touches it. Never a line of the attack is adapted, and the room prints
-every number the run produces (VD-224: no number typed by hand).
+so no port edit touches it. Never a line of the attack is adapted; the byte-faithful
+copy is `Beanstalk_exp.orig.sol`, pinned by the sha256 above.
+
+The museum adds a few of its own labelled lines at the top and bottom of `testExploit`,
+each marked `museum:`, around the untouched attack: the fork block and the attacker's
+USDC balance before and after the drain (read off the same account the attack sweeps to,
+so the difference is the profit). The transcript's door-one page keys on those museum
+labels rather than on DeFiHackLabs' ad-hoc ones, which stay as they wrote them. Every
+number the room prints, the museum's lines included, is produced by the run and not typed
+by hand (VD-224), and the room credits DeFiHackLabs by name.
 
 ## What it proves
 

