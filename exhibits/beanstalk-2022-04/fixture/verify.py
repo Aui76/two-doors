@@ -11,12 +11,20 @@ result equals the creation code the stand sent. It tries the target's imports fi
 for each build in out/build-info every source numbered at or before the target, plus
 their imports. The builds are forge's, so run it on the tree that stood the fixture.
 
+The creation code comes from the chain: each stand transaction's hash is in the committed
+record/84532.transactions.json, and the node returns what the transaction carried. So a
+clone can run the proof, not only the machine that stood the fixture. Until that record is
+written, after the filing, the creation code comes from forge's broadcast log, which git
+ignores. When both are here they must agree.
+
     python exhibits/beanstalk-2022-04/fixture/verify.py --check   # the local proof, nothing sent
     python exhibits/beanstalk-2022-04/fixture/verify.py           # the proof, then Basescan
+    python exhibits/beanstalk-2022-04/fixture/verify.py --check --record=<dir>   # a superseded fixture
 
-Run it from the repo root after forge build. The API key comes from $BASESCAN_API_KEY
-(an Etherscan key; the v2 API serves Base Sepolia) and is never printed. Transport is
-curl with the form on stdin, so the key is on no command line.
+Run it from the repo root after forge build. The node is $RPC_URL, or Base Sepolia's public
+one. The API key comes from $BASESCAN_API_KEY (an Etherscan key; the v2 API serves Base
+Sepolia) and is never printed. Transport is curl with the form on stdin, so the key is on
+no command line.
 """
 import json
 import os
@@ -25,12 +33,15 @@ import sys
 import tempfile
 import time
 import urllib.parse
+import urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
 CHAIN_ID = "84532"
 API = "https://api.etherscan.io/v2/api?chainid=" + CHAIN_ID
+RPC = os.environ.get("RPC_URL", "").strip() or "https://sepolia.base.org"
 RECORD = ROOT / "exhibits/beanstalk-2022-04/fixture/record" / (CHAIN_ID + ".json")
+TRANSACTIONS = RECORD.with_name(CHAIN_ID + ".transactions.json")
 BROADCAST = ROOT / "broadcast/Fixture.s.sol" / CHAIN_ID / "stand-latest.json"
 CREATE2_FACTORY = "0x4e59b44847b379578588920ca78fbf26c0b4956c"
 META_MARK = "a264697066735822"
@@ -49,8 +60,19 @@ def read_json(p):
     return json.loads(Path(p).read_text(encoding="utf-8"))
 
 
-def deployments():
-    """Address, initcode without any CREATE2 salt, and the library table, from the stand's broadcast."""
+def rpc(method, params):
+    body = json.dumps({"jsonrpc": "2.0", "id": 1, "method": method, "params": params}).encode()
+    req = urllib.request.Request(RPC, data=body, headers={"content-type": "application/json",
+                                                          "user-agent": "two-doors-verify/1"})
+    with urllib.request.urlopen(req, timeout=60) as r:
+        res = json.loads(r.read().decode("utf-8"))
+    if res.get("result") is None:
+        die("the node gave no answer to %s %s: %s" % (method, params, res.get("error")))
+    return res["result"]
+
+
+def from_broadcast():
+    """Address and initcode without any CREATE2 salt per contract, and the library table."""
     b = read_json(BROADCAST)
     out = {}
     for t in b["transactions"]:
@@ -62,6 +84,55 @@ def deployments():
     for entry in b.get("libraries", []):
         path, name, addr = entry.rsplit(":", 2)
         libs[name] = (path, addr)
+    return out, libs
+
+
+def from_chain():
+    """The same, from the transactions the committed record names, as the node returns them.
+
+    A CREATE must have made the recorded address, by its receipt. A CREATE2 must have gone
+    to the factory; the libraries are the stand's CREATE2s, which is how forge deploys them."""
+    out, libs = {}, {}
+    for t in read_json(TRANSACTIONS)["transactions"]:
+        if t["script"] != "stand" or t["type"] not in ("CREATE", "CREATE2"):
+            continue
+        if t["status"] != 1:
+            die("the record marks %s's creation %s as failed" % (t["contract"], t["tx"]))
+        tx = rpc("eth_getTransactionByHash", [t["tx"]])
+        if tx["from"].lower() != t["from"].lower():
+            die("%s was sent from %s, the record says %s" % (t["tx"], tx["from"], t["from"]))
+        raw = tx["input"].lower().removeprefix("0x")
+        to = (tx.get("to") or "").lower()
+        if t["type"] == "CREATE":
+            made = (rpc("eth_getTransactionReceipt", [t["tx"]]).get("contractAddress") or "").lower()
+            if to or made != t["address"].lower():
+                die("%s did not create %s at %s" % (t["tx"], t["contract"], t["address"]))
+        else:
+            if to != CREATE2_FACTORY:
+                die("%s is a CREATE2 that did not go to the factory" % t["tx"])
+            raw = raw[64:]
+            libs[t["contract"]] = ("", t["address"])
+        out[t["contract"]] = (t["address"], raw)
+    return out, libs
+
+
+def deployments():
+    """Address, initcode without any CREATE2 salt, and the library table: from the chain when the
+    transaction record is committed, from the stand's broadcast log until then."""
+    if TRANSACTIONS.exists():
+        out, libs = from_chain()
+        print("creation code: from %s, by the transaction hashes in %s" % (RPC.split("?")[0], TRANSACTIONS.name))
+        if BROADCAST.exists():
+            logged, _ = from_broadcast()
+            for name, (addr, raw) in out.items():
+                if name not in logged or logged[name][0].lower() != addr.lower() or logged[name][1] != raw:
+                    die("the chain and the broadcast log disagree about %s" % name)
+            print("  and the broadcast log on this machine carries the same %d creations" % len(out))
+    elif BROADCAST.exists():
+        out, libs = from_broadcast()
+        print("creation code: from the broadcast log %s, which git ignores" % BROADCAST.relative_to(ROOT))
+    else:
+        die("neither %s nor a broadcast log is here" % TRANSACTIONS.name)
     record = read_json(RECORD)
     for name, (addr, _) in out.items():
         if name in record and record[name].lower() != addr.lower():
@@ -150,9 +221,11 @@ def prove(name, libs, deployed):
         built = out["contracts"][src][name]["evm"]["bytecode"]["object"].lower()
         body_ok = built[:built.rfind(META_MARK)] == chain_body
         exact = chain.startswith(built)
-        print("  %s: %s, %d sources, %d B built vs %d B sent, body %s, metadata %s, %.0f s"
-              % (name, label, len(sources), len(built) // 2, len(chain) // 2, "same" if body_ok else "DIFFERS",
-                 "same" if exact else "differs", time.time() - t0))
+        # The input's size is printed because Basescan's answer depends on it: it refused
+        # AuditCell's 59 sources at 1.4 MB twice on 27 September 2026.
+        print("  %s: %s, %d sources, %d B input, %d B built vs %d B sent, body %s, metadata %s, %.0f s"
+              % (name, label, len(sources), len(json.dumps(std)), len(built) // 2, len(chain) // 2,
+                 "same" if body_ok else "DIFFERS", "same" if exact else "differs", time.time() - t0))
         tried.append((label, keep))
         if body_ok:
             std["settings"]["outputSelection"] = {src: {name: ["abi", "evm.bytecode.object",
@@ -198,8 +271,18 @@ def submit(p, key):
 
 
 def main(argv):
+    global RECORD, TRANSACTIONS, BROADCAST
     check_only = "--check" in argv
     names = [a for a in argv[1:] if not a.startswith("--")] or ORDER
+    for a in argv[1:]:
+        if a.startswith("--record="):
+            # A superseded fixture's records, moved to record/superseded/<its cell>/. Its creation
+            # code can come only from the chain: the broadcast log here is the latest stand's.
+            d = ROOT / a.split("=", 1)[1]
+            RECORD, TRANSACTIONS = d / (CHAIN_ID + ".json"), d / (CHAIN_ID + ".transactions.json")
+            BROADCAST = d / "no-broadcast-log"
+            if not (RECORD.exists() and TRANSACTIONS.exists()):
+                die("%s holds no %s.json and %s.transactions.json" % (d, CHAIN_ID, CHAIN_ID))
     key = None
     if not check_only:
         key = os.environ.get("BASESCAN_API_KEY", "").strip() or die("set BASESCAN_API_KEY in this shell")

@@ -37,7 +37,8 @@ What the filing moved is on the plaque, in `../filing/README.md`.
   (VD-270(iv)). The script writes `record/84532.json` on the real broadcast.
   Dry runs and anvil rehearsals write files that git ignores.
 - `verify.py` verifies the sixteen contracts on Basescan. It compiles each one
-  here first and submits only what equals the bytes the stand sent.
+  here first and submits only what equals the bytes the stand sent, which it
+  reads from the chain.
 - `transactions.js` writes `record/84532.transactions.json`, every transaction
   the stand and the filing sent, from forge's broadcast logs, which git ignores.
 
@@ -149,8 +150,13 @@ Each of these is the operator's keystroke (VD-270). The session runs none of the
    `forge verify-contract` submits only the target's imports, and Basescan
    refused CellLogicLib. `verify.py` rebuilds each input from the build that
    deployed the fixture, compiles it with the same solc, and submits a contract
-   only when that compile equals the creation code in forge's broadcast log. The
-   key is an Etherscan API key, read from `BASESCAN_API_KEY`:
+   only when that compile equals the creation code the stand sent. It asks the
+   chain for that code, by the transaction hashes in
+   `record/84532.transactions.json`, and checks that each transaction created
+   the address the record names. Until that file is written, after the filing,
+   it reads forge's broadcast log instead. The node is `RPC_URL`, or Base
+   Sepolia's public one. The key is an Etherscan API key, read from
+   `BASESCAN_API_KEY`:
 
    ```bash
    python exhibits/beanstalk-2022-04/fixture/verify.py --check
@@ -172,12 +178,15 @@ Each of these is the operator's keystroke (VD-270). The session runs none of the
    the same answer on 13 September 2026 when it sent CellLogicLib as 2.1 MB, and
    Basescan passed CellLogicLib from 17 sources. So AuditCell stays unverified on Basescan.
 
-   I ran that proof on my own machine at `86781e1`, and a clone cannot rerun it.
-   `verify.py` reads the creation code from forge's broadcast log, which git
-   ignores. The tree has moved since as well. `062ba6c` changed the filing
-   script, which sorted ahead of the hull, and AuditCell's body moved with it.
-   Then the hull moved from `lib/` to `deps/`, which changes every contract's
-   metadata.
+   I ran that proof at `86781e1` from forge's broadcast log, which git ignores,
+   so at first only my machine could run it. Now it reads the chain, and a clone
+   can run it after `forge build`. On 28 September 2026 I ran it that way here,
+   with the broadcast log set aside, and it proved the same 15 bodies; the
+   creation code the node returned equals the broadcast log's, all 16. AuditCell
+   is still not reproduced, and from this tree it cannot be. `062ba6c` changed
+   the filing script, which sorted ahead of the hull, and AuditCell's body moved
+   with it. Then the hull moved from `lib/` to `deps/`, which changes every
+   contract's metadata but none of the other 15 bodies.
 
    The move to `deps/` is for the next stand. With the hull ahead of the
    museum's own files, AuditCell compiles from its 14 sources, 188 KB and no
@@ -205,3 +214,33 @@ node -e "const b=require('./broadcast/Fixture.s.sol/84532/stand-latest.json');co
 ```
 
 The filing and its transaction are door two's, in `../filing/README.md`.
+
+## A second fixture
+
+The fixture's records carry the chain id and nothing else in their names, and
+every writer refuses to overwrite one. A second stand on Base Sepolia keeps the
+first fixture's records under the address of its cell and takes the plain names
+itself. The script already asks for this. It refuses to stand while
+`record/84532.json` names a cell that has code on chain, and a deployed cell
+always has code, so the first record has to move before anything is sent.
+
+1. **The first fixture's records move**, in one commit, before the stand:
+
+   ```bash
+   D=exhibits/beanstalk-2022-04/fixture/record; S=$D/superseded/$(node -p "require('./$D/84532.json').AuditCell.toLowerCase()"); mkdir -p $S && git mv $D/84532.*.json $D/84532.json $S/
+   ```
+
+   Beside them goes a file named `SUPERSEDED.md` that says which fixture
+   replaced this one, from which commit, and why. The commit is the stand's
+   clean tree, so the stand cites a commit that already holds the move.
+2. **The stand, the filing and their records**, as in steps 3 to 5 above and in
+   `../filing/README.md`. Each writes its file under the plain name again.
+3. **The first fixture stays provable.** Its transactions are still on chain,
+   and `verify.py` reads them from the moved record:
+
+   ```bash
+   python exhibits/beanstalk-2022-04/fixture/verify.py --check --record=exhibits/beanstalk-2022-04/fixture/record/superseded/0x2f5005c69c1da917af5c47118bbca9a8f0f1ffb2
+   ```
+
+   With `--record` it reads only the chain, because the broadcast log on the
+   machine is the latest stand's.
