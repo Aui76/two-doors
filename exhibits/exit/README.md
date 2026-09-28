@@ -70,9 +70,9 @@ curl -s https://raw.githubusercontent.com/Aui76/decentralized-audit-network/0561
 ```
 
 This version of the tool has the fix for row 0, the first row any cell files. Before it, the tool said a
-contract had never been audited when its row was row 0. Its own tests read 65 passed, 0 failed in my private
-tree, where the tool is built. The test file isn't in the public repo, because it reads paths that only
-exist there.
+contract had never been audited when its row was row 0. I test the tool against that case in my private
+tree, where it is built. That test file isn't in the public repo, because it reads paths that only exist
+there, so no command in this tree prints its count.
 
 `Exit.t.sol` hashes both files again and fails if one byte has moved. When I changed one character in
 `dan-check.mjs`, it went red. Rooms 1 and 3 run this same copy, so the tool the rooms were read with is the

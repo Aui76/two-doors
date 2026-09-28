@@ -41,9 +41,9 @@ cp .env.example .env
 forge test
 ```
 
-On a fresh clone on 26 September 2026 that read 32 passed, 0 failed. The first compile took 37 minutes on my
-machine. DAN's AuditCell only fits under the contract size limit with `via_ir` and one optimizer run, and that
-is slow to build. After that a run takes seconds.
+On a fresh clone `forge test` reads 33 passed, 0 failed. The first compile is slow, minutes not seconds,
+because DAN's AuditCell only fits under the contract size limit with `via_ir` and one optimizer run. After
+that a run takes seconds. The transcript records the build and test times of its own run.
 
 ## Where DAN is
 
