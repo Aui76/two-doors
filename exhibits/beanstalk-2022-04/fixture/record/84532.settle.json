@@ -1,0 +1,17 @@
+{
+  "what": "Room 2, door two: row 0 settled on the fixture once its window closed, an instance of the DAN hull at 0f3eaf8 on Base Sepolia. Not the network's cell.",
+  "chainId": 84532,
+  "AuditCell": "0x5D76C2127Ea49F1f6cc4b7228608d4ccD9c62016",
+  "auditId": 0,
+  "state": "InBlock",
+  "settledBy": "0xfEE57981D498a5b3882ac464344687A12c8d4cC9",
+  "tx": "0x333b31b26818a8d51a5221050ba8938b4d1a53b8bb9fddfa6234f0d0708d11eb",
+  "block": 47449003,
+  "timestamp": 1790666294,
+  "bountyPaidTo": "0xEdB37f4C862fC94A63Fe826baCefF2fF17016839",
+  "bountyPaidWei": "40000000000000000000",
+  "IssuanceModule": "0x44ee11787BD55cE6d29CCcaD14B84b43865f58bd",
+  "mintedToAuditorWei": "625000000000000000",
+  "mintedToEscrowWei": "644062500000000000",
+  "CellEscrow": "0x4d953DC5d5c773D169fc01b82541763Aa0aD982B"
+}

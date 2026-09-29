@@ -129,8 +129,8 @@ forge script exhibits/beanstalk-2022-04/fixture/Fixture.s.sol:ReadTheFixture --s
 Each of these is the operator's keystroke (VD-270). The session runs none of them.
 
 1. **The export refresh at `0f3eaf8` is public first** (VD-270(i)). It is: it
-   went public on 26 September 2026 as `0561a4b`, and the fixture on Base Sepolia
-   was stood with `lib/dan` pinned to it.
+   went public on 26 September 2026 as `0561a4b`. The first fixture on Base
+   Sepolia was stood with `lib/dan` pinned to it, and the second with `deps/dan`.
 2. **A fresh key, funded from a faucet for gas only.** It is never the network's
    deployer and never its genesis auditor. The script refuses both.
 3. **The deploy.** This is the same command as the rehearsal, pointed at Base
@@ -165,34 +165,34 @@ Each of these is the operator's keystroke (VD-270). The session runs none of the
 
    The first command is the local proof and sends nothing.
 
-   I ran it on 27 September 2026 and Basescan verified 15 of the 16. AuditCell
-   is the one it did not verify. The only input I found that reproduces its
-   deployed code is the 59 sources the stand's build numbered at or before it,
-   with their imports.
-   The museum's own files sort before the hull, and the stand script, the filing
-   script and the two tests among them pull in forge-std, so that input is
-   1.4 MB. I tried smaller sets here and none compiled to the deployed body.
-   Basescan answered "Other Exception" to the 59 sources twice. Here, solc
-   compiles AuditCell from them in 14 seconds. Asked for every contract in the
-   same input, it was still running after 25 minutes, and I stopped it. DAN got
-   the same answer on 13 September 2026 when it sent CellLogicLib as 2.1 MB, and
-   Basescan passed CellLogicLib from 17 sources. So AuditCell stays unverified on Basescan.
+   I ran it on 27 September 2026 for the first fixture, and Basescan verified
+   15 of the 16. AuditCell is the one it did not verify. The museum's own files
+   sorted before the hull, and the stand script, the filing script and the two
+   tests among them pull in forge-std. So the only input I found that
+   reproduced AuditCell's body was the 59 sources the stand's build numbered at
+   or before it, with their imports, 1.4 MB in all. Basescan answered "Other
+   Exception" to it twice. DAN got the same answer on 13 September 2026 when it
+   sent CellLogicLib as 2.1 MB, and Basescan passed CellLogicLib from 17 sources.
 
-   I ran that proof at `86781e1` from forge's broadcast log, which git ignores,
-   so at first only my machine could run it. Now it reads the chain, and a clone
-   can run it after `forge build`. On 28 September 2026 I ran it that way here,
-   with the broadcast log set aside, and it proved the same 15 bodies; the
-   creation code the node returned equals the broadcast log's, all 16. AuditCell
-   is still not reproduced, and from this tree it cannot be. `062ba6c` changed
-   the filing script, which sorted ahead of the hull, and AuditCell's body moved
-   with it. Then the hull moved from `lib/` to `deps/`, which changes every
-   contract's metadata but none of the other 15 bodies.
+   So in `db0c107` I moved the hull from `lib/` to `deps/`, which sorts ahead of
+   the museum's files. On 29 September 2026 I stood a second fixture from
+   `55511e4`. `--check` proved all 16 bodies, AuditCell from 13 sources and
+   180,823 bytes of input, with no forge-std. Basescan verified all 16. It
+   answered "Invalid API Key" to SpecGapModule once, and the same key passed it
+   on the next try, with the contract's name after the command.
 
-   The move to `deps/` is for the next stand. With the hull ahead of the
-   museum's own files, AuditCell compiles from its 14 sources, 188 KB and no
-   forge-std, to the same body as the hull built alone. I measured that on
-   28 September 2026 with the stand's settings, against the files the stand
-   was built from.
+   Three of the 16 reproduce with a different metadata hash: AuditCell,
+   CellLogicLib and SubmitAuditLib. They are the three that link libraries.
+   Forge compiled them with no library addresses and wrote the addresses into
+   the code at deploy. `verify.py` gives the compiler the addresses the stand
+   deployed, the addresses go into the metadata, and the metadata's hash sits
+   at the end of the code. The body before it is the same byte for byte, and
+   Basescan verified all three.
+
+   The first fixture's records are in `record/superseded/`, and its 15 bodies
+   still prove from there, as the last section says. Its AuditCell cannot be
+   reproduced from this tree. `062ba6c` changed the filing script, which sorted
+   ahead of the hull then, and AuditCell's body moved with it.
 5. **The record is committed**: `record/84532.json`, which the stand wrote, and
    `record/84532.admin-acts.json`, which the second command below writes from
    forge's broadcast log. That file lists every call the fixture key made at the

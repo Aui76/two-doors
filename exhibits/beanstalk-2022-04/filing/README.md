@@ -25,43 +25,48 @@ commands under the plaque print them and read the rest back from the chain.
 > Before the filing, its admin, the museum's key, registered the gap's class and
 > flagged door two's evaluator canonical.
 
-The stand. On 27 September 2026 at 19:42:40 UTC, block 47,384,936, the museum's
+The stand. On 29 September 2026 at 06:42:20 UTC, block 47,447,926, the museum's
 key `0x85F9549e4fdCa52fF56742B27b6C037ae5B06966` deployed the fixture's AuditCell
-at `0x2f5005C69C1da917AF5C47118BBCa9a8f0f1Ffb2`, in transaction
-`0x171d5aed…b8d6`. It flagged door two's evaluator canonical at block 47,384,993
-and registered the gap's class at 47,384,994. Basescan verified 15 of the
-fixture's 16 contracts. AuditCell is the one it did not, and
-`../fixture/README.md` says why.
+at `0x5D76C2127Ea49F1f6cc4b7228608d4ccD9c62016`, in transaction
+`0x6a869677…9609`. It flagged door two's evaluator canonical at block 47,447,982
+and registered the gap's class at 47,447,983. Basescan verified all 16 of the
+fixture's contracts. This is the second fixture I stood. Basescan could not
+verify the first one's AuditCell, and `../fixture/README.md` says why and what I
+changed.
 
 The row. The museum's key took the protocol's seat and filed Room 1's row as row
 0, with a bounty of 40 AUDIT. `0xEdB37f4C862fC94A63Fe826baCefF2fF17016839`
-audited it and passed it, and the row's window opened at 19:53:16 UTC for 600
+audited it and passed it, and the row's window opened at 07:07:40 UTC for 600
 seconds.
 
-The gap. At 19:53:22 UTC, block 47,385,257, the discoverer
+The gap. At 07:07:46 UTC, block 47,448,689, the discoverer
 `0xfEE57981D498a5b3882ac464344687A12c8d4cC9`, a second fresh key, filed the gap
-against row 0 in transaction `0x7ac4a1f5…b5ac` and staked 10 AUDIT. The protocol
-had until 19:58:22 to answer and said nothing.
+against row 0 in transaction `0xd5cc45f3…98bf` and staked 10 AUDIT. The protocol
+had until 07:12:46 to answer and said nothing.
 
-The confirm. I sent it from the discoverer's key at 20:00:14 UTC, block
-47,385,463, 112 seconds after the protocol's window closed, in transaction
-`0x36d26fe400734e1c4b1ce2efdf6c1297f5f348519510ea1e7019cf1ea43712b4`. The module
+The confirm. I sent it from the discoverer's key at 07:13:28 UTC, block
+47,448,860, 42 seconds after the protocol's window closed, in transaction
+`0xc57c1c1f8de7a7e7ecf945bf469d64266807e8eaf7c9acfe7eff89ff19840b46`. The module
 sent the 10 AUDIT stake back to the discoverer, and the gap reads Confirmed.
 
 So the discoverer got back what they staked and nothing more. A reward is the
-protocol's to give by adopting the gap, and the protocol never adopted it. The
-row's own window closed at 20:03:16 UTC. Nobody had sent `confirmAudit` for it
-when I read the chain at block 47,389,403, 22:11:34 UTC, so row 0 still read
-AwaitingWindow, the cell still held the 40 AUDIT bounty, and the auditor held
-none. The fixture holds one row, so nothing on it supersedes row 0. The museum's
-key holds 0 AUDIT, and its nonce was 71 at the filing's block and 71 after it.
+protocol's to give by adopting the gap, and the protocol never adopted it.
+
+The row. Its own window closed at 07:17:40 UTC. At 07:18:14, block 47,449,003, I
+sent `confirmAudit` for row 0 from the discoverer's key, in transaction
+`0x333b31b26818a8d51a5221050ba8938b4d1a53b8bb9fddfa6234f0d0708d11eb`. Row 0 now
+reads InBlock. The cell paid the auditor the 40 AUDIT bounty, and in the same
+transaction the issuance module minted 0.625 AUDIT to the auditor and 0.6440625
+to the escrow. The cell holds 0 AUDIT, the auditor 40.625 and the discoverer 10.
+The fixture holds one row, so nothing on it supersedes row 0. The museum's key
+holds 0 AUDIT, and its nonce was 140 at the filing's block and 140 after it.
 
 This prints the gap's status, the row's state, bounty and window, what the cell,
 the auditor, the discoverer and the museum's key hold, the key's nonce, and the
 block and second it read at. State 4 is AwaitingWindow and 6 is InBlock. Times
-are unix seconds and amounts are wei, 18 decimals to the AUDIT. If someone has
-sent `confirmAudit` since I read it, the row and the balances will have moved,
-and this shows where to.
+are unix seconds and amounts are wei, 18 decimals to the AUDIT. Row 0 is settled,
+so the row reads as above for good. The balances are keys' balances, and a key
+can still send its AUDIT on.
 
 ```bash
 forge script exhibits/beanstalk-2022-04/filing/Filing.s.sol:ReadTheFiling --sig "check()" --rpc-url https://sepolia.base.org
@@ -70,11 +75,11 @@ forge script exhibits/beanstalk-2022-04/filing/Filing.s.sol:ReadTheFiling --sig 
 The number of rows on the fixture, and the key's nonce at the filing's block:
 
 ```bash
-cast call 0x2f5005C69C1da917AF5C47118BBCa9a8f0f1Ffb2 "nextAuditId()(uint256)" --rpc-url https://sepolia.base.org
+cast call 0x5D76C2127Ea49F1f6cc4b7228608d4ccD9c62016 "nextAuditId()(uint256)" --rpc-url https://sepolia.base.org
 ```
 
 ```bash
-cast nonce 0x85F9549e4fdCa52fF56742B27b6C037ae5B06966 --block 47385257 --rpc-url https://sepolia.base.org
+cast nonce 0x85F9549e4fdCa52fF56742B27b6C037ae5B06966 --block 47448689 --rpc-url https://sepolia.base.org
 ```
 
 The stand's and the filing's transactions, with their blocks and times, from the
@@ -84,7 +89,9 @@ record:
 node -e "const j=require('./exhibits/beanstalk-2022-04/fixture/record/84532.transactions.json');for(const t of j.transactions)if((t.contract==='AuditCell'&&t.type==='CREATE')||/^(setToolWitnessFlags|registerClass|submitArtifactAudit|provePass|openSpecGap)\(/.test(t.function||''))console.log(t.function||'deploy '+t.contract,t.tx,t.block,new Date(t.timestamp*1000).toISOString())"
 ```
 
-The confirm is in `../fixture/record/84532.confirm.json`.
+The confirm is in `../fixture/record/84532.confirm.json`, and the row's
+settlement in `../fixture/record/84532.settle.json`. The first fixture's records
+are in `../fixture/record/superseded/`.
 
 ## What is in this directory
 
@@ -225,3 +232,13 @@ node exhibits/beanstalk-2022-04/fixture/transactions.js
 ```bash
 cast receipt CONFIRM_TX --json --rpc-url https://sepolia.base.org
 ```
+
+8. **Settle the row** once its own window has closed. `ReadTheFiling` prints
+   that second too. Any key with gas may send it, and the operator sent it from
+   the second key. Then commit `../fixture/record/84532.settle.json`, read from
+   its receipt the same way: the sender, the block and its second, the bounty's
+   transfer to the auditor and the issuance module's mints.
+
+   ```bash
+   cast send AUDIT_CELL "confirmAudit(uint256)" ROW --private-key $SECOND_KEY --rpc-url https://sepolia.base.org
+   ```

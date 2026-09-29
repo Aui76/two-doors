@@ -9,8 +9,8 @@ out = "out"
 # Under via_ir, AuditCell's bytes depend on which sources come before it in the
 # compilation unit: with exhibits/ first, two of its immutables trade memory slots
 # (0x80 and 0xa0) and 23 bytes change. With the hull first, the stand builds the
-# same AuditCell as the hull compiled alone, and Basescan can be given the 14
-# sources up to AuditCell instead of all 59 (PC-138, measured 2026-09-28).
+# same AuditCell as the hull compiled alone. Basescan refused the first fixture's
+# AuditCell as 59 sources and verified the second's from 13 (PC-138, 2026-09-29).
 libs = ["deps"]
 solc = "0.8.20"
 optimizer = true
