@@ -1,0 +1,569 @@
+{
+  "what": "Every call the fixture key made at the stand, from forge broadcast log (VD-273(1))",
+  "acts": [
+    {
+      "contract": "AuditCell",
+      "to": "0x5d76c2127ea49f1f6cc4b7228608d4ccd9c62016",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "setGenesisBootstrap(address,address)",
+      "arguments": [
+        "0x0000000000000000000000000000000000000000",
+        "0xEdB37f4C862fC94A63Fe826baCefF2fF17016839"
+      ],
+      "tx": "0xd42dd948794021370d71ae041b403c915f045c9b4ac2dccf7e1a4aaa5f782f10",
+      "block": 47447927
+    },
+    {
+      "contract": "IssuanceModule",
+      "to": "0x44ee11787bd55ce6d29cccad14b84b43865f58bd",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "wire(address,address,address)",
+      "arguments": [
+        "0x5D76C2127Ea49F1f6cc4b7228608d4ccD9c62016",
+        "0xC694fd2e77465B3133485e402b9a2cc18BFAEB7c",
+        "0x4d953DC5d5c773D169fc01b82541763Aa0aD982B"
+      ],
+      "tx": "0x48e5ec0e6d288e26c72665c7666858f6ff0fe9b0ba94a92a6865f0ee1c632989",
+      "block": 47447938
+    },
+    {
+      "contract": "IssuanceModule",
+      "to": "0x44ee11787bd55ce6d29cccad14b84b43865f58bd",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "setEmaToMintBps(uint256)",
+      "arguments": [
+        "2500"
+      ],
+      "tx": "0x5b005820d2e3845e433504762621247fc3e42a1a0149ab8dee1316262692351b",
+      "block": 47447939
+    },
+    {
+      "contract": "IssuanceModule",
+      "to": "0x44ee11787bd55ce6d29cccad14b84b43865f58bd",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "setMintLpCapBps(uint256)",
+      "arguments": [
+        "500"
+      ],
+      "tx": "0x6b8e698e8b15a09433fa3ae241eac0decefdda0fcb20e1511434b022b3231f7a",
+      "block": 47447940
+    },
+    {
+      "contract": "ClaimDisputeModule",
+      "to": "0x5ab566ed5c5af94cdb71b140b709df09fa7b0392",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "wire(address)",
+      "arguments": [
+        "0x5D76C2127Ea49F1f6cc4b7228608d4ccD9c62016"
+      ],
+      "tx": "0xb952b93977b646875ca6307a6568f47038695a3239f06bda4ec3f7a2e017ea64",
+      "block": 47447941
+    },
+    {
+      "contract": "FmeaRegistry",
+      "to": "0x1aa596748f13346052830dac3807c662d2d3787a",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "wireClaimModule(address)",
+      "arguments": [
+        "0x5aB566Ed5C5af94cdb71B140b709DF09Fa7b0392"
+      ],
+      "tx": "0x6b19a03f1dfac3acbb47599fe1a17ac21bac2cb0c5eb2c9766079b1071705cec",
+      "block": 47447942
+    },
+    {
+      "contract": "ClaimDisputeModule",
+      "to": "0x5ab566ed5c5af94cdb71b140b709df09fa7b0392",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "wireFmeaRegistry(address)",
+      "arguments": [
+        "0x1aA596748f13346052830daC3807C662d2d3787a"
+      ],
+      "tx": "0xfca9c683c469d219561cbc7973c2af781e478607af3d4e1c4e7cce8b096bcacf",
+      "block": 47447943
+    },
+    {
+      "contract": "AssignmentModule",
+      "to": "0xa1b36137ee4039c3844f1830f35040b0a3709e23",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "wire(address)",
+      "arguments": [
+        "0x5D76C2127Ea49F1f6cc4b7228608d4ccD9c62016"
+      ],
+      "tx": "0x08b09aa1424140a12c18644a98116f899f126a7550dfc8868a406abd1a0c217a",
+      "block": 47447944
+    },
+    {
+      "contract": "SpecGapModule",
+      "to": "0xf618111097e302df6db5378122715c2aed9214c6",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "wire(address)",
+      "arguments": [
+        "0x5D76C2127Ea49F1f6cc4b7228608d4ccD9c62016"
+      ],
+      "tx": "0x02354b1deb1112974d2ebf5cad28b7e86c6100fd3bb6b02eabacd15a34835fbb",
+      "block": 47447945
+    },
+    {
+      "contract": "SpecArbiterModule",
+      "to": "0x2aa7e65f56473bec2a96929123b4215db0227565",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "wire(address)",
+      "arguments": [
+        "0x5D76C2127Ea49F1f6cc4b7228608d4ccD9c62016"
+      ],
+      "tx": "0x9caf00565a902bf29d4bc7641edff0f42d52ecac85eec753c8df785c7cd63065",
+      "block": 47447946
+    },
+    {
+      "contract": "IntegrityReviewModule",
+      "to": "0x6fa8da30ea3d2760ef0b10b8fc48c0166aa90743",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "wire(address,address)",
+      "arguments": [
+        "0x5D76C2127Ea49F1f6cc4b7228608d4ccD9c62016",
+        "0x2AA7e65f56473BEc2A96929123b4215DB0227565"
+      ],
+      "tx": "0x5786d134bdda52b8f6de2062a7043e5a4818e44b2767dc065e9749df893341ef",
+      "block": 47447947
+    },
+    {
+      "contract": "StructuralUpgradeModule",
+      "to": "0xf3143c33bf0073165464ed3ffe8e87953e0870e7",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "wire(address,address)",
+      "arguments": [
+        "0x5D76C2127Ea49F1f6cc4b7228608d4ccD9c62016",
+        "0x44ee11787BD55cE6d29CCcaD14B84b43865f58bd"
+      ],
+      "tx": "0xe381050e62805fd761aee4a4f5704438569af0e879d3462bdfe9e09e5e7c867f",
+      "block": 47447948
+    },
+    {
+      "contract": "IssuanceModule",
+      "to": "0x44ee11787bd55ce6d29cccad14b84b43865f58bd",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "setStructuralModule(address)",
+      "arguments": [
+        "0xF3143C33bf0073165464ED3fFe8E87953E0870e7"
+      ],
+      "tx": "0xf9fd8fb733753a5a9b03fe678948e6d68d864d20ab4661933225d6c68a1899a9",
+      "block": 47447949
+    },
+    {
+      "contract": "CellEscrow",
+      "to": "0x4d953dc5d5c773d169fc01b82541763aa0ad982b",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "setFounderReleaseTarget(uint256)",
+      "arguments": [
+        "500"
+      ],
+      "tx": "0x107d4534457cc93a75625791447a0c77b7b9063af3160001927940b1ddcf228d",
+      "block": 47447950
+    },
+    {
+      "contract": "CellEscrow",
+      "to": "0x4d953dc5d5c773d169fc01b82541763aa0ad982b",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "setNetwork(address)",
+      "arguments": [
+        "0x5D76C2127Ea49F1f6cc4b7228608d4ccD9c62016"
+      ],
+      "tx": "0x3fa65cd4e73e536c87a4bd0268399f48090edbf79fe31b2f7ae1fd4fb6ff50c9",
+      "block": 47447951
+    },
+    {
+      "contract": "CellEscrow",
+      "to": "0x4d953dc5d5c773d169fc01b82541763aa0ad982b",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "setIssuanceModule(address)",
+      "arguments": [
+        "0x44ee11787BD55cE6d29CCcaD14B84b43865f58bd"
+      ],
+      "tx": "0xcd13b849134a9f684ae32ba465ea8c5e0d2d7557f9abe5611f4917f8337cf988",
+      "block": 47447952
+    },
+    {
+      "contract": "CellEscrow",
+      "to": "0x4d953dc5d5c773d169fc01b82541763aa0ad982b",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "setStructuralUpgradeModule(address)",
+      "arguments": [
+        "0xF3143C33bf0073165464ED3fFe8E87953E0870e7"
+      ],
+      "tx": "0x749d9e58a82a436f46f68d53192c1c75f27726a156814bad24bfb8a97dcf6a2d",
+      "block": 47447953
+    },
+    {
+      "contract": "CellEscrow",
+      "to": "0x4d953dc5d5c773d169fc01b82541763aa0ad982b",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "setIntegrityReviewModule(address)",
+      "arguments": [
+        "0x6FA8Da30EA3D2760ef0B10B8FC48c0166Aa90743"
+      ],
+      "tx": "0x90b19cf6c065d702e4049f9c196f2ba28b5ad95414220f116b7d5ca72711802a",
+      "block": 47447954
+    },
+    {
+      "contract": "AuditCell",
+      "to": "0x5d76c2127ea49f1f6cc4b7228608d4ccd9c62016",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "setTreasuryEscrow(address)",
+      "arguments": [
+        "0x4d953DC5d5c773D169fc01b82541763Aa0aD982B"
+      ],
+      "tx": "0xf48a8483c295ad132c3a7c22d9acf9814c6af8eadd60b7a657f2d8bfe282ee40",
+      "block": 47447955
+    },
+    {
+      "contract": "AuditCell",
+      "to": "0x5d76c2127ea49f1f6cc4b7228608d4ccd9c62016",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "setIssuanceModule(address)",
+      "arguments": [
+        "0x44ee11787BD55cE6d29CCcaD14B84b43865f58bd"
+      ],
+      "tx": "0x37d027af4d497a8a34f08bc61246761f5972aca5597252d16fe5be723b851eef",
+      "block": 47447956
+    },
+    {
+      "contract": "AuditCell",
+      "to": "0x5d76c2127ea49f1f6cc4b7228608d4ccd9c62016",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "setDisputeModule(uint8,address)",
+      "arguments": [
+        "0",
+        "0x5aB566Ed5C5af94cdb71B140b709DF09Fa7b0392"
+      ],
+      "tx": "0xa1d8abe42048b8b36e7eebd5194cb7704ced2e90c73f8d7dd066f9dbbf5f2867",
+      "block": 47447957
+    },
+    {
+      "contract": "AuditCell",
+      "to": "0x5d76c2127ea49f1f6cc4b7228608d4ccd9c62016",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "setDisputeModule(uint8,address)",
+      "arguments": [
+        "1",
+        "0xf618111097e302dF6Db5378122715c2Aed9214C6"
+      ],
+      "tx": "0xdbebb1f32c3aa30e33c8e3de88dcc5b18df349e107f57849f912687d1b8c8be7",
+      "block": 47447958
+    },
+    {
+      "contract": "AuditCell",
+      "to": "0x5d76c2127ea49f1f6cc4b7228608d4ccd9c62016",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "setDisputeModule(uint8,address)",
+      "arguments": [
+        "2",
+        "0x2AA7e65f56473BEc2A96929123b4215DB0227565"
+      ],
+      "tx": "0xae621493855119083cb660704a566374d1fbc606716ff5b020f325e7c2a4bdd5",
+      "block": 47447959
+    },
+    {
+      "contract": "AuditCell",
+      "to": "0x5d76c2127ea49f1f6cc4b7228608d4ccd9c62016",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "setDisputeModule(uint8,address)",
+      "arguments": [
+        "3",
+        "0x6FA8Da30EA3D2760ef0B10B8FC48c0166Aa90743"
+      ],
+      "tx": "0x24e285007b300d8e2b53ea5061f934c3c4496f045a5316f6a2d4faafb6cfe427",
+      "block": 47447960
+    },
+    {
+      "contract": "AuditCell",
+      "to": "0x5d76c2127ea49f1f6cc4b7228608d4ccd9c62016",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "setDisputeModule(uint8,address)",
+      "arguments": [
+        "4",
+        "0xF3143C33bf0073165464ED3fFe8E87953E0870e7"
+      ],
+      "tx": "0xe1d9694b2b16dbf67038345aab50578855e1f0dac1d0b8b4c7657a14cbf5f910",
+      "block": 47447961
+    },
+    {
+      "contract": "AuditCell",
+      "to": "0x5d76c2127ea49f1f6cc4b7228608d4ccd9c62016",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "setAssignmentModule(address)",
+      "arguments": [
+        "0xA1b36137ee4039C3844f1830f35040B0a3709E23"
+      ],
+      "tx": "0x5c2c79ee593d9dd04b5c30ea8f16bd8f55d9eec9ccb9c20365ca2509e650e256",
+      "block": 47447962
+    },
+    {
+      "contract": "AuditCell",
+      "to": "0x5d76c2127ea49f1f6cc4b7228608d4ccd9c62016",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "setEntropyProvider(address)",
+      "arguments": [
+        "0xF931753eCCA3beAEca3dFa05609208DF7e394f9b"
+      ],
+      "tx": "0xf0ece08e09a97f471bddc303d22b496317538bc7dc911d2bfba114e3bda3c16d",
+      "block": 47447963
+    },
+    {
+      "contract": "AuditCell",
+      "to": "0x5d76c2127ea49f1f6cc4b7228608d4ccd9c62016",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "setParam(uint8,uint256)",
+      "arguments": [
+        "9",
+        "300"
+      ],
+      "tx": "0x9fb06e6174e3f8b3098e496cb87e5864c80705521203db289af367e5621b0474",
+      "block": 47447964
+    },
+    {
+      "contract": "AuditCell",
+      "to": "0x5d76c2127ea49f1f6cc4b7228608d4ccd9c62016",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "setParam(uint8,uint256)",
+      "arguments": [
+        "10",
+        "300"
+      ],
+      "tx": "0x8682ddc2c2d1b02933e18a31e9d5275c8c7a92e34e3fe37ec3d85cc598cd2722",
+      "block": 47447965
+    },
+    {
+      "contract": "AuditCell",
+      "to": "0x5d76c2127ea49f1f6cc4b7228608d4ccd9c62016",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "setParam(uint8,uint256)",
+      "arguments": [
+        "11",
+        "600"
+      ],
+      "tx": "0x2d8e64a4bb0fe5dc4f38b63dad10388da3f86ad4d39ac07015fc078d4a1e822d",
+      "block": 47447966
+    },
+    {
+      "contract": "AuditCell",
+      "to": "0x5d76c2127ea49f1f6cc4b7228608d4ccd9c62016",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "setParam(uint8,uint256)",
+      "arguments": [
+        "8",
+        "600"
+      ],
+      "tx": "0xe9787d186356ad5d1dbda5b2f4eb139b081008ac1ae20bdef8223b7565efdd75",
+      "block": 47447967
+    },
+    {
+      "contract": "AuditCell",
+      "to": "0x5d76c2127ea49f1f6cc4b7228608d4ccd9c62016",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "setParam(uint8,uint256)",
+      "arguments": [
+        "0",
+        "1800"
+      ],
+      "tx": "0x730812159c34e0f11b80981d203d6c5e876da9fd5e75d3d6d59863e338f1258f",
+      "block": 47447968
+    },
+    {
+      "contract": "ClaimDisputeModule",
+      "to": "0x5ab566ed5c5af94cdb71b140b709df09fa7b0392",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "setProtocolClaimDecisionWindow(uint256)",
+      "arguments": [
+        "120"
+      ],
+      "tx": "0x5b975a04fc664c344ef56d6681b66b39450e2cbd0827a3464d44fcca91909fb6",
+      "block": 47447969
+    },
+    {
+      "contract": "AuditCell",
+      "to": "0x5d76c2127ea49f1f6cc4b7228608d4ccd9c62016",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "setParam(uint8,uint256)",
+      "arguments": [
+        "1",
+        "10000000000000000000"
+      ],
+      "tx": "0x4411fe7d49f1ed253039d934fa75ce966142683c3280ec2d109f2f680145c990",
+      "block": 47447970
+    },
+    {
+      "contract": "SpecArbiterModule",
+      "to": "0x2aa7e65f56473bec2a96929123b4215db0227565",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "setSpecChallengeStake(uint256)",
+      "arguments": [
+        "10000000000000000000"
+      ],
+      "tx": "0xbddcee64be1254432238ffebd1235b1afa1b0e544e0d1cac7eea3228dbd05c81",
+      "block": 47447971
+    },
+    {
+      "contract": "IntegrityReviewModule",
+      "to": "0x6fa8da30ea3d2760ef0b10b8fc48c0166aa90743",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "setIntegrityFilingStake(uint256)",
+      "arguments": [
+        "10000000000000000000"
+      ],
+      "tx": "0x28e5ca84e1f2dd9223f79fb718afd9506607f8930a1edc3ee51b42597527a7c9",
+      "block": 47447972
+    },
+    {
+      "contract": "IntegrityReviewModule",
+      "to": "0x6fa8da30ea3d2760ef0b10b8fc48c0166aa90743",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "setIntegrityContestStake(uint256)",
+      "arguments": [
+        "10000000000000000000"
+      ],
+      "tx": "0x598595da08577ca6df2e85bac4a567b63f9444f655d70f5d8e6637654c95439f",
+      "block": 47447973
+    },
+    {
+      "contract": "StructuralUpgradeModule",
+      "to": "0xf3143c33bf0073165464ed3ffe8e87953e0870e7",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "setGapFilingStake(uint256)",
+      "arguments": [
+        "10000000000000000000"
+      ],
+      "tx": "0x8a374e7edc760df4b207e6ebbd3d0e420cb1495c394ab5d0efeb17a5aa98dfe4",
+      "block": 47447974
+    },
+    {
+      "contract": "SpecArbiterModule",
+      "to": "0x2aa7e65f56473bec2a96929123b4215db0227565",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "setSpecChallengeFee(uint256)",
+      "arguments": [
+        "1000000000000000000"
+      ],
+      "tx": "0x8cce40b23c48c1613d9f11487663060576e43acf95ea7715d967f02fe1db6475",
+      "block": 47447975
+    },
+    {
+      "contract": "AuditCell",
+      "to": "0x5d76c2127ea49f1f6cc4b7228608d4ccd9c62016",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "registerTool(bytes32,bool)",
+      "arguments": [
+        "0x6b158852c2edaa3e62fa63340ffca6c6eb5836485795e937ae647fdb35c9561b",
+        "true"
+      ],
+      "tx": "0x24cfc0016b21d274a1d5e10820a9949b8fb9605dfe66059a8391bfebc901e3b1",
+      "block": 47447976
+    },
+    {
+      "contract": "AuditCell",
+      "to": "0x5d76c2127ea49f1f6cc4b7228608d4ccd9c62016",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "registerTool(bytes32,bool)",
+      "arguments": [
+        "0xd37d9e7f39cd9e205ea7391a04306da31663ac06cc0593e53e332c0ffd813ed3",
+        "false"
+      ],
+      "tx": "0x9d757bd17f96d279207e676501b3a5b062317335c20a60c37c31cdf6d30775fa",
+      "block": 47447977
+    },
+    {
+      "contract": "AuditCell",
+      "to": "0x5d76c2127ea49f1f6cc4b7228608d4ccd9c62016",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "registerTool(bytes32,bool)",
+      "arguments": [
+        "0x5e760c27d08e287a039371351c80735e68c7181afd7ab375d6352281ce5c8c5a",
+        "true"
+      ],
+      "tx": "0x7b3acda3745ecfcfa5f9b7f5e33383b56d178afb1062c5a5b8385aeb4365f5cf",
+      "block": 47447978
+    },
+    {
+      "contract": "AuditCell",
+      "to": "0x5d76c2127ea49f1f6cc4b7228608d4ccd9c62016",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "registerTool(bytes32,bool)",
+      "arguments": [
+        "0xf012303c32aef1925aadda38a50f66f9ff012276418cc437733da708f258e0a9",
+        "false"
+      ],
+      "tx": "0x5ada51466ec72890a565a404f5351957b0e2e48b06a397bcd790c0c9869df72c",
+      "block": 47447979
+    },
+    {
+      "contract": "AuditCell",
+      "to": "0x5d76c2127ea49f1f6cc4b7228608d4ccd9c62016",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "registerTool(bytes32,bool)",
+      "arguments": [
+        "0x3a05af87d6078f203b5cb12dfa6a1b76fe4c3567ce1026302e580a4bd50dbb92",
+        "false"
+      ],
+      "tx": "0x48aa923c181e2a6600fa3f6e331c8d783f7858d567d9e4234b1e10b271884972",
+      "block": 47447980
+    },
+    {
+      "contract": "AuditCell",
+      "to": "0x5d76c2127ea49f1f6cc4b7228608d4ccd9c62016",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "registerTool(bytes32,bool)",
+      "arguments": [
+        "0xac6b12f92c30ef9b42ba27fa763e9753304bc08051b4fe21a9cbe1e7e9faec71",
+        "false"
+      ],
+      "tx": "0xb177101ef03348cd4e17596377df3f2ac9b50e218ff54ee54ed2fd354f949060",
+      "block": 47447981
+    },
+    {
+      "contract": "AuditCell",
+      "to": "0x5d76c2127ea49f1f6cc4b7228608d4ccd9c62016",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "setToolWitnessFlags(bytes32,bool,bool)",
+      "arguments": [
+        "0xac6b12f92c30ef9b42ba27fa763e9753304bc08051b4fe21a9cbe1e7e9faec71",
+        "true",
+        "true"
+      ],
+      "tx": "0x41feea4c67c434d146dcf5ecece2184f095c6b369df88fa54b26a1b155df118a",
+      "block": 47447982
+    },
+    {
+      "contract": "SpecGapModule",
+      "to": "0xf618111097e302df6db5378122715c2aed9214c6",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "registerClass(bytes32)",
+      "arguments": [
+        "0xf265280a77ba6123996963ca5c8304643796f2443d1c448144d3f41c86c139b3"
+      ],
+      "tx": "0xa9a1369776840665add96864471cfe525621e713c5976a0abbdc2c5fc22ada73",
+      "block": 47447983
+    },
+    {
+      "contract": "CellToken",
+      "to": "0xc694fd2e77465b3133485e402b9a2cc18bfaeb7c",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "genesisMint(address,uint256)",
+      "arguments": [
+        "0x85F9549e4fdCa52fF56742B27b6C037ae5B06966",
+        "50000000000000000000"
+      ],
+      "tx": "0x7a1d27eec9cdc051c39a67d81dae9ff359e656661326e6302f781c1c80e2a85f",
+      "block": 47447984
+    },
+    {
+      "contract": "CellToken",
+      "to": "0xc694fd2e77465b3133485e402b9a2cc18bfaeb7c",
+      "from": "0x85f9549e4fdca52ff56742b27b6c037ae5b06966",
+      "function": "setMinter(address)",
+      "arguments": [
+        "0x44ee11787BD55cE6d29CCcaD14B84b43865f58bd"
+      ],
+      "tx": "0x3318a5675aa46c7581f67541a366177d0974c6057201eb522f3ac8e189773e0c",
+      "block": 47447985
+    }
+  ]
+}
