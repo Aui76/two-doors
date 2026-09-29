@@ -463,20 +463,20 @@ Room 2, door two: a spec gap on the fixture - not the network's cell
 ```text
 Room 2 fixture: an instance of the DAN hull at 0f3eaf8, deployed on Base Sepolia by the museum for one filing. Not the network's cell.
 
-AssignmentModule          0xe470890315f59f9aD5dEFc0BEaA65c8fb3D2B1a6
-AuditCell                 0x2f5005C69C1da917AF5C47118BBCa9a8f0f1Ffb2
-BlockhashEntropy          0xe0B7bb2d1A74F52193A4c81c093172e60e0b52ab
-CellEscrow                0x2D2cb5C9E37B9A047291703e829259009a3339a6
-CellToken                 0x9C667B21C072D2Cf816fF458D6698be8D21f6A33
-ClaimDisputeModule        0x9Ec29eC41137d0aCc1Af4f9269D74C844f6eBFC7
-FmeaRegistry              0x13be4c808b3e36047cF99B925E24E82F2479a1dB
-IntegrityReviewModule     0xa1E2E7Afbc28DE286B2cD91bbE5B9B1b0CC8A5d4
-IssuanceModule            0x45Fc8848c7Fe1cC0D227Ac52D5e19Ed5c742660f
-SpecArbiterModule         0x12fb0d9415C9a35A41d7E47Af8953C1d5d751E3D
-SpecGapModule             0xd17E1b67F438532036F279b08b34DEb264338a9C
-StructuralUpgradeModule   0x2D068330484DF8269218f804Fdad6d04BfE041E0
+AssignmentModule          0xA1b36137ee4039C3844f1830f35040B0a3709E23
+AuditCell                 0x5D76C2127Ea49F1f6cc4b7228608d4ccD9c62016
+BlockhashEntropy          0xF931753eCCA3beAEca3dFa05609208DF7e394f9b
+CellEscrow                0x4d953DC5d5c773D169fc01b82541763Aa0aD982B
+CellToken                 0xC694fd2e77465B3133485e402b9a2cc18BFAEB7c
+ClaimDisputeModule        0x5aB566Ed5C5af94cdb71B140b709DF09Fa7b0392
+FmeaRegistry              0x1aA596748f13346052830daC3807C662d2d3787a
+IntegrityReviewModule     0x6FA8Da30EA3D2760ef0B10B8FC48c0166Aa90743
+IssuanceModule            0x44ee11787BD55cE6d29CCcaD14B84b43865f58bd
+SpecArbiterModule         0x2AA7e65f56473BEc2A96929123b4215DB0227565
+SpecGapModule             0xf618111097e302dF6Db5378122715c2Aed9214C6
+StructuralUpgradeModule   0xF3143C33bf0073165464ED3fFe8E87953E0870e7
 auditCellRuntimeBytes     20909
-auditCellRuntimeCodehash  0x03096cea080c40581f861a2172a23c2bed32a183e9a131d63cf18e214faa69d1
+auditCellRuntimeCodehash  0x268d9d15a3544c2b58db188784dbce9514de6a9add99e44b903f3973f4f2dfed
 chainId                   84532
 fixtureKey                0x85F9549e4fdCa52fF56742B27b6C037ae5B06966
 gapClassId                0xf265280a77ba6123996963ca5c8304643796f2443d1c448144d3f41c86c139b3
@@ -488,7 +488,7 @@ gapWords                  exhibits/beanstalk-2022-04/filing/gap.json
 genesisAuditor            0xEdB37f4C862fC94A63Fe826baCefF2fF17016839
 genesisMint               50000000000000000000
 hull                      0f3eaf8
-standCommit               a3d577a0294da949038c96ffe89949157a50e47b
+standCommit               55511e4dff671a7e3f81be683d2a6c1d99458b0b
 ```
 
 `exhibits/beanstalk-2022-04/fixture/record/84532.filing.json`, which the filing wrote:
@@ -496,8 +496,8 @@ standCommit               a3d577a0294da949038c96ffe89949157a50e47b
 ```text
 Room 2, door two: a spec gap filed on the fixture, an instance of the DAN hull at 0f3eaf8 on Base Sepolia. Not the network's cell.
 
-AuditCell           0x2f5005C69C1da917AF5C47118BBCa9a8f0f1Ffb2
-SpecGapModule       0xd17E1b67F438532036F279b08b34DEb264338a9C
+AuditCell           0x5D76C2127Ea49F1f6cc4b7228608d4ccD9c62016
+SpecGapModule       0xf618111097e302dF6Db5378122715c2Aed9214C6
 artifactHash        0x2ff59388cd5e1842a3d057338010945a779a6c7d57abfb5e9ddc697838700870
 auditId             0
 auditor             0xEdB37f4C862fC94A63Fe826baCefF2fF17016839
@@ -525,14 +525,14 @@ witnessCommitment   0x67ac345b341006be892721e935bfc71542d27e8ca67dabe79a150ca907
 Room 2, door two: silence confirmed the spec gap on the fixture, an instance of the DAN hull at 0f3eaf8 on Base Sepolia. Not the network's cell.
 
 chainId           84532
-SpecGapModule     0xd17E1b67F438532036F279b08b34DEb264338a9C
+SpecGapModule     0xf618111097e302dF6Db5378122715c2Aed9214C6
 auditId           0
 classId           0xf265280a77ba6123996963ca5c8304643796f2443d1c448144d3f41c86c139b3
 status            Confirmed
 confirmedBy       0xfEE57981D498a5b3882ac464344687A12c8d4cC9
-tx                0x36d26fe400734e1c4b1ce2efdf6c1297f5f348519510ea1e7019cf1ea43712b4
-block             47385463
-timestamp         1790539214
+tx                0xc57c1c1f8de7a7e7ecf945bf469d64266807e8eaf7c9acfe7eff89ff19840b46
+block             47448860
+timestamp         1790666008
 stakeReturnedTo   0xfEE57981D498a5b3882ac464344687A12c8d4cC9
 stakeReturnedWei  10000000000000000000
 ```
@@ -541,81 +541,81 @@ stakeReturnedWei  10000000000000000000
 
 | # | script | type | contract | function | block | tx |
 |---|---|---|---|---|---|---|
-| 0 | stand | CREATE2 | DiscovererPayoutLib |  | 47384931 | [0x7390e803…](https://sepolia.basescan.org/tx/0x7390e8035e01c85080a6407da498af3ed62c1a7caada877718b78b633faf2e05) |
-| 1 | stand | CREATE2 | ToolUseLib |  | 47384932 | [0xec70a3c6…](https://sepolia.basescan.org/tx/0xec70a3c61e144dbec037de3d271eb7f5d4b8fed5e580a5df4ff212ce22c2420c) |
-| 2 | stand | CREATE2 | CellLogicLib |  | 47384933 | [0xd1c1ae23…](https://sepolia.basescan.org/tx/0xd1c1ae23e084f16db35b8ffa8db4a8a674370c446b3818e974998c9772f2c077) |
-| 3 | stand | CREATE2 | SubmitAuditLib |  | 47384934 | [0x293a72b9…](https://sepolia.basescan.org/tx/0x293a72b9f688ef6dc587aae5fc3d470ee26f6a2bfd38c2f81b4ea48b4b29788e) |
-| 4 | stand | CREATE | CellToken |  | 47384935 | [0xdba56627…](https://sepolia.basescan.org/tx/0xdba566273c48640e82fae61c4ad576b83faa3272d8cfcd0c4926040fbb2b696f) |
-| 5 | stand | CREATE | AuditCell |  | 47384936 | [0x171d5aed…](https://sepolia.basescan.org/tx/0x171d5aedf40ce2d0606e8ae857051bf249ae1627d3ccda52f32489b09b55b8d6) |
-| 6 | stand | CALL | AuditCell | setGenesisBootstrap | 47384937 | [0xd1b6241f…](https://sepolia.basescan.org/tx/0xd1b6241f5133cf2c7dcc7dd62290cd4abafbfa8081e56972c9dcc881abe7a4ce) |
-| 7 | stand | CREATE | CellEscrow |  | 47384938 | [0xf86f45f5…](https://sepolia.basescan.org/tx/0xf86f45f56f3f0830bdc0ce4e1dc075958231c933410f6f3125ab4e2726567135) |
-| 8 | stand | CREATE | IssuanceModule |  | 47384939 | [0xebb81a0a…](https://sepolia.basescan.org/tx/0xebb81a0ab66613f592a4d34d30bdece3b53106778f89d440b10b50d3bbe9b611) |
-| 9 | stand | CREATE | ClaimDisputeModule |  | 47384940 | [0x84ee0152…](https://sepolia.basescan.org/tx/0x84ee01529777a2444c21974e9a867ae546b78e82268a28faf11bcdf16e0ee061) |
-| 10 | stand | CREATE | SpecGapModule |  | 47384941 | [0x699972c8…](https://sepolia.basescan.org/tx/0x699972c8a53c9dddae9d187db09c4b999f6f9a1b8da2ea4ab4d04697e7920de1) |
-| 11 | stand | CREATE | SpecArbiterModule |  | 47384942 | [0x7d6142bf…](https://sepolia.basescan.org/tx/0x7d6142bf0ecf4f61d0b084771d7f17d2490dee648a85cc609a07444aa4c8f3c1) |
-| 12 | stand | CREATE | IntegrityReviewModule |  | 47384943 | [0xb9a1aac9…](https://sepolia.basescan.org/tx/0xb9a1aac95853c78316086f40675bb4e57f59803597db59522ceb8b5051ba1c75) |
-| 13 | stand | CREATE | StructuralUpgradeModule |  | 47384944 | [0x5f08026d…](https://sepolia.basescan.org/tx/0x5f08026d4ccd64cac088b932ec38af6690ebfafaa7963ee064d630b8020e9c8d) |
-| 14 | stand | CREATE | FmeaRegistry |  | 47384945 | [0x4d0187b0…](https://sepolia.basescan.org/tx/0x4d0187b08a276f61be11b7e7cb8a4646dc61f4d3ff55402a30f6c5dd96df4460) |
-| 15 | stand | CREATE | AssignmentModule |  | 47384946 | [0xf1b4687a…](https://sepolia.basescan.org/tx/0xf1b4687a672122ad7d7a626b4e63e660c642d68ee5e29cb8e1e81435c3c918ef) |
-| 16 | stand | CREATE | BlockhashEntropy |  | 47384947 | [0x5e13edbd…](https://sepolia.basescan.org/tx/0x5e13edbdd9d128374f0e962902d3370af0b345c81ae443e2a8093f07d92d1783) |
-| 17 | stand | CALL | IssuanceModule | wire | 47384948 | [0xe35341c3…](https://sepolia.basescan.org/tx/0xe35341c37b16774503b253947560505d532e8400d3a16392f024104908ce7537) |
-| 18 | stand | CALL | IssuanceModule | setEmaToMintBps | 47384949 | [0x4fc185c7…](https://sepolia.basescan.org/tx/0x4fc185c73b853ac02c4b60b99edab0c4719f6ea460551f3aa55ba1d9c4e60b56) |
-| 19 | stand | CALL | IssuanceModule | setMintLpCapBps | 47384950 | [0x27ad689f…](https://sepolia.basescan.org/tx/0x27ad689fa5a176f0dd533809ca5bb9128cb63b4ffdf2c2e2600a864c3bbbfcd0) |
-| 20 | stand | CALL | ClaimDisputeModule | wire | 47384951 | [0x1c329f5a…](https://sepolia.basescan.org/tx/0x1c329f5a2c46ababe899323a18e1c97e64083687ba221eda79cf336c3d9860a2) |
-| 21 | stand | CALL | FmeaRegistry | wireClaimModule | 47384952 | [0x9e1090ce…](https://sepolia.basescan.org/tx/0x9e1090ce509e598d417b578308802634c395f775259e9077433d6dcdfcfa2fdc) |
-| 22 | stand | CALL | ClaimDisputeModule | wireFmeaRegistry | 47384953 | [0x641e0f6c…](https://sepolia.basescan.org/tx/0x641e0f6c67b92b6b424f9373004bab780051db944e3ae8ee8745974c58d7d0f2) |
-| 23 | stand | CALL | AssignmentModule | wire | 47384954 | [0xe885a73a…](https://sepolia.basescan.org/tx/0xe885a73a0fc4c1ab57643f94cab16368915f7ac262ccec53813553a54a6ad2e0) |
-| 24 | stand | CALL | SpecGapModule | wire | 47384955 | [0xd1b57156…](https://sepolia.basescan.org/tx/0xd1b57156f4a923240db782d2c59274fcac389abad9cf83fc81df6aa04403c308) |
-| 25 | stand | CALL | SpecArbiterModule | wire | 47384956 | [0x570df77b…](https://sepolia.basescan.org/tx/0x570df77b105a598ecb9eaa1d0e04b26af8e53c44404878d7a543d7b6493cc74b) |
-| 26 | stand | CALL | IntegrityReviewModule | wire | 47384957 | [0xb0a49596…](https://sepolia.basescan.org/tx/0xb0a49596fb45b9339f5122f10a32d9fc36066368db4e3c4b4be2ac89bd4cede1) |
-| 27 | stand | CALL | StructuralUpgradeModule | wire | 47384958 | [0x4d75314d…](https://sepolia.basescan.org/tx/0x4d75314d1df7719f9a5ccbc947860b2c3d6265b424e8764a15651c357412ef11) |
-| 28 | stand | CALL | IssuanceModule | setStructuralModule | 47384959 | [0xf3cfdc06…](https://sepolia.basescan.org/tx/0xf3cfdc063ffd3a77cdf3de566170f07134099e6bdb6558b63ef3534526e75a01) |
-| 29 | stand | CALL | CellEscrow | setFounderReleaseTarget | 47384960 | [0x4773cac1…](https://sepolia.basescan.org/tx/0x4773cac1b17c8c03331c100373e1056d25c16e5caa602d9558eeaba7d9c0433c) |
-| 30 | stand | CALL | CellEscrow | setNetwork | 47384961 | [0x3a8ebb64…](https://sepolia.basescan.org/tx/0x3a8ebb64be4ef0ed99627ffd1816a4066fa9d02d79bc8b8136a3178633348d90) |
-| 31 | stand | CALL | CellEscrow | setIssuanceModule | 47384962 | [0x9b3169ee…](https://sepolia.basescan.org/tx/0x9b3169ee5fe43e1c1c6bc70a4b5b78700c8beff42d245680fee419b8183608ed) |
-| 32 | stand | CALL | CellEscrow | setStructuralUpgradeModule | 47384963 | [0xf795faa0…](https://sepolia.basescan.org/tx/0xf795faa058dc4453a124241a0989232d2d57863cb39c6ae9592e13fe48c40dfa) |
-| 33 | stand | CALL | CellEscrow | setIntegrityReviewModule | 47384964 | [0xeba6a3f6…](https://sepolia.basescan.org/tx/0xeba6a3f694fd238ab1de7438e19e69ca85b2e52ea4f1f4b21c0375c394c1aea1) |
-| 34 | stand | CALL | AuditCell | setTreasuryEscrow | 47384965 | [0x2bf2c2a7…](https://sepolia.basescan.org/tx/0x2bf2c2a7a916b0e549982a78318c5af27e28b881b90c15a2ebb07e01b572cad3) |
-| 35 | stand | CALL | AuditCell | setIssuanceModule | 47384966 | [0x3d7b3f59…](https://sepolia.basescan.org/tx/0x3d7b3f593744009b417a3b0e1d55f8262f5c5397dc687d3455a0a636ff3b1dd4) |
-| 36 | stand | CALL | AuditCell | setDisputeModule | 47384967 | [0x99c478ec…](https://sepolia.basescan.org/tx/0x99c478ecc6dcb844a09addde372d6d89692945de874b89f60f1cabc8c3ff4234) |
-| 37 | stand | CALL | AuditCell | setDisputeModule | 47384969 | [0x468cdb2f…](https://sepolia.basescan.org/tx/0x468cdb2fdf594874d508caa6fee7298f8b9aa95064539bf8db39d88f14de137f) |
-| 38 | stand | CALL | AuditCell | setDisputeModule | 47384970 | [0x11243a49…](https://sepolia.basescan.org/tx/0x11243a49a8d2fde0276724428356ffebf90447422871dbcb8a8cb0dfb8e6f9f3) |
-| 39 | stand | CALL | AuditCell | setDisputeModule | 47384971 | [0x1a927fa6…](https://sepolia.basescan.org/tx/0x1a927fa6e095bd7c82aab7b7205e4dd662e76b51c338734c5b7d048177503217) |
-| 40 | stand | CALL | AuditCell | setDisputeModule | 47384972 | [0x3b33ccf2…](https://sepolia.basescan.org/tx/0x3b33ccf21a5e9e0ebe8b9f7d7409ca72765902d07942c76ff795290577304558) |
-| 41 | stand | CALL | AuditCell | setAssignmentModule | 47384973 | [0x1aed6f46…](https://sepolia.basescan.org/tx/0x1aed6f46a6318a18276dae6e7ce759cead8a70ce373e4e3c03967618b4521bd7) |
-| 42 | stand | CALL | AuditCell | setEntropyProvider | 47384974 | [0x3063d9c4…](https://sepolia.basescan.org/tx/0x3063d9c428c859b078910c1acaae9e5af182815514f1e4cef50f24823151c1ec) |
-| 43 | stand | CALL | AuditCell | setParam | 47384975 | [0x3d387871…](https://sepolia.basescan.org/tx/0x3d3878715644a96fdf20e628a059f3200a3854abd026e61716766410ad59c06e) |
-| 44 | stand | CALL | AuditCell | setParam | 47384976 | [0x50bf9fc1…](https://sepolia.basescan.org/tx/0x50bf9fc1651407511a1af85b5147690179cac6f82d93e801b10a56d3382ce5f6) |
-| 45 | stand | CALL | AuditCell | setParam | 47384977 | [0x48404af7…](https://sepolia.basescan.org/tx/0x48404af781a7211d6afadf6f0d4423d5a878b4458dcda18e72c1399c3e203a48) |
-| 46 | stand | CALL | AuditCell | setParam | 47384978 | [0xfebda28c…](https://sepolia.basescan.org/tx/0xfebda28c0c988ad0e54167e786c61a9f94612a12ec7f96b635003804a6cedc68) |
-| 47 | stand | CALL | AuditCell | setParam | 47384979 | [0xc4b90571…](https://sepolia.basescan.org/tx/0xc4b905711eaeeb6c958f1f093444badeb786871b37529c6b2c58f395cf351cc2) |
-| 48 | stand | CALL | ClaimDisputeModule | setProtocolClaimDecisionWindow | 47384980 | [0x0035d63f…](https://sepolia.basescan.org/tx/0x0035d63f21f58ce2f0ac155e04c086f09d6b4beb3462094d445e34b126239a34) |
-| 49 | stand | CALL | AuditCell | setParam | 47384981 | [0xeb70c96f…](https://sepolia.basescan.org/tx/0xeb70c96f7c0223d162a61d8028ba19c9be3a4c44476335bb25afb6e8a440a1dc) |
-| 50 | stand | CALL | SpecArbiterModule | setSpecChallengeStake | 47384982 | [0xe6191b16…](https://sepolia.basescan.org/tx/0xe6191b1659b051de2094cb86236009b4da37f3f0b0fc30675c8c115efd3627db) |
-| 51 | stand | CALL | IntegrityReviewModule | setIntegrityFilingStake | 47384983 | [0xbc9a9c86…](https://sepolia.basescan.org/tx/0xbc9a9c862c6124156cf52ba2b87b9a2d250feb658a2d85ed6a0c5de25794ce55) |
-| 52 | stand | CALL | IntegrityReviewModule | setIntegrityContestStake | 47384984 | [0xff614de6…](https://sepolia.basescan.org/tx/0xff614de67b9317c713325fc96963eaa580651bcb06f6fd2e64ce3da5cbc23752) |
-| 53 | stand | CALL | StructuralUpgradeModule | setGapFilingStake | 47384985 | [0x67938694…](https://sepolia.basescan.org/tx/0x67938694034824b1c45c2b3eb3f41c8afed370781325b6da26cef86cfc958a5d) |
-| 54 | stand | CALL | SpecArbiterModule | setSpecChallengeFee | 47384986 | [0xea5efa8e…](https://sepolia.basescan.org/tx/0xea5efa8e7a97590860d87350ac9b702132a9d46a70f0e14465436aee79f8e98e) |
-| 55 | stand | CALL | AuditCell | registerTool | 47384987 | [0xf8fda210…](https://sepolia.basescan.org/tx/0xf8fda2100caae387ad02842d6ea21c460bf04743be7706037e753d52e5f4daae) |
-| 56 | stand | CALL | AuditCell | registerTool | 47384988 | [0x171ca02b…](https://sepolia.basescan.org/tx/0x171ca02be927f79c9d92ddfc8b3c32ae5fddae44ddb391452c14bc76cd779a9d) |
-| 57 | stand | CALL | AuditCell | registerTool | 47384989 | [0xa4b1c499…](https://sepolia.basescan.org/tx/0xa4b1c4997da762c606f662097b150df1e88a785f947083e9795b5f55887f6c31) |
-| 58 | stand | CALL | AuditCell | registerTool | 47384990 | [0xe9896028…](https://sepolia.basescan.org/tx/0xe98960281f0350ffd070ff3fb9699a86e6eb79acf65de9c932b3b176175e5352) |
-| 59 | stand | CALL | AuditCell | registerTool | 47384991 | [0x9b523eb6…](https://sepolia.basescan.org/tx/0x9b523eb6dff1a18a5b608df4704840f375e27130e1b2a821e399d3f0e52f75e8) |
-| 60 | stand | CALL | AuditCell | registerTool | 47384992 | [0x1338470d…](https://sepolia.basescan.org/tx/0x1338470dbf6fbbcaadd46089391904d3af8dd6014e535a77b737f5b59e4c23d8) |
-| 61 | stand | CALL | AuditCell | setToolWitnessFlags | 47384993 | [0x3ff6aa38…](https://sepolia.basescan.org/tx/0x3ff6aa382db25a2f415ca26a0fe892a9a034e5e3f53bfd8b5b124591915036f5) |
-| 62 | stand | CALL | SpecGapModule | registerClass | 47384994 | [0x7a5969dd…](https://sepolia.basescan.org/tx/0x7a5969dd55c1631a80bb0b40a7b388bb1723eb0b74c8e753296e7d0a07197505) |
-| 63 | stand | CALL | CellToken | genesisMint | 47384995 | [0xfca511b5…](https://sepolia.basescan.org/tx/0xfca511b55683fdbf7795b069c96f22bf643d21f518f723ff413db51652e52bde) |
-| 64 | stand | CALL | CellToken | setMinter | 47384996 | [0xe081bfda…](https://sepolia.basescan.org/tx/0xe081bfdaed19ec8ac6e75c330ab2d1f5d05a7000e66ad91b2da5e1ae9fe84594) |
-| 65 | filing | CALL |  | register | 47385250 | [0xdec225f7…](https://sepolia.basescan.org/tx/0xdec225f79c117fc7f05510c56a7657a37063c7676a642da1e347b675f6e16196) |
-| 66 | filing | CALL |  | approve | 47385250 | [0xf1c03783…](https://sepolia.basescan.org/tx/0xf1c037831c06996d2db2db4f8295b156408a3dd3af8d54e3097512f5cbef07e4) |
-| 67 | filing | CALL |  | submitArtifactAudit | 47385251 | [0x1e798a6e…](https://sepolia.basescan.org/tx/0x1e798a6e1915bff956f005b42acf8bb230e4349e9f5e750962693262fd07cec8) |
-| 68 | filing | CALL |  | protocolAcceptAuditor | 47385252 | [0x9311d0ce…](https://sepolia.basescan.org/tx/0x9311d0ce566d69da0c1d7c246f4c99f4e7c642200dc4458281ecfa95694fb0ad) |
-| 69 | filing | CALL |  | acceptAudit | 47385253 | [0xc220ff75…](https://sepolia.basescan.org/tx/0xc220ff75bb546a8b761b4bb9f37d3e4cd14fa58dae637d0f5b51a0b82ad3f0c5) |
-| 70 | filing | CALL |  | provePass | 47385254 | [0x2e94b58f…](https://sepolia.basescan.org/tx/0x2e94b58f7ed0e9e42bb1e9c269cbf3a2d1bdf2c2491b8d2be41ebe04ef6002dd) |
-| 71 | filing | CALL |  | transfer | 47385254 | [0xefe8b8dd…](https://sepolia.basescan.org/tx/0xefe8b8dd7513bfa3c9ce629b95c7cc0d22d2783aaf6b02af3476d69707e17b11) |
-| 72 | filing | CALL |  | register | 47385255 | [0xa5cfba38…](https://sepolia.basescan.org/tx/0xa5cfba38b7bfcaa7223694a691cded754b4d871ff9eb1d1f8457b42b4face0ec) |
-| 73 | filing | CALL |  | approve | 47385256 | [0xdc78e5a4…](https://sepolia.basescan.org/tx/0xdc78e5a40f042dbd06f7b096a3a75821b6b783a738d1bb454481b8e0ce6c7bc7) |
-| 74 | filing | CALL |  | openSpecGap | 47385257 | [0x7ac4a1f5…](https://sepolia.basescan.org/tx/0x7ac4a1f5256d25f5c7ab76080086e01edbed6f48cd9260cf51dbde9c8787b5ac) |
+| 0 | stand | CREATE2 | DiscovererPayoutLib |  | 47447921 | [0xae45370c…](https://sepolia.basescan.org/tx/0xae45370c3c7da4054b3d45075a2c03f236a93ae0786fa112f37536866f8d3a4c) |
+| 1 | stand | CREATE2 | ToolUseLib |  | 47447922 | [0xd795dd95…](https://sepolia.basescan.org/tx/0xd795dd95f5b35714d741fbebe1e4ca5c911d9e68f45e0e6b63dc6a063562d0d4) |
+| 2 | stand | CREATE2 | CellLogicLib |  | 47447923 | [0x26235de3…](https://sepolia.basescan.org/tx/0x26235de3b3876d7e6b92dbc154737fec625a20a0f66f0126a520b32eb19b54c5) |
+| 3 | stand | CREATE2 | SubmitAuditLib |  | 47447924 | [0x1defc8b7…](https://sepolia.basescan.org/tx/0x1defc8b7a0dc431552b35ee3535ee356a104b3b4d6d598aa59e50e4426a109f5) |
+| 4 | stand | CREATE | CellToken |  | 47447925 | [0x28a8b425…](https://sepolia.basescan.org/tx/0x28a8b4253ed56192c7d7a0c7c8049c59254b9ac001dc0beedda46cbaf571c815) |
+| 5 | stand | CREATE | AuditCell |  | 47447926 | [0x6a869677…](https://sepolia.basescan.org/tx/0x6a869677248b64f71898f093c29f4d593e2bac84bdb7f14d936dc18cc1249609) |
+| 6 | stand | CALL | AuditCell | setGenesisBootstrap | 47447927 | [0xd42dd948…](https://sepolia.basescan.org/tx/0xd42dd948794021370d71ae041b403c915f045c9b4ac2dccf7e1a4aaa5f782f10) |
+| 7 | stand | CREATE | CellEscrow |  | 47447928 | [0xc5b0d379…](https://sepolia.basescan.org/tx/0xc5b0d37926863f9cebba0af03baa066a1b4cb61390b70f89fb5e57ccdb552b07) |
+| 8 | stand | CREATE | IssuanceModule |  | 47447929 | [0xde11a711…](https://sepolia.basescan.org/tx/0xde11a711cb17dfc1cb280384c444d8a19ce30f3f8a71e0a411d26e0282b15910) |
+| 9 | stand | CREATE | ClaimDisputeModule |  | 47447930 | [0xac84310d…](https://sepolia.basescan.org/tx/0xac84310d44bcc3f81aee9543077ddf56d51e400313925458d54d2e19590dc7dd) |
+| 10 | stand | CREATE | SpecGapModule |  | 47447931 | [0x1d78784f…](https://sepolia.basescan.org/tx/0x1d78784f0488aad1fd7ca1b9a93de5b80f1203e5c1b3e3090d77e48311726306) |
+| 11 | stand | CREATE | SpecArbiterModule |  | 47447932 | [0x0d585d37…](https://sepolia.basescan.org/tx/0x0d585d3711e72c83b232a74ea093643d045fbf16b7b3329a156050d9f4427c96) |
+| 12 | stand | CREATE | IntegrityReviewModule |  | 47447933 | [0x4d3a510b…](https://sepolia.basescan.org/tx/0x4d3a510b195f7451472c7541b8a60a55bd88f780be31c4aae556b551ae12f742) |
+| 13 | stand | CREATE | StructuralUpgradeModule |  | 47447934 | [0xae9ca4ce…](https://sepolia.basescan.org/tx/0xae9ca4cedbdc29aba5f69b551e63163f0165276930c94506366a0fea88a4ab8d) |
+| 14 | stand | CREATE | FmeaRegistry |  | 47447935 | [0xd21317ed…](https://sepolia.basescan.org/tx/0xd21317edc44e53f9786749bd93d83624de3bf8ab974c2797f777fc2d0ae5e08e) |
+| 15 | stand | CREATE | AssignmentModule |  | 47447936 | [0x86eda0f7…](https://sepolia.basescan.org/tx/0x86eda0f71cf6d583ea63da748a3d286053adbc440cdb5a2d4d81b29b2a1017eb) |
+| 16 | stand | CREATE | BlockhashEntropy |  | 47447937 | [0x644ddaa1…](https://sepolia.basescan.org/tx/0x644ddaa19f522a610df7de6d7e4d71c2cc8b1890fd2613a9d0caf649c359a4f7) |
+| 17 | stand | CALL | IssuanceModule | wire | 47447938 | [0x48e5ec0e…](https://sepolia.basescan.org/tx/0x48e5ec0e6d288e26c72665c7666858f6ff0fe9b0ba94a92a6865f0ee1c632989) |
+| 18 | stand | CALL | IssuanceModule | setEmaToMintBps | 47447939 | [0x5b005820…](https://sepolia.basescan.org/tx/0x5b005820d2e3845e433504762621247fc3e42a1a0149ab8dee1316262692351b) |
+| 19 | stand | CALL | IssuanceModule | setMintLpCapBps | 47447940 | [0x6b8e698e…](https://sepolia.basescan.org/tx/0x6b8e698e8b15a09433fa3ae241eac0decefdda0fcb20e1511434b022b3231f7a) |
+| 20 | stand | CALL | ClaimDisputeModule | wire | 47447941 | [0xb952b939…](https://sepolia.basescan.org/tx/0xb952b93977b646875ca6307a6568f47038695a3239f06bda4ec3f7a2e017ea64) |
+| 21 | stand | CALL | FmeaRegistry | wireClaimModule | 47447942 | [0x6b19a03f…](https://sepolia.basescan.org/tx/0x6b19a03f1dfac3acbb47599fe1a17ac21bac2cb0c5eb2c9766079b1071705cec) |
+| 22 | stand | CALL | ClaimDisputeModule | wireFmeaRegistry | 47447943 | [0xfca9c683…](https://sepolia.basescan.org/tx/0xfca9c683c469d219561cbc7973c2af781e478607af3d4e1c4e7cce8b096bcacf) |
+| 23 | stand | CALL | AssignmentModule | wire | 47447944 | [0x08b09aa1…](https://sepolia.basescan.org/tx/0x08b09aa1424140a12c18644a98116f899f126a7550dfc8868a406abd1a0c217a) |
+| 24 | stand | CALL | SpecGapModule | wire | 47447945 | [0x02354b1d…](https://sepolia.basescan.org/tx/0x02354b1deb1112974d2ebf5cad28b7e86c6100fd3bb6b02eabacd15a34835fbb) |
+| 25 | stand | CALL | SpecArbiterModule | wire | 47447946 | [0x9caf0056…](https://sepolia.basescan.org/tx/0x9caf00565a902bf29d4bc7641edff0f42d52ecac85eec753c8df785c7cd63065) |
+| 26 | stand | CALL | IntegrityReviewModule | wire | 47447947 | [0x5786d134…](https://sepolia.basescan.org/tx/0x5786d134bdda52b8f6de2062a7043e5a4818e44b2767dc065e9749df893341ef) |
+| 27 | stand | CALL | StructuralUpgradeModule | wire | 47447948 | [0xe381050e…](https://sepolia.basescan.org/tx/0xe381050e62805fd761aee4a4f5704438569af0e879d3462bdfe9e09e5e7c867f) |
+| 28 | stand | CALL | IssuanceModule | setStructuralModule | 47447949 | [0xf9fd8fb7…](https://sepolia.basescan.org/tx/0xf9fd8fb733753a5a9b03fe678948e6d68d864d20ab4661933225d6c68a1899a9) |
+| 29 | stand | CALL | CellEscrow | setFounderReleaseTarget | 47447950 | [0x107d4534…](https://sepolia.basescan.org/tx/0x107d4534457cc93a75625791447a0c77b7b9063af3160001927940b1ddcf228d) |
+| 30 | stand | CALL | CellEscrow | setNetwork | 47447951 | [0x3fa65cd4…](https://sepolia.basescan.org/tx/0x3fa65cd4e73e536c87a4bd0268399f48090edbf79fe31b2f7ae1fd4fb6ff50c9) |
+| 31 | stand | CALL | CellEscrow | setIssuanceModule | 47447952 | [0xcd13b849…](https://sepolia.basescan.org/tx/0xcd13b849134a9f684ae32ba465ea8c5e0d2d7557f9abe5611f4917f8337cf988) |
+| 32 | stand | CALL | CellEscrow | setStructuralUpgradeModule | 47447953 | [0x749d9e58…](https://sepolia.basescan.org/tx/0x749d9e58a82a436f46f68d53192c1c75f27726a156814bad24bfb8a97dcf6a2d) |
+| 33 | stand | CALL | CellEscrow | setIntegrityReviewModule | 47447954 | [0x90b19cf6…](https://sepolia.basescan.org/tx/0x90b19cf6c065d702e4049f9c196f2ba28b5ad95414220f116b7d5ca72711802a) |
+| 34 | stand | CALL | AuditCell | setTreasuryEscrow | 47447955 | [0xf48a8483…](https://sepolia.basescan.org/tx/0xf48a8483c295ad132c3a7c22d9acf9814c6af8eadd60b7a657f2d8bfe282ee40) |
+| 35 | stand | CALL | AuditCell | setIssuanceModule | 47447956 | [0x37d027af…](https://sepolia.basescan.org/tx/0x37d027af4d497a8a34f08bc61246761f5972aca5597252d16fe5be723b851eef) |
+| 36 | stand | CALL | AuditCell | setDisputeModule | 47447957 | [0xa1d8abe4…](https://sepolia.basescan.org/tx/0xa1d8abe42048b8b36e7eebd5194cb7704ced2e90c73f8d7dd066f9dbbf5f2867) |
+| 37 | stand | CALL | AuditCell | setDisputeModule | 47447958 | [0xdbebb1f3…](https://sepolia.basescan.org/tx/0xdbebb1f32c3aa30e33c8e3de88dcc5b18df349e107f57849f912687d1b8c8be7) |
+| 38 | stand | CALL | AuditCell | setDisputeModule | 47447959 | [0xae621493…](https://sepolia.basescan.org/tx/0xae621493855119083cb660704a566374d1fbc606716ff5b020f325e7c2a4bdd5) |
+| 39 | stand | CALL | AuditCell | setDisputeModule | 47447960 | [0x24e28500…](https://sepolia.basescan.org/tx/0x24e285007b300d8e2b53ea5061f934c3c4496f045a5316f6a2d4faafb6cfe427) |
+| 40 | stand | CALL | AuditCell | setDisputeModule | 47447961 | [0xe1d9694b…](https://sepolia.basescan.org/tx/0xe1d9694b2b16dbf67038345aab50578855e1f0dac1d0b8b4c7657a14cbf5f910) |
+| 41 | stand | CALL | AuditCell | setAssignmentModule | 47447962 | [0x5c2c79ee…](https://sepolia.basescan.org/tx/0x5c2c79ee593d9dd04b5c30ea8f16bd8f55d9eec9ccb9c20365ca2509e650e256) |
+| 42 | stand | CALL | AuditCell | setEntropyProvider | 47447963 | [0xf0ece08e…](https://sepolia.basescan.org/tx/0xf0ece08e09a97f471bddc303d22b496317538bc7dc911d2bfba114e3bda3c16d) |
+| 43 | stand | CALL | AuditCell | setParam | 47447964 | [0x9fb06e61…](https://sepolia.basescan.org/tx/0x9fb06e6174e3f8b3098e496cb87e5864c80705521203db289af367e5621b0474) |
+| 44 | stand | CALL | AuditCell | setParam | 47447965 | [0x8682ddc2…](https://sepolia.basescan.org/tx/0x8682ddc2c2d1b02933e18a31e9d5275c8c7a92e34e3fe37ec3d85cc598cd2722) |
+| 45 | stand | CALL | AuditCell | setParam | 47447966 | [0x2d8e64a4…](https://sepolia.basescan.org/tx/0x2d8e64a4bb0fe5dc4f38b63dad10388da3f86ad4d39ac07015fc078d4a1e822d) |
+| 46 | stand | CALL | AuditCell | setParam | 47447967 | [0xe9787d18…](https://sepolia.basescan.org/tx/0xe9787d186356ad5d1dbda5b2f4eb139b081008ac1ae20bdef8223b7565efdd75) |
+| 47 | stand | CALL | AuditCell | setParam | 47447968 | [0x73081215…](https://sepolia.basescan.org/tx/0x730812159c34e0f11b80981d203d6c5e876da9fd5e75d3d6d59863e338f1258f) |
+| 48 | stand | CALL | ClaimDisputeModule | setProtocolClaimDecisionWindow | 47447969 | [0x5b975a04…](https://sepolia.basescan.org/tx/0x5b975a04fc664c344ef56d6681b66b39450e2cbd0827a3464d44fcca91909fb6) |
+| 49 | stand | CALL | AuditCell | setParam | 47447970 | [0x4411fe7d…](https://sepolia.basescan.org/tx/0x4411fe7d49f1ed253039d934fa75ce966142683c3280ec2d109f2f680145c990) |
+| 50 | stand | CALL | SpecArbiterModule | setSpecChallengeStake | 47447971 | [0xbddcee64…](https://sepolia.basescan.org/tx/0xbddcee64be1254432238ffebd1235b1afa1b0e544e0d1cac7eea3228dbd05c81) |
+| 51 | stand | CALL | IntegrityReviewModule | setIntegrityFilingStake | 47447972 | [0x28e5ca84…](https://sepolia.basescan.org/tx/0x28e5ca84e1f2dd9223f79fb718afd9506607f8930a1edc3ee51b42597527a7c9) |
+| 52 | stand | CALL | IntegrityReviewModule | setIntegrityContestStake | 47447973 | [0x598595da…](https://sepolia.basescan.org/tx/0x598595da08577ca6df2e85bac4a567b63f9444f655d70f5d8e6637654c95439f) |
+| 53 | stand | CALL | StructuralUpgradeModule | setGapFilingStake | 47447974 | [0x8a374e7e…](https://sepolia.basescan.org/tx/0x8a374e7edc760df4b207e6ebbd3d0e420cb1495c394ab5d0efeb17a5aa98dfe4) |
+| 54 | stand | CALL | SpecArbiterModule | setSpecChallengeFee | 47447975 | [0x8cce40b2…](https://sepolia.basescan.org/tx/0x8cce40b23c48c1613d9f11487663060576e43acf95ea7715d967f02fe1db6475) |
+| 55 | stand | CALL | AuditCell | registerTool | 47447976 | [0x24cfc001…](https://sepolia.basescan.org/tx/0x24cfc0016b21d274a1d5e10820a9949b8fb9605dfe66059a8391bfebc901e3b1) |
+| 56 | stand | CALL | AuditCell | registerTool | 47447977 | [0x9d757bd1…](https://sepolia.basescan.org/tx/0x9d757bd17f96d279207e676501b3a5b062317335c20a60c37c31cdf6d30775fa) |
+| 57 | stand | CALL | AuditCell | registerTool | 47447978 | [0x7b3acda3…](https://sepolia.basescan.org/tx/0x7b3acda3745ecfcfa5f9b7f5e33383b56d178afb1062c5a5b8385aeb4365f5cf) |
+| 58 | stand | CALL | AuditCell | registerTool | 47447979 | [0x5ada5146…](https://sepolia.basescan.org/tx/0x5ada51466ec72890a565a404f5351957b0e2e48b06a397bcd790c0c9869df72c) |
+| 59 | stand | CALL | AuditCell | registerTool | 47447980 | [0x48aa923c…](https://sepolia.basescan.org/tx/0x48aa923c181e2a6600fa3f6e331c8d783f7858d567d9e4234b1e10b271884972) |
+| 60 | stand | CALL | AuditCell | registerTool | 47447981 | [0xb177101e…](https://sepolia.basescan.org/tx/0xb177101ef03348cd4e17596377df3f2ac9b50e218ff54ee54ed2fd354f949060) |
+| 61 | stand | CALL | AuditCell | setToolWitnessFlags | 47447982 | [0x41feea4c…](https://sepolia.basescan.org/tx/0x41feea4c67c434d146dcf5ecece2184f095c6b369df88fa54b26a1b155df118a) |
+| 62 | stand | CALL | SpecGapModule | registerClass | 47447983 | [0xa9a13697…](https://sepolia.basescan.org/tx/0xa9a1369776840665add96864471cfe525621e713c5976a0abbdc2c5fc22ada73) |
+| 63 | stand | CALL | CellToken | genesisMint | 47447984 | [0x7a1d27ee…](https://sepolia.basescan.org/tx/0x7a1d27eec9cdc051c39a67d81dae9ff359e656661326e6302f781c1c80e2a85f) |
+| 64 | stand | CALL | CellToken | setMinter | 47447985 | [0x3318a567…](https://sepolia.basescan.org/tx/0x3318a5675aa46c7581f67541a366177d0974c6057201eb522f3ac8e189773e0c) |
+| 65 | filing | CALL |  | register | 47448683 | [0xe2ede1de…](https://sepolia.basescan.org/tx/0xe2ede1de0e5357a267df2222ad6bdcebd28cffcf9ae4c79bb7b8dc6e17b3a9db) |
+| 66 | filing | CALL |  | approve | 47448683 | [0x3801c3b8…](https://sepolia.basescan.org/tx/0x3801c3b881917191e6c4a8484e418a5cd2c7bde6b6e6f453e8002acc4af6ed6e) |
+| 67 | filing | CALL |  | submitArtifactAudit | 47448684 | [0x370c6d8f…](https://sepolia.basescan.org/tx/0x370c6d8fe841bd8fceceee758113254c17c9dc30abc7212e8174627984a127aa) |
+| 68 | filing | CALL |  | protocolAcceptAuditor | 47448685 | [0xa705b6d2…](https://sepolia.basescan.org/tx/0xa705b6d20099b4153e6bff330f052586fe5d34ac9d80e604b6d4932a2f9e2524) |
+| 69 | filing | CALL |  | acceptAudit | 47448685 | [0x8f3f1f36…](https://sepolia.basescan.org/tx/0x8f3f1f36cd74a6417be52fc24e5d5aba93226a7e3e2ac88faa31de7864e5cce4) |
+| 70 | filing | CALL |  | provePass | 47448686 | [0xa6a4b3d1…](https://sepolia.basescan.org/tx/0xa6a4b3d10c0a39aa23a1bedf41d7f9f0c1bafb3cb509cb17fb3297c887f7f87b) |
+| 71 | filing | CALL |  | transfer | 47448686 | [0x38c61912…](https://sepolia.basescan.org/tx/0x38c6191265bb86cfd7277f606cbd78d78acc70133d580f7b4da5aa311eb4fe45) |
+| 72 | filing | CALL |  | register | 47448687 | [0x428b0e20…](https://sepolia.basescan.org/tx/0x428b0e2080e9e9e175d500394aa6a14efd7afd16d6b52b2be44ff809aeb26fba) |
+| 73 | filing | CALL |  | approve | 47448688 | [0x560d1099…](https://sepolia.basescan.org/tx/0x560d10991616896bcd3772e8521773de841592e5131d8bdb5eaf88469b00a62e) |
+| 74 | filing | CALL |  | openSpecGap | 47448689 | [0xd5cc45f3…](https://sepolia.basescan.org/tx/0xd5cc45f3d58578a0e652f4bb000a87682373a67dff5aa6d4e0cd01c3cb8898bf) |
 
 ### Door two on Base Sepolia, read from the chain in this run
 
@@ -627,10 +627,10 @@ Room 2 fixture: the DAN hull at 0f3eaf8 - not the network's cell
   chain id                 84532
   fixture key              0x85F9549e4fdCa52fF56742B27b6C037ae5B06966
   genesis auditor          0xEdB37f4C862fC94A63Fe826baCefF2fF17016839
-  AuditCell                0x2f5005C69C1da917AF5C47118BBCa9a8f0f1Ffb2
-  CellToken                0x9C667B21C072D2Cf816fF458D6698be8D21f6A33
-  SpecGapModule            0xd17E1b67F438532036F279b08b34DEb264338a9C
-  StructuralUpgradeModule  0x2D068330484DF8269218f804Fdad6d04BfE041E0
+  AuditCell                0x5D76C2127Ea49F1f6cc4b7228608d4ccD9c62016
+  CellToken                0xC694fd2e77465B3133485e402b9a2cc18BFAEB7c
+  SpecGapModule            0xf618111097e302dF6Db5378122715c2Aed9214C6
+  StructuralUpgradeModule  0xF3143C33bf0073165464ED3fFe8E87953E0870e7
   AuditCell runtime bytes  20909
   decision window (s)      300
   protocol decision (s)    300
@@ -645,33 +645,33 @@ Room 2 fixture: the DAN hull at 0f3eaf8 - not the network's cell
 ```text
 Room 2, door two: a spec gap on the fixture - not the network's cell
   chain id                 84532
-  AuditCell                0x2f5005C69C1da917AF5C47118BBCa9a8f0f1Ffb2
-  SpecGapModule            0xd17E1b67F438532036F279b08b34DEb264338a9C
+  AuditCell                0x5D76C2127Ea49F1f6cc4b7228608d4ccD9c62016
+  SpecGapModule            0xf618111097e302dF6Db5378122715c2Aed9214C6
   row                      0
   protocol                 0x85F9549e4fdCa52fF56742B27b6C037ae5B06966
   auditor                  0xEdB37f4C862fC94A63Fe826baCefF2fF17016839
   discoverer               0xfEE57981D498a5b3882ac464344687A12c8d4cC9
   fixture key's seat       protocol
-  row state                4
+  row state                6
   gap status               Confirmed
   filing stake (wei)       10000000000000000000
-  filed at                 1790538802
-  silence confirms from    1790539102
+  filed at                 1790665666
+  silence confirms from    1790665966
   gap class
 0xf265280a77ba6123996963ca5c8304643796f2443d1c448144d3f41c86c139b3
   result root
 0x41922cf47145f448a316089973c55a15409ff973e5c68c50115cbd598d759b1e
   row bounty (wei)         40000000000000000000
-  row window opened        1790538796
+  row window opened        1790665660
   row window (s)           600
-  row window closed        1790539396
-  cell holds (wei)         40000000000000000000
-  auditor holds (wei)      0
+  row window closed        1790666260
+  cell holds (wei)         0
+  auditor holds (wei)      40625000000000000000
   discoverer holds (wei)   10000000000000000000
   fixture key holds (wei)  0
-  fixture key's nonce      71
-  read at block            47434123
-  read at (unix s)         1790636534
+  fixture key's nonce      140
+  read at block            47449224
+  read at (unix s)         1790666736
   read back from           exhibits/beanstalk-2022-04/fixture/record/84532.filing.json
 ```
 <!-- /live -->
