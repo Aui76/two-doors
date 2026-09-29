@@ -37,6 +37,13 @@ remappings = [
   # Not vendored: the hull is BUSL-1.1 and this tree is MIT.
   "dan/=deps/dan/cell/contracts/",
   "genesis-tools/=deps/dan/cell/contracts/tools/",
+  # The Balancer room's replay imports Balancer's own StableMath, which pulls in
+  # four files of @balancer-labs/v2-solidity-utils (math + one error helper). They
+  # are vendored beside the replay at v2-solidity-utils@2.0.0 (unpkg) with their
+  # pragma bumped from ^0.7.0 to >=0.7.0 <0.9.0 — the exact install step
+  # DeFiHackLabs' StableMath.sol documents in its own header. Kept under the exhibit,
+  # never in deps/, so hull source ordering and AuditCell's bytes are untouched.
+  "@balancer-labs/v2-solidity-utils/=exhibits/balancer-2025-11/replay/balancer-v2-solidity-utils/",
 ]
 auto_detect_remappings = false
 # The raw fetched reference (replay/*.orig.sol) is a transient, hash-pinned copy of
