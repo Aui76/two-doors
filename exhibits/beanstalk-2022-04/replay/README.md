@@ -17,6 +17,10 @@ DAN.
   bytes and their hash, and that the attacker's contract
   `0xE5eCF73603D98A0128F05ed30506ac7A663dBb69` (BIP 18) is empty at the fork block
   — the last safe moment, before the attack was written.
+- The fork is the state the attack met, not only the block before it. The attack is
+  transaction 94 of 138 in block 14,595,906, and no receipt ahead of it in that block
+  touches the diamond, BEAN, BEAN3CRV, BEANLUSD or BEAN/ETH (receipts, not a trace):
+  `python exhibits/fork-position.py` (added 2026-09-30).
 
 ## The port itself
 

@@ -10,10 +10,12 @@ Pulled 25 September 2026.
 ## The cut-off
 
 The room forks at block 21,895,237, mined at 1740147203, which is Friday 21 February 2025 at 14:13:23 UTC.
-The signed transaction is in the next block.
+The signed transaction is in the next block, transaction 116 of 202. No receipt ahead of it in that block
+touches the Safe, so the fork is the state the signers' transaction met. The check reads receipts, not traces.
 
 ```
 cast block 21895237 --rpc-url $MAINNET_ARCHIVE_RPC_URL
+python exhibits/fork-position.py
 ```
 
 ## The words

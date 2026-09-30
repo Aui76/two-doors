@@ -16,7 +16,7 @@ cites. A fact that failed at its source, or was ruled off the wall, is listed un
 | What it is | a contract creation; the created contract is `0x54b53503c0e2173df29f8da735fbd45ee8aba30d` | receipt `to` is empty, `contractAddress` set |
 | What it did at the Vault | 226 `Swap` and 6 `InternalBalanceChanged` events, on two pools only | Vault logs in its receipt |
 | Withdrawal | `0xd155207261712c35fa3d472ed1e51bfcd816e616dd4f517fa5959836f5b48569`, same sender, to the created contract | block 23,717,404, status true |
-| Fork block (the last block before the drain) | 23,717,396 | no Vault-heavy transaction in blocks 23,717,390–396 |
+| Fork block (the last block before the drain) | 23,717,396 | no Vault-heavy transaction in blocks 23,717,390–396; the drain is transaction 1 of 214 in block 23,717,397, and the receipt of transaction 0 touches neither the Vault nor pool A nor pool B (receipts, not a trace), so the fork is the state the drain met; `python exhibits/fork-position.py` |
 | Drained pool A | osETH/wETH `0xdacf5fa19b1f720111609043ac67a9818262850c`, poolId `…0635` | `version()` = ComposableStablePool **v5**, deployment `20230711-composable-stable-pool-v5` |
 | Drained pool B | wstETH/WETH `0x93d199263632a4ef4bb438f1feb99e57b4b5f0bd`, poolId `…05c2` | same, **v5** |
 | Their factory | `0xDB8d758BCb971e482B2C45f7F8a7740283A1bd3A`, ComposableStablePoolFactory **v5** | `isPoolFromFactory` true for both |
