@@ -10,8 +10,8 @@ import {CellToken} from "dan/CellToken.sol";
 /// Room 1: the hull stands beside Beanstalk on the morning of 16 April 2022, a
 /// row is filed against the diamond's code, and the door is asked.
 ///
-/// The fork is the one Fork.t.sol proves. The hull is the cured one at 0f3eaf8,
-/// compiled from the public export in deps/dan with its own settings. Nothing about
+/// The fork is the one Fork.t.sol proves. The hull is the cured one, compiled from
+/// the public export in deps/dan with its own settings. Nothing about
 /// the row is a promise: `InBlock` means settled, window closed, nothing claimed as
 /// of this block, and the door's own table says exactly that
 /// (exhibits/exit/dan-check/dan-check.mjs).

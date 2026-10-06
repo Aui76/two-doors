@@ -15,7 +15,7 @@ libs = ["deps"]
 solc = "0.8.20"
 optimizer = true
 # The hull's own build settings (cell/foundry.toml in deps/dan), not the museum's
-# preference: the point of Room 1 is to stand the cured hull at 0f3eaf8 beside the
+# preference: the point of the rooms is to stand the cured hull from deps/dan beside the
 # artifact, so it is compiled the way it ships. AuditCell needs via_ir and a low
 # runs count to fit under EIP-170; at runs = 200 it would not deploy.
 optimizer_runs = 1

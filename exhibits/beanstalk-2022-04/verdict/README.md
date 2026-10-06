@@ -47,10 +47,11 @@ git submodule update --init
 That fetches `deps/dan` and `deps/forge-std`. A clone made with `--recurse-submodules`
 already has both. The hull's contracts sit under `deps/dan/cell/contracts/`.
 
-The contracts there are the cured hull at the network's commit `0f3eaf8`, with one
+The contracts there are the cured hull at the network's commit `7fd937a`, with one
 difference: the 8 interfaces carry an MIT licence line where the network's own tree
 has BUSL-1.1. That line ends up in the compiled metadata, so AuditCell's bytes here are
 not byte for byte the network's build. Nothing in this room compares against them.
+The plaque above names `0f3eaf8` because that is the hull this room first ran on.
 
 An archive endpoint that serves 2022 state, in the environment:
 
