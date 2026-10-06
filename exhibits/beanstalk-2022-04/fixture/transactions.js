@@ -9,14 +9,25 @@
 //
 // With --check it writes nothing and compares the committed record with the logs and
 // the node, if the logs are on this machine.
+//
+// With --review it does the same for the auditor's room: its stand and its review,
+// from Review.s.sol's logs, into record/84532.review-transactions.json.
 const fs = require('fs');
 
 const RPC = process.env.RPC_URL || 'https://sepolia.base.org';
-const OUT = 'exhibits/beanstalk-2022-04/fixture/record/84532.transactions.json';
-const LOGS = [
-  ['stand', 'broadcast/Fixture.s.sol/84532/stand-latest.json'],
-  ['filing', 'broadcast/Filing.s.sol/84532/file-latest.json'],
-];
+const REVIEW = process.argv.includes('--review');
+const OUT = REVIEW
+  ? 'exhibits/beanstalk-2022-04/fixture/record/84532.review-transactions.json'
+  : 'exhibits/beanstalk-2022-04/fixture/record/84532.transactions.json';
+const LOGS = REVIEW
+  ? [
+      ['stand', 'broadcast/Review.s.sol/84532/stand-latest.json'],
+      ['review', 'broadcast/Review.s.sol/84532/file-latest.json'],
+    ]
+  : [
+      ['stand', 'broadcast/Fixture.s.sol/84532/stand-latest.json'],
+      ['filing', 'broadcast/Filing.s.sol/84532/file-latest.json'],
+    ];
 
 async function blockTime(n) {
   const res = await fetch(RPC, {
@@ -55,7 +66,9 @@ async function build() {
   for (const n of [...new Set(txs.map((t) => t.block))]) times[n] = await blockTime(n);
   for (const t of txs) t.timestamp = times[t.block];
   return {
-    what: 'Every transaction the stand and the filing sent on Base Sepolia, from forge broadcast logs; timestamps are each block\'s, read from the node. The confirm is in 84532.confirm.json.',
+    what: REVIEW
+      ? 'Every transaction the auditor\'s room stand and review sent on Base Sepolia, from forge broadcast logs; timestamps are each block\'s, read from the node. The settlement is in 84532.review-settle.json.'
+      : 'Every transaction the stand and the filing sent on Base Sepolia, from forge broadcast logs; timestamps are each block\'s, read from the node. The confirm is in 84532.confirm.json.',
     chainId: 84532,
     transactions: txs,
   };
@@ -63,7 +76,7 @@ async function build() {
 
 (async () => {
   const text = JSON.stringify(await build(), null, 2) + String.fromCharCode(10);
-  if (process.argv[2] === '--check') {
+  if (process.argv.includes('--check')) {
     const same = fs.readFileSync(OUT, 'utf8') === text;
     console.log(same ? 'RECORD-MATCHES-LOGS' : 'RECORD-DIFFERS');
     process.exit(same ? 0 : 1);

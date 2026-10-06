@@ -29,9 +29,17 @@ cites. A fact that failed at its source, or was ruled off the wall, is listed un
 | Block | WETH | osETH |
 |---|---|---|
 | 23,717,396 (before) | 4,922.356 | 6,851.581 |
-| 23,717,397 (after the first transaction) | 256.226 | 1.722 |
+| after the first transaction alone (run by `Transact.t.sol`) | 298.755 | 0.458 |
+| 23,717,397 (end of the block) | 256.226 | 1.722 |
 | 23,717,399 | 0.136 | 0.000216 |
 | 23,717,404 | 0.0019 | 0.00061 |
+
+Corrected 2026-10-01. The 256.226 / 1.722 row used to be labelled "after the first transaction". A read at a block
+number is the state at the end of that block, and the drain is transaction 1 of 214 in block 23,717,397. Transaction
+2 (`0x4b6b5fb9aa779c7662793a2613dca48f6e4afd15037b1acf2be4355cb032ed63`, from another sender, not a drain sender) emits
+one Vault `Swap` in pool A: 1.264 osETH in, 42.529 WETH out. `Transact.t.sol` runs the drain by `vm.transact` on the
+fork at 23,717,396 and prints the row above. It then runs transaction 2 and matches a second fork at 23,717,397 to
+the wei. No other receipt in the block names pool A or pool B at the Vault (receipts, not a trace).
 
 ### Pool B balances (wstETH/WETH)
 
@@ -41,6 +49,9 @@ cites. A fact that failed at its source, or was ruled off the wall, is listed un
 | 23,717,397 | 10.998 | 13.219 |
 | 23,717,399 | 0.000113 | 0.000229 |
 | 23,717,404 | 0.00000053 | 0.00000072 |
+
+For pool B the 23,717,397 row is both readings. The first transaction alone leaves the same balances as the end of
+the block, to the wei (`Transact.t.sol`).
 
 ### The version fingerprint (VD-310(2)(A)), read at 23,717,396
 

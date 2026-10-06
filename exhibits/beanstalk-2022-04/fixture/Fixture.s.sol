@@ -103,11 +103,114 @@ abstract contract FixtureCore is DeployCell {
         return scaled > floor ? scaled : floor;
     }
 
+    /// DeployCell.run's deploy and wiring, with `fixture` in the deployer's place, and
+    /// the testnet profile. Called inside the stand's broadcast. Shared by every
+    /// stand, so each fixture is the same hull wired the same way; what differs is
+    /// the tools each stand registers after it.
+    function _deployAndWire(address fixture, address auditor) internal returns (Deployed memory d) {
+        // --- DeployCell.run lines 146-162 at 0f3eaf8, the fixture key as deployer ---
+        d.token = new CellToken();
+        d.cell = new AuditCell(address(d.token));
+        if (auditor != address(0)) d.cell.setGenesisBootstrap(address(0), auditor);
+        d.escrow = new CellEscrow(address(d.token));
+        d.issuance = new IssuanceModule(fixture);
+        d.claimModule = new ClaimDisputeModule(fixture);
+        d.specGapModule = new SpecGapModule(fixture);
+        d.specArbiterModule = new SpecArbiterModule(fixture);
+        d.integrityReviewModule = new IntegrityReviewModule(fixture);
+        d.structuralUpgradeModule = new StructuralUpgradeModule(fixture);
+        d.fmeaRegistry = new FmeaRegistry(fixture);
+        d.assignmentModule = new AssignmentModule(fixture);
+        d.blockhashEntropy = new BlockhashEntropy();
+
+        // --- lines 165-198: the wiring, in DeployCell's order, testnet branch ---
+        d.issuance.wire(address(d.cell), address(d.token), address(d.escrow));
+        d.issuance.setEmaToMintBps(2500);
+        d.issuance.setMintLpCapBps(500);
+        d.claimModule.wire(address(d.cell));
+        d.fmeaRegistry.wireClaimModule(address(d.claimModule));
+        d.claimModule.wireFmeaRegistry(address(d.fmeaRegistry));
+        d.assignmentModule.wire(address(d.cell));
+        d.specGapModule.wire(address(d.cell));
+        d.specArbiterModule.wire(address(d.cell));
+        d.integrityReviewModule.wire(address(d.cell), address(d.specArbiterModule));
+        d.structuralUpgradeModule.wire(address(d.cell), address(d.issuance));
+        d.issuance.setStructuralModule(address(d.structuralUpgradeModule));
+        d.escrow.setFounderReleaseTarget(FOUNDER_RELEASE_TARGET_PAIRS);
+        d.escrow.setNetwork(address(d.cell));
+        d.escrow.setIssuanceModule(address(d.issuance));
+        d.escrow.setStructuralUpgradeModule(address(d.structuralUpgradeModule));
+        d.escrow.setIntegrityReviewModule(address(d.integrityReviewModule));
+        d.cell.setTreasuryEscrow(address(d.escrow));
+        d.cell.setIssuanceModule(address(d.issuance));
+        d.cell.setDisputeModule(0, address(d.claimModule));
+        d.cell.setDisputeModule(1, address(d.specGapModule));
+        d.cell.setDisputeModule(2, address(d.specArbiterModule));
+        d.cell.setDisputeModule(3, address(d.integrityReviewModule));
+        d.cell.setDisputeModule(4, address(d.structuralUpgradeModule));
+        d.cell.setAssignmentModule(address(d.assignmentModule));
+        d.cell.setEntropyProvider(address(d.blockhashEntropy));
+
+        // --- the testnet profile: inherited, not copied (lines 202, 218) ---
+        _applyTestnetTimeProfile(d);
+        d.specArbiterModule.setSpecChallengeFee(SPEC_CHALLENGE_FEE_TESTNET);
+
+        // --- the network's two tools (lines 235-236) ---
+        d.cell.registerTool(SPEC_TOOL_ID, true);
+        d.cell.registerTool(VERDICT_TOOL_ID, false);
+    }
+
+    /// The stand's guards before it sends anything: the chain, the keys, the
+    /// genesis-auditor seat, and one fixture per record. Forge runs a broadcast
+    /// script twice: once, then again after it deploys the hull's libraries for the
+    /// fixture key. The first run has already written the record by then, and
+    /// nothing is on chain yet. On 27 September 2026 a guard that asked only whether
+    /// the file existed refused the second run, so nothing was sent. The record
+    /// therefore counts only if the chain holds the cell it names.
+    function _beforeStand(uint256 key, address auditor, bool open, string memory path, bool live)
+        internal
+        view
+        returns (address fixture)
+    {
+        _requireFixtureChain();
+        fixture = vm.addr(key);
+        _refuseNetworkKey(fixture, "FIXTURE_KEY");
+        require(
+            auditor != address(0) || open,
+            "FIXTURE_GENESIS_AUDITOR required (PC-85). Set FIXTURE_GENESIS_AUDITOR_OPEN=1 to leave the seat open on purpose."
+        );
+        require(auditor != fixture, "FIXTURE_GENESIS_AUDITOR must not be the fixture key (PC-86)");
+        if (auditor != address(0)) _refuseNetworkKey(auditor, "FIXTURE_GENESIS_AUDITOR");
+        if (live && block.chainid == BASE_SEPOLIA && vm.exists(path)) {
+            (Deployed memory recorded,,) = _fromRecord(vm.readFile(path));
+            require(
+                address(recorded.cell).code.length == 0,
+                "a fixture is already recorded on Base Sepolia; supersede it by hand first (VD-270 reopen)"
+            );
+        }
+    }
+
     /// The whole fixture read back from the chain: every admin seat is the fixture
     /// key, every wire points where DeployCell points it, and the testnet profile's
     /// named values are the ones on chain. The profile's windows are asserted by the
-    /// cell's own PC-88(a) rule and printed, not retyped here.
+    /// cell's own PC-88(a) rule and printed, not retyped here. Then the museum's own
+    /// tools, the ones door two's stand registered.
     function _readBack(Deployed memory d, address key, address auditor) internal view {
+        _readBackHull(d, key, auditor);
+
+        (, bool r1SpecIsSpec,,, bool r1SpecExists,,) = d.cell.tools(Room1.SPEC_TOOL);
+        (, bool r1VerdictIsSpec,,, bool r1VerdictExists,,) = d.cell.tools(Room1.VERDICT_TOOL);
+        (, bool finderIsSpec,,, bool finderExists,,) = d.cell.tools(Room2.FINDER_TOOL);
+        (, bool evalIsSpec, bool evalIsEval, bool evalCanon, bool evalExists,,) = d.cell.tools(Room2.EVALUATOR_TOOL);
+        require(r1SpecExists && r1SpecIsSpec, "Room 1 spec tool");
+        require(r1VerdictExists && !r1VerdictIsSpec, "Room 1 verdict tool");
+        require(finderExists && !finderIsSpec, "door two finder tool");
+        require(evalExists && !evalIsSpec && evalIsEval && evalCanon, "door two evaluator: canonical");
+        require(d.specGapModule.vulnerabilityClassRegistered(Room2.gap().classId), "door two gap class");
+    }
+
+    /// The hull half of the read-back, the same for every fixture.
+    function _readBackHull(Deployed memory d, address key, address auditor) internal view {
         AuditCell c = d.cell;
         require(c.admin() == key, "cell admin");
         require(d.token.admin() == key, "token admin");
@@ -162,16 +265,6 @@ abstract contract FixtureCore is DeployCell {
         (, bool verdictIsSpec,,, bool verdictExists,,) = c.tools(VERDICT_TOOL_ID);
         require(specExists && specIsSpec, "spec tool");
         require(verdictExists && !verdictIsSpec, "verdict tool");
-
-        (, bool r1SpecIsSpec,,, bool r1SpecExists,,) = c.tools(Room1.SPEC_TOOL);
-        (, bool r1VerdictIsSpec,,, bool r1VerdictExists,,) = c.tools(Room1.VERDICT_TOOL);
-        (, bool finderIsSpec,,, bool finderExists,,) = c.tools(Room2.FINDER_TOOL);
-        (, bool evalIsSpec, bool evalIsEval, bool evalCanon, bool evalExists,,) = c.tools(Room2.EVALUATOR_TOOL);
-        require(r1SpecExists && r1SpecIsSpec, "Room 1 spec tool");
-        require(r1VerdictExists && !r1VerdictIsSpec, "Room 1 verdict tool");
-        require(finderExists && !finderIsSpec, "door two finder tool");
-        require(evalExists && !evalIsSpec && evalIsEval && evalCanon, "door two evaluator: canonical");
-        require(d.specGapModule.vulnerabilityClassRegistered(Room2.gap().classId), "door two gap class");
     }
 
     function _print(Deployed memory d, address key, address auditor) internal view {
@@ -278,86 +371,17 @@ contract StandTheFixture is FixtureCore {
     }
 
     function standWith(uint256 key, address auditor, bool open) public returns (Deployed memory d) {
-        _requireFixtureChain();
-        address fixture = vm.addr(key);
-        _refuseNetworkKey(fixture, "FIXTURE_KEY");
-        require(
-            auditor != address(0) || open,
-            "FIXTURE_GENESIS_AUDITOR required (PC-85). Set FIXTURE_GENESIS_AUDITOR_OPEN=1 to leave the seat open on purpose."
-        );
-        require(auditor != fixture, "FIXTURE_GENESIS_AUDITOR must not be the fixture key (PC-86)");
-        if (auditor != address(0)) _refuseNetworkKey(auditor, "FIXTURE_GENESIS_AUDITOR");
-
         // One fixture per Base Sepolia record. A second deploy is the reopen case
         // (VD-270): the old record is marked superseded by hand first, then moved.
-        // The record counts only if the chain holds the cell it names. Forge runs
-        // this script twice when it broadcasts: once, then again after it deploys
-        // the hull's libraries for the fixture key. The first run has already
-        // written the record by then, and nothing is on chain yet. On 27 September
-        // 2026 a guard that asked only whether the file existed refused the
-        // second run, so nothing was sent.
         bool live = _isLive();
         string memory path = _recordPath(live);
-        if (live && block.chainid == BASE_SEPOLIA && vm.exists(path)) {
-            (Deployed memory recorded,,) = _fromRecord(vm.readFile(path));
-            require(
-                address(recorded.cell).code.length == 0,
-                "a fixture is already recorded on Base Sepolia; supersede it by hand first (VD-270 reopen)"
-            );
-        }
+        address fixture = _beforeStand(key, auditor, open, path, live);
 
         vm.startBroadcast(key);
 
-        // --- DeployCell.run lines 146-162 at 0f3eaf8, the fixture key as deployer ---
-        d.token = new CellToken();
-        d.cell = new AuditCell(address(d.token));
-        if (auditor != address(0)) d.cell.setGenesisBootstrap(address(0), auditor);
-        d.escrow = new CellEscrow(address(d.token));
-        d.issuance = new IssuanceModule(fixture);
-        d.claimModule = new ClaimDisputeModule(fixture);
-        d.specGapModule = new SpecGapModule(fixture);
-        d.specArbiterModule = new SpecArbiterModule(fixture);
-        d.integrityReviewModule = new IntegrityReviewModule(fixture);
-        d.structuralUpgradeModule = new StructuralUpgradeModule(fixture);
-        d.fmeaRegistry = new FmeaRegistry(fixture);
-        d.assignmentModule = new AssignmentModule(fixture);
-        d.blockhashEntropy = new BlockhashEntropy();
+        d = _deployAndWire(fixture, auditor);
 
-        // --- lines 165-198: the wiring, in DeployCell's order, testnet branch ---
-        d.issuance.wire(address(d.cell), address(d.token), address(d.escrow));
-        d.issuance.setEmaToMintBps(2500);
-        d.issuance.setMintLpCapBps(500);
-        d.claimModule.wire(address(d.cell));
-        d.fmeaRegistry.wireClaimModule(address(d.claimModule));
-        d.claimModule.wireFmeaRegistry(address(d.fmeaRegistry));
-        d.assignmentModule.wire(address(d.cell));
-        d.specGapModule.wire(address(d.cell));
-        d.specArbiterModule.wire(address(d.cell));
-        d.integrityReviewModule.wire(address(d.cell), address(d.specArbiterModule));
-        d.structuralUpgradeModule.wire(address(d.cell), address(d.issuance));
-        d.issuance.setStructuralModule(address(d.structuralUpgradeModule));
-        d.escrow.setFounderReleaseTarget(FOUNDER_RELEASE_TARGET_PAIRS);
-        d.escrow.setNetwork(address(d.cell));
-        d.escrow.setIssuanceModule(address(d.issuance));
-        d.escrow.setStructuralUpgradeModule(address(d.structuralUpgradeModule));
-        d.escrow.setIntegrityReviewModule(address(d.integrityReviewModule));
-        d.cell.setTreasuryEscrow(address(d.escrow));
-        d.cell.setIssuanceModule(address(d.issuance));
-        d.cell.setDisputeModule(0, address(d.claimModule));
-        d.cell.setDisputeModule(1, address(d.specGapModule));
-        d.cell.setDisputeModule(2, address(d.specArbiterModule));
-        d.cell.setDisputeModule(3, address(d.integrityReviewModule));
-        d.cell.setDisputeModule(4, address(d.structuralUpgradeModule));
-        d.cell.setAssignmentModule(address(d.assignmentModule));
-        d.cell.setEntropyProvider(address(d.blockhashEntropy));
-
-        // --- the testnet profile: inherited, not copied (lines 202, 218) ---
-        _applyTestnetTimeProfile(d);
-        d.specArbiterModule.setSpecChallengeFee(SPEC_CHALLENGE_FEE_TESTNET);
-
-        // --- tools (lines 235-236), then the stake funding before the minter ---
-        d.cell.registerTool(SPEC_TOOL_ID, true);
-        d.cell.registerTool(VERDICT_TOOL_ID, false);
+        // --- the stake funding before the minter ---
         // The museum's own: Room 1's two labels, so the row door two files against is
         // Room 1's row, and door two's finder and evaluator. Flagging the evaluator
         // canonical and registering the gap's class are admin acts, and the stand is

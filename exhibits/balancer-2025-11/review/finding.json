@@ -1,0 +1,15 @@
+{
+  "_what": "The finding the drawn auditor files in review on Balancer's row, in words. The cell receives only hashes: every commitment in the claim is the keccak256 of one string below, read by Review.sol at run time. Change a word here and every hash follows. The _pins are the values the tests find again in the files they came from.",
+  "invariant": {
+    "id": "every-rounding-on-an-exact-out-swap-favours-the-pool",
+    "statement": "on an exact-out swap every rounding on the path goes in the direction that benefits the pool, the upscaling of the amount out and of the balances included, so the amount in the pool asks for is never less than the trade is worth",
+    "_missing_from": "spec/swap-rounding-v0.json. It states each step's rounding as the pool's own comments state it, and upscaling-rounds-down-for-every-amount is the step that rounds against the pool on an exact-out swap: the amount out is made smaller before the math prices it. Balancer's comment on that line says the impact is expected to be minimal because there is no rounding error unless the scaling factor is overridden, and this pool overrides it (ComposableStablePoolRates.sol line 302). Nothing in the spec says the steps taken together must favour the pool."
+  },
+  "location": "the error enters at specimens/balancer-2025-11/BasePool.sol lines 680-686, _upscale, which multiplies every amount by its scaling factor rounding down (sha256 0x9fec78a410cccd9248ff96a075a8766af2d607ae4d08e5b5708cd30b99f01972), called on the exact-out path at specimens/balancer-2025-11/BaseGeneralPool.sol lines 75-76 (sha256 0xa48d3fe6126e1a49b160d389f27268c848b57127bee13ccf49c9245cb823c5b0) with a scaling factor that is decimals times a token rate at specimens/balancer-2025-11/ComposableStablePoolRates.sol line 302 (sha256 0xb361d8ff591fcdf6d811c68f1f602db59e0bd26ecb81b6e184a3ce2522e33e61); specimens/balancer-2025-11/StableMath.sol lines 164-198, _calcInGivenOut, carries it into the amount in (sha256 0x25154c99a13173016d22bf8efbf0a5aeb55cef3cfd96f043489c7f573034bdf8)",
+  "witness": "door one of this room: the replay of DeFiHackLabs src/test/2025-11/BalancerV2_exp.sol (sha256 9cf837fa17a20573fd6df4bdaa28b2e38c0e478e699bf0701efec8be5d8d17dc) on a fork of chain 1 at block 23717396, with the drainer 0x54B53503c0e2173Df29f8da735fBd45Ee8aBa30d still empty at that block",
+  "context": "chain 1 at block 23717396: Balancer osETH/wETH StablePool 0xDACf5Fa19b1f720111609043ac67A9818262850c, runtime codehash 0x72b6e1b187e715820b74d4243533145e6d2d0e168101fd8b27be6f5be80ca441, in the Vault 0xBA12222222228d8Ba445958a75a0704d566BF2C8",
+  "_pins": {
+    "replayReference": "9cf837fa17a20573fd6df4bdaa28b2e38c0e478e699bf0701efec8be5d8d17dc",
+    "drainer": "0x54B53503c0e2173Df29f8da735fBd45Ee8aBa30d"
+  }
+}

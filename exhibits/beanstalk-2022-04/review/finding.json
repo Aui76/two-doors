@@ -1,0 +1,15 @@
+{
+  "_what": "The finding the drawn auditor files in review, in words. The cell receives only hashes: every commitment in the claim is the keccak256 of one string below, read by Review.sol at run time. Change a word here and every hash follows. The words are the ones the discoverer filed as a spec gap on the second fixture on 29 September 2026 (../filing/gap.json), so the commitments are the same hashes; the gap's class is not here, because a witness claim carries none. The _pins are the values the tests find again in the files they came from.",
+  "invariant": {
+    "id": "vote-weight-was-held-before-the-proposal",
+    "statement": "a vote adds to a BIP's tally only Roots the voter already held when the BIP was proposed; Roots acquired after the proposal add nothing to it",
+    "_missing_from": "spec/governance-v0.json. Its vote-weight-is-proportional-to-stalk reads the weight at the instant of the vote, and its emergency-commit-requires-day-and-supermajority counts 24 hours from the proposal. Nothing in it ties the weight to any moment before the vote."
+  },
+  "location": "specimens/beanstalk-2022-04/VotingBooth.sol lines 32-35, recordVote, which adds balanceOfRoots(account) as it stands at the vote (sha256 0x8f4bc3b86403814495490089e4300da66f42b34bdd4210d82bbf9abf7e2fe484); specimens/beanstalk-2022-04/GovernanceFacet.sol lines 180-191, emergencyCommit (sha256 0x27938091a8fd181e62246d9f365e3d5523d8b825b1c562243ffa9d6db908efad)",
+  "witness": "door one of this room: the replay of DeFiHackLabs src/test/2022-04/Beanstalk_exp.sol (sha256 07c9396063f71acd5e6b4e688adb7bc1ebdd1022083cb05cfc997b3312b42256) on a fork of chain 1 at block 14595905, with its proposal contract 0xE5eCF73603D98A0128F05ed30506ac7A663dBb69 (BIP 18) still empty at that block",
+  "context": "chain 1 at block 14595905: the Beanstalk diamond 0xC1E088fC1323b20BCBee9bd1B9fC9546db5624C5, runtime codehash 0x2ff59388cd5e1842a3d057338010945a779a6c7d57abfb5e9ddc697838700870",
+  "_pins": {
+    "replayReference": "07c9396063f71acd5e6b4e688adb7bc1ebdd1022083cb05cfc997b3312b42256",
+    "bip18": "0xE5eCF73603D98A0128F05ed30506ac7A663dBb69"
+  }
+}

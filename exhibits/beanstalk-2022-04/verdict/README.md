@@ -1,5 +1,8 @@
 <!-- SPDX-License-Identifier: MIT -->
-# The verdict — Room 1
+# The verdict, on file
+
+This was Room 1 until 3 October 2026, when the auditor's room (`../review/`) took its place.
+Its tests still run, and the transcript keeps them on its page after the exit.
 
 The last safe moment. Ethereum at block 14,595,905, Saturday 16 April 2022, 10:54
 UTC, the night before Beanstalk was drained. The cured hull stands beside the
@@ -31,7 +34,7 @@ about it is the code it names.
 The hull is not vendored (it is BUSL-1.1; this tree is MIT). It comes in as a git
 submodule at `deps/dan`: DAN's public repository,
 [`Aui76/decentralized-audit-network`](https://github.com/Aui76/decentralized-audit-network),
-pinned at commit `5f2012b`. Inside the project, not beside it: a remapping that
+pinned at commit `0fafb27`. Inside the project, not beside it: a remapping that
 points outside the root makes foundry compile every hull source twice under two
 spellings of one path, and the two `AuditCell` artifacts cannot be linked.
 

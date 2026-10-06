@@ -1,8 +1,10 @@
 # The replay — the Balancer room, the attacker's door
 
-This directory holds the exploit replay: the real 3-November-2025 Balancer V2
-drain, run against the fork at block 23,717,396, the two Composable Stable Pools
-falling, with the command that reproduces it. It is the attacker's door, and it
+This directory holds the exploit replay: the 3-November-2025 Balancer V2 drain,
+ported and run against the fork at block 23,717,396, the two Composable Stable
+Pools falling, with the command that reproduces it. The port is a rebuilt attack.
+The chain's own first transaction runs beside it, in `../Transact.t.sol`, on the
+same fork. It is the attacker's door, and it
 stands beside the discoverer's door (the Trail of Bits look at the carrying half,
 on the wall under VD-314).
 
@@ -85,6 +87,16 @@ printed by the run, not typed. **No dollar figure** (VD-307(2), VD-310(5)); the
 labels print token balances only. Every number the room prints, the museum's lines
 included, is produced by the run (VD-224), and the room credits DeFiHackLabs by name.
 
+**No `etch` on the room's addresses** (operator, 2026-10-06). `vm.etch` puts new runtime
+code at an address without running a constructor, and the fork's storage beside it stays
+as it was. A room that etched an exhibit's contract would no longer be running the bytecode
+the attack met. No test in this tree calls it; the only `etch` under `exhibits/` is the
+declaration in the upstream `interface.sol`. Run from the repo root, the check prints nothing:
+
+```bash
+grep -rnE '\betch\(' exhibits specimens src --include=*.sol | grep -v 'function etch'
+```
+
 ### The run, recorded
 
 Run on 2026-09-29 the replay passes (`[PASS] testPoC()`), and the `museum:` lines
@@ -98,11 +110,18 @@ print, per pool, the two paired assets at the Vault (the pool's own BPT skipped)
 The **before** row reproduces, to the decimal, the fork-block Vault balances the
 archive node gave (`VERIFIED.md`, "Pool A/B balances"): the run is reading the two
 pools the room names — WETH `0xC02a…6Cc2`, osETH `0xf1C9…0E38`, wstETH
-`0x7f39…2Ca0`. The **after** row is this port's own residual: the DeFiHackLabs PoC
-drains by its own swap path, so it leaves more than the attacker's first
-transaction did (`VERIFIED.md` records the on-chain 23,717,397 state as WETH 256.226
-/ osETH 1.722 and wstETH 10.998 / WETH 13.219). Either way both pools fall from
-thousands to almost nothing, and every figure is produced by the run, not typed.
+`0x7f39…2Ca0`. The **after** row is this port's own residual. The DeFiHackLabs PoC
+drains by its own swap path, and `../Transact.t.sol` runs the chain's own first
+transaction on the same fork, so the two can be read side by side. In pool A they
+agree to the three decimals printed here: WETH 298.755 and osETH 0.458 either way.
+In pool B they differ. The port leaves wstETH 43.583 and WETH 12.406, and the
+chain's transaction left wstETH 10.998 and WETH 13.219. Either way both pools fall
+from thousands to almost nothing, and every figure is produced by a run, not typed.
+
+Corrected 2026-10-01. This paragraph used to say the port leaves more than the
+attacker's first transaction did in both pools, against a pool A figure of WETH
+256.226 and osETH 1.722. That figure is the end of block 23,717,397, which holds
+one more swap in pool A after the drain (`VERIFIED.md`, "Pool A balances").
 
 ## What it proves
 

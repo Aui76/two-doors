@@ -1,10 +1,14 @@
-# The replay — Room 2, door one
+# The replay — Room 1, door one
 
-This directory holds the exploit replay: the real April-2022 Beanstalk attack
-transaction, run step by step against the fork at block 14,595,905, the pool
-draining, with the command that reproduces it. It is the left door of Room 2 —
-the attacker's door — and it stands beside door two, the discoverer's filing on
-DAN.
+This directory holds the exploit replay: the April-2022 Beanstalk attack, rebuilt
+and run step by step against the fork at block 14,595,905, the pool draining, with
+the command that reproduces it. It is a rebuilt attack, not the chain's own
+transaction. The test makes the proposal itself, moves the clock forward one day,
+and drains through its own flash loan. The chain's drain is
+`0xcd314668aaa9bbfebaf1a0bd2b6553d01dd58899c508d4729fa7311dc5d33ad7` in block
+14,602,790, which is 6,885 blocks after the fork, and it is not run here. It is
+door one of Room 1, the attacker's door, and it stands beside door two, the
+finding the drawn auditor files on DAN while the row is in review (`../review/`).
 
 ## Footing (confirmed 2026-09-23)
 
@@ -17,7 +21,8 @@ DAN.
   bytes and their hash, and that the attacker's contract
   `0xE5eCF73603D98A0128F05ed30506ac7A663dBb69` (BIP 18) is empty at the fork block
   — the last safe moment, before the attack was written.
-- The fork is the state the attack met, not only the block before it. The attack is
+- The fork is the state the attack met, not only the block before it. The attack's
+  first transaction, the proposal the replay rebuilds (`0x68cdec0a…4c6f`), is
   transaction 94 of 138 in block 14,595,906, and no receipt ahead of it in that block
   touches the diamond, BEAN, BEAN3CRV, BEANLUSD or BEAN/ETH (receipts, not a trace):
   `python exhibits/fork-position.py` (added 2026-09-30).
@@ -62,6 +67,16 @@ so the difference is the profit). The transcript's door-one page keys on those m
 labels rather than on DeFiHackLabs' ad-hoc ones, which stay as they wrote them. Every
 number the room prints, the museum's lines included, is produced by the run and not typed
 by hand (VD-224), and the room credits DeFiHackLabs by name.
+
+**No `etch` on the room's addresses** (operator, 2026-10-06). `vm.etch` puts new runtime
+code at an address without running a constructor, and the fork's storage beside it stays
+as it was. A room that etched an exhibit's contract would no longer be running the bytecode
+the attack met. No test in this tree calls it; the only `etch` under `exhibits/` is the
+declaration in the upstream `interface.sol`. Run from the repo root, the check prints nothing:
+
+```bash
+grep -rnE '\betch\(' exhibits specimens src --include=*.sol | grep -v 'function etch'
+```
 
 ## What it proves
 

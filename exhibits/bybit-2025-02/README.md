@@ -1,5 +1,5 @@
 <!-- SPDX-License-Identifier: MIT -->
-# Room 3, the room with no seat
+# Room 2, the room with no seat
 
 Bybit. On 21 February 2025 its cold wallet on Ethereum held 401,346.768858404671846374 ETH. Three of its six
 owners signed a transaction, the wallet checked the three signatures and did what the transaction said, and
@@ -7,7 +7,7 @@ thirteen blocks later the ETH was gone.
 
 The wallet is a Safe v1.1.1, and I wrote its spec from Safe's own words of 2019 (`spec/SOURCES.md`). The check
 passes, and it is right to pass: the wallet's code did exactly what those words say. The money left anyway.
-In Room 2 you can file the gap yourself. Here there is no gap to file, so this room has no button, and I won't
+In Room 1 you can file the gap yourself. Here there is no gap to file, so this room has no button, and I won't
 hand you a door that isn't there.
 
 This one we could not have caught, and I will not pretend otherwise.

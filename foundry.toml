@@ -23,11 +23,12 @@ via_ir = true
 remappings = [
   "forge-std/=deps/forge-std/src/",
   # The hull. deps/dan is a submodule of DAN's public repository,
-  # Aui76/decentralized-audit-network, pinned at 5f2012b. Its contracts and deploy
-  # scripts are those of 0561a4b (VD-239(3)); the three commits since change CI, the
-  # NOTICE, the cell's foundry.toml and the site, none of them compiled here. It replaced a
-  # local link to the private cell tree, which a clone of this repo could not follow.
-  # Its cell/contracts/ are the cured hull at 0f3eaf8 with one difference: the 8
+  # Aui76/decentralized-audit-network, pinned at 0fafb27, the export that carries the
+  # auditor's witness claim in review for the auditor's room. It replaced a local link to
+  # the private cell tree, which a clone of this repo could not follow. The second
+  # fixture stood from the export at 0561a4b; exhibits/beanstalk-2022-04/fixture/README.md
+  # says how to stand it from that commit again.
+  # Its cell/contracts/ are the hull at network 7fd937a with one difference: the 8
   # interfaces carry an MIT licence line where the private tree has BUSL-1.1. That
   # line goes into the compiled metadata, so AuditCell's bytes here differ from a
   # build of the private tree. No exhibit compares against those bytes.

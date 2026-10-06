@@ -1,6 +1,7 @@
 # The vendored pre-hack sources are checked by sha256. Git must not touch a byte
 # of them, or the hash recorded in spec/SOURCES.md stops matching on checkout.
 specimens/beanstalk-2022-04/*.sol -text
+specimens/balancer-2025-11/*.sol -text
 
 # The specs and the gap are hashed as bytes, and the hash is what a row carries on chain. A checkout
 # that turned LF into CRLF would give a different hash on Windows than on Linux for the same commit.

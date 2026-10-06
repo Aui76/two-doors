@@ -2,7 +2,7 @@
 """Writes the museum's transcript: what every room prints, page by page, stamped with the commit.
 
 Nothing on these pages is typed. The rooms' lines are what `forge test --json -vv` returns
-in each test's decoded_logs. Door two's Base Sepolia facts are the committed records in
+in each test's decoded_logs. The second fixture's Base Sepolia facts are the committed records in
 exhibits/beanstalk-2022-04/fixture/record/ and what ReadTheFixture and ReadTheFiling print
 when they read the chain. The exit's bytes and hashes are computed here from its files.
 
@@ -42,26 +42,37 @@ LIVE = ("<!-- live -->", "<!-- /live -->")
 # Each page, and the test files whose output it carries, in the order the visitor walks.
 # A test file that no page claims stops the run, so a new room cannot go missing quietly.
 PAGES = [
-    ("room-1", "Room 1, the last safe moment", [
+    ("room-1", "Room 1, the auditor's room", [
         ("Beanstalk on Ethereum, the block before it was drained", [
             "exhibits/beanstalk-2022-04/Fork.t.sol",
-            "exhibits/beanstalk-2022-04/Verdict.t.sol",
             "exhibits/beanstalk-2022-04/Provenance.t.sol",
         ]),
-    ]),
-    ("room-2", "Room 2, the two doors", [
-        ("Door one, the attacker's: the attack replayed on the fork", [
+        ("What the spec never says: the attack it allows, replayed on the fork", [
             "exhibits/beanstalk-2022-04/replay/Replay.t.sol",
         ]),
-        ("Door two, the discoverer's: the fixture and the filing, in memory", [
-            "exhibits/beanstalk-2022-04/Fixture.t.sol",
-            "exhibits/beanstalk-2022-04/Filing.t.sol",
+        ("The finding filed in review, and the re-run that upholds it, in memory", [
+            "exhibits/beanstalk-2022-04/Review.t.sol",
         ]),
     ]),
-    ("room-3", "Room 3, the room with no seat", [
+    ("room-2", "Room 2, the room with no seat", [
         ("Bybit's wallet on Ethereum, February 2025", [
             "exhibits/bybit-2025-02/Fork.t.sol",
             "exhibits/bybit-2025-02/NoSeat.t.sol",
+        ]),
+    ]),
+    ("room-3", "Room 3, the Balancer room", [
+        ("Balancer's Vault on Ethereum, the block before it was drained", [
+            "exhibits/balancer-2025-11/Fork.t.sol",
+            "exhibits/balancer-2025-11/Provenance.t.sol",
+        ]),
+        ("The drain, rebuilt and replayed on the fork", [
+            "exhibits/balancer-2025-11/replay/Replay.t.sol",
+        ]),
+        ("The chain's own drain transaction, run on the fork", [
+            "exhibits/balancer-2025-11/Transact.t.sol",
+        ]),
+        ("The finding filed in review, and the re-run that upholds it, in memory", [
+            "exhibits/balancer-2025-11/Review.t.sol",
         ]),
     ]),
     ("exit", "The exit", [
@@ -69,7 +80,21 @@ PAGES = [
             "exhibits/exit/Exit.t.sol",
         ]),
     ]),
+    # Not a room. The same row as it was shown before the auditor's room: passed on the
+    # fork, and the same words filed as a gap after the PASS on the second fixture. Its
+    # tests still run and its records are real acts on Base Sepolia, so it stays on file.
+    ("record", "On file: the row passed, and the gap filed after it", [
+        ("The verdict on the fork: the row passed and the door read CLEAN", [
+            "exhibits/beanstalk-2022-04/Verdict.t.sol",
+        ]),
+        ("The second fixture: the same words filed as a gap after the PASS", [
+            "exhibits/beanstalk-2022-04/Fixture.t.sol",
+            "exhibits/beanstalk-2022-04/Filing.t.sol",
+        ]),
+    ]),
 ]
+# The page that carries the second fixture's committed records and its live read.
+FIXTURE_TWO = ("record", "The second fixture")
 EXIT_FILES = ["exhibits/exit/dan-check/dan-check.mjs", "exhibits/exit/dan-check/keccak256.mjs"]
 
 
@@ -178,7 +203,7 @@ def base_records():
     filed = read_json(RECORDS + "84532.filing.json")
     confirm = read_json(RECORDS + "84532.confirm.json")
     txs = read_json(RECORDS + "84532.transactions.json")["transactions"]
-    out = ["", "### Door two on Base Sepolia, from the committed records", ""]
+    out = ["", "### The second fixture on Base Sepolia, from the committed records", ""]
     out.append("`%s84532.json`, which the stand wrote:" % RECORDS)
     out.append("")
     out += fence([stood["what"], ""] + pairs(stood, skip=("what",)))
@@ -218,7 +243,7 @@ def script_logs(target):
 
 
 def base_live(offline):
-    out = ["", "### Door two on Base Sepolia, read from the chain in this run", ""]
+    out = ["", "### The second fixture on Base Sepolia, read from the chain in this run", ""]
     if offline:
         return out + block(LIVE, ["Not read: this run was made with --offline."])
     body = ["`ReadTheFixture` and `ReadTheFiling` read the chain from %s and send nothing:" % BASE_RPC, ""]
@@ -250,7 +275,7 @@ def pages(suites, offline, tally):
         for heading, files in sections:
             lines += ["", "## " + heading]
             lines += test_lines(suites, files, tally)
-            if slug == "room-2" and heading.startswith("Door two"):
+            if slug == FIXTURE_TWO[0] and heading.startswith(FIXTURE_TWO[1]):
                 lines += base_records()
                 lines += base_live(offline)
             if slug == "exit":
@@ -312,17 +337,22 @@ def main(argv):
     built = pages(suites, offline, tally)
     built["README.md"] = index(commit, dirty, build, test_s, tally, offline)
     texts = {name: "\n".join(lines) + "\n" for name, lines in built.items()}
+    # A page no entry builds any more, such as a room that was merged away.
+    stale = sorted(p.name for p in OUT.glob("*.md") if p.name not in texts)
     if check:
-        differ = []
+        differ = list(stale)
         for name, text in texts.items():
             here = OUT / name
             if not here.exists() or comparable(here.read_text(encoding="utf-8")) != comparable(text):
                 differ.append(name)
         for name in differ:
-            print("DIFFERS  transcript/" + name)
+            print(("STALE    transcript/" if name in stale else "DIFFERS  transcript/") + name)
         print("%d passed, %d failed; %d of %d pages match"
-              % (tally[0], tally[1], len(texts) - len(differ), len(texts)))
+              % (tally[0], tally[1], len(texts) - len(set(differ) - set(stale)), len(texts)))
         return 1 if differ or tally[1] else 0
+    for name in stale:
+        (OUT / name).unlink()
+        print("removed transcript/" + name)
     for name, text in texts.items():
         (OUT / name).write_bytes(text.encode("utf-8"))
         print("wrote transcript/" + name)

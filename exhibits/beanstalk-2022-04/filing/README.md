@@ -1,5 +1,8 @@
 <!-- SPDX-License-Identifier: MIT -->
-# Door two: the discoverer's filing
+# The gap filed on the second fixture, on file
+
+This was Room 2's door two until 3 October 2026, when the auditor's room (`../review/`) took
+its place. The filing and its records stand as they were filed.
 
 In door two the discoverer files a spec gap against Room 1's row, on the fixture
 that `../fixture/` stands. The fixture is not the network's cell; its README carries the paragraph

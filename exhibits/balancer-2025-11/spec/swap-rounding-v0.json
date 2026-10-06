@@ -1,0 +1,92 @@
+{
+  "version": "1",
+  "description": "Balancer's composable stable pool, version 5, as its own source described its swaps before the drain of 3 November 2025. Every invariant below was read from the comments and code of seven of the source files deployed at 0xDACf5Fa19b1f720111609043ac67A9818262850c, which Sourcify holds as an exact match and which hash the same at balancer/balancer-v2-monorepo commit 6198fd700204ed143a33b06539954d218845b3dc (11 July 2023). No word in it comes from anything published after the drain. spec/SOURCES.md names the line each one came from. Writer shape: RealDeal/notebook/8-integration/book/04-spec-scope-and-quality.md.",
+  "target": {
+    "kind": "contract",
+    "name": "Balancer osETH/wETH StablePool (ComposableStablePool v5)",
+    "chainId": 1,
+    "address": "0xDACf5Fa19b1f720111609043ac67A9818262850c",
+    "block": 23717396,
+    "codehash": "0x72b6e1b187e715820b74d4243533145e6d2d0e168101fd8b27be6f5be80ca441"
+  },
+  "invariants": [
+    {
+      "id": "swaps-come-only-from-the-vault",
+      "statement": "onSwap reverts unless the Balancer Vault calls it for this pool's own id",
+      "scope": ["ACCESS-CONTROL"],
+      "_source": "BaseGeneralPool.sol:37"
+    },
+    {
+      "id": "swap-fee-is-bounded",
+      "statement": "the swap fee percentage can only be set between 0.0001% and 10%",
+      "scope": ["PRIVILEGED-PARAMETER"],
+      "_source": "BasePool.sol:72-73, :195-196"
+    },
+    {
+      "id": "pool-holds-two-tokens-or-more",
+      "statement": "the pool cannot be created with fewer than two tokens or with more than its maximum",
+      "scope": ["INPUT-VALIDATION"],
+      "_source": "BasePool.sol:67, :124-125"
+    },
+    {
+      "id": "exact-in-fee-comes-off-before-scaling",
+      "statement": "on an exact-in swap the fee is taken off the amount in before the amount is scaled, and the fee rounds up",
+      "scope": ["SWAP-RATE"],
+      "_source": "BaseGeneralPool.sol:56-57; BasePool.sol:626-629"
+    },
+    {
+      "id": "exact-in-amount-out-rounds-down",
+      "statement": "on an exact-in swap the amount out rounds down, in the stable math and again when it is scaled back to token units",
+      "scope": ["SWAP-RATE", "ARITHMETIC-SAFETY"],
+      "_source": "StableMath.sol:144, :158; BaseGeneralPool.sol:64-65"
+    },
+    {
+      "id": "exact-out-amount-in-rounds-up",
+      "statement": "on an exact-out swap the amount in rounds up, in the stable math and again when it is scaled back to token units",
+      "scope": ["SWAP-RATE", "ARITHMETIC-SAFETY"],
+      "_source": "StableMath.sol:184, :198; BaseGeneralPool.sol:80-81"
+    },
+    {
+      "id": "exact-out-fee-is-added-after-scaling",
+      "statement": "on an exact-out swap the fee is added to the amount in after it is scaled back to token units, and the fee rounds up",
+      "scope": ["SWAP-RATE"],
+      "_source": "BaseGeneralPool.sol:83-84; BasePool.sol:618-620"
+    },
+    {
+      "id": "upscaling-rounds-down-for-every-amount",
+      "statement": "before the stable math runs, every balance and the swap's given amount are multiplied by their scaling factors and rounded down, whichever way the amount moves",
+      "scope": ["ARITHMETIC-SAFETY"],
+      "_source": "BasePool.sol:680-686, :692-699; BaseGeneralPool.sol:59-60, :75-76"
+    },
+    {
+      "id": "scaling-factor-is-decimals-times-rate",
+      "statement": "each token's scaling factor is its decimals factor times its current rate, rounded down, and the decimals factor is fixed when the pool is built, from the token's own decimals()",
+      "scope": ["ORACLE-DEPENDENCE", "ARITHMETIC-SAFETY"],
+      "_source": "ComposableStablePoolRates.sol:296-306; ComposableStablePoolStorage.sol:54-56, :108-113, :274-280; BasePool.sol:638-649"
+    },
+    {
+      "id": "invariant-rounds-down",
+      "statement": "the stable invariant is computed rounding down",
+      "scope": ["ARITHMETIC-SAFETY"],
+      "_source": "StableMath.sol:71"
+    },
+    {
+      "id": "join-amounts-in-round-up",
+      "statement": "on a join the amounts in are scaled back to token units rounding up",
+      "scope": ["BALANCE-ACCOUNTING"],
+      "_source": "BasePool.sol:343-344, :364-365"
+    },
+    {
+      "id": "exit-amounts-out-round-down",
+      "statement": "on an exit the amounts out are scaled back to token units rounding down",
+      "scope": ["BALANCE-ACCOUNTING"],
+      "_source": "BasePool.sol:417-418"
+    },
+    {
+      "id": "bpt-swaps-are-joins-and-exits",
+      "statement": "a swap with the pool's own BPT on either side is priced as a single-token join or exit, and every other swap goes through the regular stable swap",
+      "scope": ["SWAP-RATE", "SUPPLY-CONSERVATION"],
+      "_source": "ComposableStablePool.sol:202-231"
+    }
+  ]
+}

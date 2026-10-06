@@ -1,5 +1,8 @@
 <!-- SPDX-License-Identifier: MIT -->
-# The fixture — Room 2, door two
+# The second fixture, on file
+
+This was Room 2's door two until 3 October 2026, when the auditor's room (`../review/`) took
+its place. The fixture and its records stand as they were filed.
 
 > **Exhibit fixture.** This is an instance of the DAN hull at `0f3eaf8`, deployed
 > on Base Sepolia by the museum for one filing. It is not the network's cell. The
@@ -91,12 +94,16 @@ after.
 ## Before any key touches Base
 
 The hull behind `deps/dan` must hold the public export's contracts at `0561a4b`,
-which are the hull at `0f3eaf8` with an MIT licence line on the 8 interfaces. The
-submodule is pinned at `5f2012b`, three commits later, and none of the three
-touches these files:
+which are the hull at `0f3eaf8` with an MIT licence line on the 8 interfaces. That
+is the hull this fixture stood from. The submodule has since moved to `0fafb27` for
+the auditor's room, and that commit changes five of these files
+(`ClaimDisputeModule.sol`, `DiscovererPayoutLib.sol`, `ISpecGapModule.sol`,
+`SpecArbiterModule.sol`, `SpecGapModule.sol`), so a stand from the pinned tree
+deploys the newer hull. To stand this fixture again, check out `0561a4b` first, and
+check it before any key touches Base:
 
 ```bash
-git -C deps/dan diff --quiet 0561a4b -- cell/contracts cell/script/DeployCell.s.sol cell/script/EnvReads.s.sol && echo HULL-AT-0561a4b
+git -C deps/dan checkout 0561a4b && git -C deps/dan diff --quiet 0561a4b -- cell/contracts cell/script/DeployCell.s.sol cell/script/EnvReads.s.sol && echo HULL-AT-0561a4b
 ```
 
 The tests, in memory:

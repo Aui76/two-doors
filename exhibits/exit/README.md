@@ -40,7 +40,7 @@ The cell has filed one row. `nextAuditId` reads 1, and row 0 is the audit the ce
   [dan-check/1] home chain 84532 @ block 0x2d18105 · computed 2026-09-25T11:54:19Z
 ```
 
-The Bybit wallet from Room 3, asked on mainnet with `--target-rpc https://eth.drpc.org`:
+The Bybit wallet from Room 2, asked on mainnet with `--target-rpc https://eth.drpc.org`:
 
 ```
   REFUSE: no settled audit reachable for this codehash
@@ -53,9 +53,9 @@ code`). The dashes in those lines are the tool's own output.
 So the pedestal is empty. A story the record can already show does not get a frame. An address with a settled
 row reads CLEAN, and the row is its record. The pedestal is for the address with no row, and today that is
 almost any address you try. It comes back REFUSE because nobody has filed a row for it yet, and the tool says
-that instead of guessing. The rows in Rooms 1 and 3 sit on local forks, so this cell
-doesn't know about them. The first row with your contract's hash in it gets there when someone files it and
-an auditor passes it, the way Room 1 does on its fork.
+that instead of guessing. The rows the rooms file sit on local forks, in memory and on the museum's own
+fixtures, so this cell doesn't know about them. The first row with your contract's hash in it gets there when
+someone files it and an auditor passes it, the way Room 2 does on its fork.
 
 ## Where the tool came from
 
@@ -75,7 +75,7 @@ tree, where it is built. That test file isn't in the public repo, because it rea
 there, so no command in this tree prints its count.
 
 `Exit.t.sol` hashes both files again and fails if one byte has moved. When I changed one character in
-`dan-check.mjs`, it went red. Rooms 1 and 3 run this same copy, so the tool the rooms were read with is the
+`dan-check.mjs`, it went red. Room 2 and the verdict on file run this same copy, so the tool the rooms were read with is the
 tool you leave with.
 
 ```
