@@ -6,8 +6,11 @@ in each test's decoded_logs. The second fixture's Base Sepolia facts are the com
 exhibits/beanstalk-2022-04/fixture/record/ and what ReadTheFixture and ReadTheFiling print
 when they read the chain. The exit's bytes and hashes are computed here from its files.
 
-    python transcript/generate.py            # run everything, write transcript/*.md
+    python transcript/generate.py            # run everything, write transcript/*.md and transcript/site/
     python transcript/generate.py --check    # run everything again, compare with the pages here
+
+transcript/site/ is the same run laid out as the walk a visitor clicks through (walk.py): a
+static site with no build step, which any static host serves as it stands.
     python transcript/generate.py --offline  # skip the Base Sepolia read (the pages say so)
     python transcript/generate.py --draft    # from a dirty tree, to look at; the stamp says so
 
@@ -30,6 +33,9 @@ import sys
 import time
 from datetime import datetime, timezone
 from pathlib import Path
+
+sys.dont_write_bytecode = True  # no __pycache__ beside the pages
+import walk  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "transcript"
@@ -269,22 +275,28 @@ def pages(suites, offline, tally):
         die("no page carries %s" % sorted(ran - claimed))
     if claimed - ran:
         die("forge ran nothing from %s" % sorted(claimed - ran))
-    built = {}
+    built, layout = {}, []
     for slug, title, sections in PAGES:
         lines = ["# " + title, "", "[The transcript](README.md)"]
+        laid = []
         for heading, files in sections:
             lines += ["", "## " + heading]
             lines += test_lines(suites, files, tally)
+            extra = []
             if slug == FIXTURE_TWO[0] and heading.startswith(FIXTURE_TWO[1]):
-                lines += base_records()
-                lines += base_live(offline)
+                extra += base_records()
+                extra += base_live(offline)
             if slug == "exit":
-                lines += exit_files()
+                extra += exit_files()
+            lines += extra
+            laid.append((heading, files, extra))
         built[slug + ".md"] = lines
-    return built
+        layout.append((slug, title, laid))
+    results = {p: tests_of(suites, p) for _, _, sections in PAGES for _, files in sections for p in files}
+    return built, layout, results
 
 
-def index(commit, dirty, build, test_s, tally, offline):
+def stamp_lines(commit, dirty, build, test_s, offline):
     stamp = ["Made from commit `%s`, %s, on %s UTC." % (
                  commit, "tree NOT clean, a draft" if dirty else "tree clean", datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M")),
              "",
@@ -293,15 +305,20 @@ def index(commit, dirty, build, test_s, tally, offline):
              "- `forge test --json -vv`: %.0f s" % test_s]
     if offline:
         stamp.append("- Base Sepolia: not read (--offline)")
+    return block(STAMP, stamp)
+
+
+def index(stamp, tally):
     lines = ["# The transcript", "",
              "What every room prints, and nothing typed. Each page is the output of the commands named on it,",
              "written by `transcript/generate.py`. Run the same commit and you get the same lines, apart from",
              "the times and the live read of Base Sepolia:", "",
              "```bash", "python transcript/generate.py --check", "```", ""]
-    lines += block(STAMP, stamp)
+    lines += stamp
     lines += ["", "**%d passed, %d failed.**" % tuple(tally), ""]
     for slug, title, _ in PAGES:
         lines.append("- [%s](%s.md)" % (title, slug))
+    lines += ["", "The same run, laid out as the walk a visitor clicks through, is `transcript/site/`."]
     return lines
 
 
@@ -334,11 +351,14 @@ def main(argv):
     build = forge_build()
     suites, test_s = forge_test()
     tally = [0, 0]
-    built = pages(suites, offline, tally)
-    built["README.md"] = index(commit, dirty, build, test_s, tally, offline)
+    built, layout, results = pages(suites, offline, tally)
+    stamp = stamp_lines(commit, dirty, build, test_s, offline)
+    built["README.md"] = index(stamp, tally)
     texts = {name: "\n".join(lines) + "\n" for name, lines in built.items()}
+    texts.update(walk.build(layout, results, stamp, tally, ROOT))
     # A page no entry builds any more, such as a room that was merged away.
-    stale = sorted(p.name for p in OUT.glob("*.md") if p.name not in texts)
+    here = list(OUT.glob("*.md")) + [p for p in (OUT / "site").glob("**/*") if p.is_file()]
+    stale = sorted(p.relative_to(OUT).as_posix() for p in here if p.relative_to(OUT).as_posix() not in texts)
     if check:
         differ = list(stale)
         for name, text in texts.items():
@@ -354,6 +374,7 @@ def main(argv):
         (OUT / name).unlink()
         print("removed transcript/" + name)
     for name, text in texts.items():
+        (OUT / name).parent.mkdir(exist_ok=True)
         (OUT / name).write_bytes(text.encode("utf-8"))
         print("wrote transcript/" + name)
     print("%d passed, %d failed, from %s" % (tally[0], tally[1], commit[:7]))
