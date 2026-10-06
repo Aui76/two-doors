@@ -9,16 +9,17 @@ python transcript/generate.py --check
 ```
 
 <!-- stamp -->
-Made from commit `5234e270002119fdc6124217c13b353882736021`, tree clean, on 2026-09-29 07:25 UTC.
+Made from commit `67e2f1aa40d1345f34b9a9323274208fb8814678`, tree clean, on 2026-10-06 21:25 UTC.
 
 - `forge --version`: forge Version: 1.7.1
-- `forge build`: No files changed, compilation skipped, 3 s
-- `forge test --json -vv`: 4 s
+- `forge build`: No files changed, compilation skipped, 1 s
+- `forge test --json -vv`: 3 s
 <!-- /stamp -->
 
-**33 passed, 0 failed.**
+**63 passed, 0 failed.**
 
-- [Room 1, the last safe moment](room-1.md)
-- [Room 2, the two doors](room-2.md)
-- [Room 3, the room with no seat](room-3.md)
+- [Room 1, the auditor's room](room-1.md)
+- [Room 2, the room with no seat](room-2.md)
+- [Room 3, the Balancer room](room-3.md)
 - [The exit](exit.md)
+- [On file: the row passed, and the gap filed after it](record.md)
