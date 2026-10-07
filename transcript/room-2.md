@@ -1,3 +1,4 @@
+<!-- SPDX-License-Identifier: MIT -->
 # Room 2, the room with no seat
 
 [The transcript](README.md)

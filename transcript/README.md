@@ -1,3 +1,4 @@
+<!-- SPDX-License-Identifier: MIT -->
 # The transcript
 
 What every room prints, and nothing typed. Each page is the output of the commands named on it,
@@ -9,11 +10,11 @@ python transcript/generate.py --check
 ```
 
 <!-- stamp -->
-Made from commit `e461af3373f5da5f5996df7c3c55706355bb29b0`, tree clean, on 2026-10-07 10:31 UTC.
+Made from commit `c4c32ea16b592e8f8deab5edef1964d1eb3dc25e`, tree clean, on 2026-10-07 21:51 UTC.
 
 - `forge --version`: forge Version: 1.7.1
-- `forge build`: No files changed, compilation skipped, 1 s
-- `forge test --json -vv`: 5 s
+- `forge build`: No files changed, compilation skipped, 3 s
+- `forge test --json -vv`: 4 s
 <!-- /stamp -->
 
 **63 passed, 0 failed.**

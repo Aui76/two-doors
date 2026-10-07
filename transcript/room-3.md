@@ -1,3 +1,4 @@
+<!-- SPDX-License-Identifier: MIT -->
 # Room 3, the Balancer room
 
 [The transcript](README.md)

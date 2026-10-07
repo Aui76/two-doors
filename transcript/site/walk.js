@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 document.addEventListener("click", function (e) {
   var b = e.target.closest("[data-door]");
   if (!b) return;

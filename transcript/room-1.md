@@ -1,3 +1,4 @@
+<!-- SPDX-License-Identifier: MIT -->
 # Room 1, the auditor's room
 
 [The transcript](README.md)
