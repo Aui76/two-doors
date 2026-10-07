@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>On file: the row passed, and the gap filed after it · Two Doors</title>
 <meta name="description" content="A museum where you stand inside a real hack at the block before it happened and find the loophole yourself.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap">
 <link rel="stylesheet" href="style.css">
 <script>document.documentElement.className = "js";</script>
 <script src="walk.js" defer></script>
@@ -23,7 +26,7 @@
 <h2>What the room prints</h2>
 <h3>The verdict on the fork: the row passed and the door read CLEAN</h3>
 <h4><a href="https://github.com/Aui76/two-doors/blob/main/exhibits/beanstalk-2022-04/Verdict.t.sol"><code>exhibits/beanstalk-2022-04/Verdict.t.sol</code></a></h4>
-<div class="test"><p><span class="pass">passed</span> <code>BeanstalkVerdictTest.test_theRowIsFiledSettledAndFoundByTheCodeHash()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>BeanstalkVerdictTest.test_theRowIsFiledSettledAndFoundByTheCodeHash()</code></p>
 <pre><code>fork block: 14595905
 cell: 0x2e234DAe75C793f67A35089C9d99245E1C58470b
 audit id: 0
@@ -33,15 +36,15 @@ case root: 0xbc7d4587db7059b977be92237c92d706145251f896f1909fe4e69e5b066b838d
 min audit window (seconds): 1209600
 state (6 = InBlock): 6</code></pre>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>BeanstalkVerdictTest.test_aDifferentHashFindsNoRow()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>BeanstalkVerdictTest.test_aDifferentHashFindsNoRow()</code></p>
 <p class="muted">It prints nothing; it asserts.</p>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>BeanstalkVerdictTest.test_theWindowCannotBeSkipped()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>BeanstalkVerdictTest.test_theWindowCannotBeSkipped()</code></p>
 <p class="muted">It prints nothing; it asserts.</p>
 </div>
 <h3>The second fixture: the same words filed as a gap after the PASS</h3>
 <h4><a href="https://github.com/Aui76/two-doors/blob/main/exhibits/beanstalk-2022-04/Fixture.t.sol"><code>exhibits/beanstalk-2022-04/Fixture.t.sol</code></a></h4>
-<div class="test"><p><span class="pass">passed</span> <code>FixtureTest.test_standsTheHullUnderTheTestnetProfile()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>FixtureTest.test_standsTheHullUnderTheTestnetProfile()</code></p>
 <pre><code>Room 2 fixture: the DAN hull at 0f3eaf8 - not the network&#x27;s cell
   chain id                 31337
   fixture key              0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
@@ -61,7 +64,7 @@ state (6 = InBlock): 6</code></pre>
 fixture key AUDIT (wei): 50000000000000000000
 AuditCell runtime bytes: 20909</code></pre>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>FixtureTest.test_mintIsOneRowAndTheClaimStakeAgainstIt()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>FixtureTest.test_mintIsOneRowAndTheClaimStakeAgainstIt()</code></p>
 <pre><code>Room 2 fixture: the DAN hull at 0f3eaf8 - not the network&#x27;s cell
   chain id                 31337
   fixture key              0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
@@ -80,7 +83,7 @@ AuditCell runtime bytes: 20909</code></pre>
   fixture key AUDIT (wei)  50000000000000000000
 requiredClaimStake (wei): 10000000000000000000</code></pre>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>FixtureTest.test_theOpenSeatIsAChoice()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>FixtureTest.test_theOpenSeatIsAChoice()</code></p>
 <pre><code>Room 2 fixture: the DAN hull at 0f3eaf8 - not the network&#x27;s cell
   chain id                 31337
   fixture key              0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
@@ -98,13 +101,13 @@ requiredClaimStake (wei): 10000000000000000000</code></pre>
   claim filing stake (wei) 10000000000000000000
   fixture key AUDIT (wei)  50000000000000000000</code></pre>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>FixtureTest.test_refusesTheFixtureKeyAsItsOwnAuditor()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>FixtureTest.test_refusesTheFixtureKeyAsItsOwnAuditor()</code></p>
 <p class="muted">It prints nothing; it asserts.</p>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>FixtureTest.test_refusesEveryNetworkKeyInTheAuditorSeat()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>FixtureTest.test_refusesEveryNetworkKeyInTheAuditorSeat()</code></p>
 <p class="muted">It prints nothing; it asserts.</p>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>FixtureTest.test_standsOnlyOnBaseSepoliaOrTheRehearsal()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>FixtureTest.test_standsOnlyOnBaseSepoliaOrTheRehearsal()</code></p>
 <pre><code>Room 2 fixture: the DAN hull at 0f3eaf8 - not the network&#x27;s cell
   chain id                 84532
   fixture key              0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
@@ -123,10 +126,10 @@ requiredClaimStake (wei): 10000000000000000000</code></pre>
   fixture key AUDIT (wei)  50000000000000000000</code></pre>
 </div>
 <h4><a href="https://github.com/Aui76/two-doors/blob/main/exhibits/beanstalk-2022-04/Filing.t.sol"><code>exhibits/beanstalk-2022-04/Filing.t.sol</code></a></h4>
-<div class="test"><p><span class="pass">passed</span> <code>FilingTest.test_theGapsWordsPointAtTheirSources()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>FilingTest.test_theGapsWordsPointAtTheirSources()</code></p>
 <p class="muted">It prints nothing; it asserts.</p>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>FilingTest.test_standMakesDoorTwosAdminActsInItsOneBroadcast()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>FilingTest.test_standMakesDoorTwosAdminActsInItsOneBroadcast()</code></p>
 <pre><code>Room 2 fixture: the DAN hull at 0f3eaf8 - not the network&#x27;s cell
   chain id                 31337
   fixture key              0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
@@ -144,7 +147,7 @@ requiredClaimStake (wei): 10000000000000000000</code></pre>
   claim filing stake (wei) 10000000000000000000
   fixture key AUDIT (wei)  50000000000000000000</code></pre>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>FilingTest.test_filesWithTheFixtureKeyAsProtocol()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>FilingTest.test_filesWithTheFixtureKeyAsProtocol()</code></p>
 <pre><code>Room 2 fixture: the DAN hull at 0f3eaf8 - not the network&#x27;s cell
   chain id                 31337
   fixture key              0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
@@ -181,7 +184,7 @@ Room 2, door two: a spec gap on the fixture - not the network&#x27;s cell
 filing stake (wei): 10000000000000000000
 result root: 0x41922cf47145f448a316089973c55a15409ff973e5c68c50115cbd598d759b1e</code></pre>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>FilingTest.test_filesWithTheFixtureKeyAsDiscoverer()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>FilingTest.test_filesWithTheFixtureKeyAsDiscoverer()</code></p>
 <pre><code>Room 2 fixture: the DAN hull at 0f3eaf8 - not the network&#x27;s cell
   chain id                 31337
   fixture key              0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
@@ -216,7 +219,7 @@ Room 2, door two: a spec gap on the fixture - not the network&#x27;s cell
   result root
 0x41922cf47145f448a316089973c55a15409ff973e5c68c50115cbd598d759b1e</code></pre>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>FilingTest.test_silenceConfirmsTheGapAndReturnsTheStake()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>FilingTest.test_silenceConfirmsTheGapAndReturnsTheStake()</code></p>
 <pre><code>Room 2 fixture: the DAN hull at 0f3eaf8 - not the network&#x27;s cell
   chain id                 31337
   fixture key              0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
@@ -251,7 +254,7 @@ Room 2, door two: a spec gap on the fixture - not the network&#x27;s cell
   result root
 0x41922cf47145f448a316089973c55a15409ff973e5c68c50115cbd598d759b1e</code></pre>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>FilingTest.test_adoptionIsPaidFromTheProtocol()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>FilingTest.test_adoptionIsPaidFromTheProtocol()</code></p>
 <pre><code>Room 2 fixture: the DAN hull at 0f3eaf8 - not the network&#x27;s cell
   chain id                 31337
   fixture key              0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
@@ -286,7 +289,7 @@ Room 2, door two: a spec gap on the fixture - not the network&#x27;s cell
   result root
 0x41922cf47145f448a316089973c55a15409ff973e5c68c50115cbd598d759b1e</code></pre>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>FilingTest.test_theRowSettlesBesideTheGap()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>FilingTest.test_theRowSettlesBesideTheGap()</code></p>
 <pre><code>Room 2 fixture: the DAN hull at 0f3eaf8 - not the network&#x27;s cell
   chain id                 31337
   fixture key              0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
@@ -323,7 +326,7 @@ Room 2, door two: a spec gap on the fixture - not the network&#x27;s cell
 row state after its window: 6
 auditor AUDIT after its window (wei): 40625000000000000000</code></pre>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>FilingTest.test_refusesThreeSeatsOnTwoKeys()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>FilingTest.test_refusesThreeSeatsOnTwoKeys()</code></p>
 <pre><code>Room 2 fixture: the DAN hull at 0f3eaf8 - not the network&#x27;s cell
   chain id                 31337
   fixture key              0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
@@ -341,7 +344,7 @@ auditor AUDIT after its window (wei): 40625000000000000000</code></pre>
   claim filing stake (wei) 10000000000000000000
   fixture key AUDIT (wei)  50000000000000000000</code></pre>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>FilingTest.test_refusesAnAuditorTheStandDidNotName()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>FilingTest.test_refusesAnAuditorTheStandDidNotName()</code></p>
 <pre><code>Room 2 fixture: the DAN hull at 0f3eaf8 - not the network&#x27;s cell
   chain id                 31337
   fixture key              0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
@@ -359,7 +362,7 @@ auditor AUDIT after its window (wei): 40625000000000000000</code></pre>
   claim filing stake (wei) 10000000000000000000
   fixture key AUDIT (wei)  50000000000000000000</code></pre>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>FilingTest.test_refusesAKeyThatDidNotStandTheFixture()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>FilingTest.test_refusesAKeyThatDidNotStandTheFixture()</code></p>
 <pre><code>Room 2 fixture: the DAN hull at 0f3eaf8 - not the network&#x27;s cell
   chain id                 31337
   fixture key              0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
@@ -377,10 +380,10 @@ auditor AUDIT after its window (wei): 40625000000000000000</code></pre>
   claim filing stake (wei) 10000000000000000000
   fixture key AUDIT (wei)  50000000000000000000</code></pre>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>FilingTest.test_refusesGapWordsTheStandDidNotFreeze()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>FilingTest.test_refusesGapWordsTheStandDidNotFreeze()</code></p>
 <p class="muted">It prints nothing; it asserts.</p>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>FilingTest.test_filesOnce()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>FilingTest.test_filesOnce()</code></p>
 <pre><code>Room 2 fixture: the DAN hull at 0f3eaf8 - not the network&#x27;s cell
   chain id                 31337
   fixture key              0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
@@ -532,8 +535,8 @@ stakeReturnedWei  10000000000000000000</code></pre>
   discoverer holds (wei)   10000000000000000000
   fixture key holds (wei)  0
   fixture key&#x27;s nonce      140
-  read at block            47800127
-  read at (unix s)         1791368542
+  read at block            47800405
+  read at (unix s)         1791369098
   read back from           exhibits/beanstalk-2022-04/fixture/record/84532.filing.json</code></pre>
 <!-- /live -->
 <p class="src">This room's source: <a href="https://github.com/Aui76/two-doors/tree/main/exhibits/beanstalk-2022-04"><code>exhibits/beanstalk-2022-04/</code></a></p>
@@ -542,8 +545,8 @@ stakeReturnedWei  10000000000000000000</code></pre>
 <footer><div class="bar">
 <p><strong>63 passed, 0 failed.</strong> Every line of output on this page is what <code>forge test --json -vv</code> returned. The plaques, specs, findings and code are read from the same commit.</p>
 <!-- stamp -->
-<p>Made from commit <code>a58f81c9f07cdf2f6f53ade7ab44c9b1cbf7443e</code>, tree clean, on 2026-10-07 10:22 UTC.</p>
-<ul><li><code>forge --version</code>: forge Version: 1.7.1</li><li><code>forge build</code>: No files changed, compilation skipped, 5 s</li><li><code>forge test --json -vv</code>: 5 s</li></ul>
+<p>Made from commit <code>e461af3373f5da5f5996df7c3c55706355bb29b0</code>, tree clean, on 2026-10-07 10:31 UTC.</p>
+<ul><li><code>forge --version</code>: forge Version: 1.7.1</li><li><code>forge build</code>: No files changed, compilation skipped, 1 s</li><li><code>forge test --json -vv</code>: 5 s</li></ul>
 <!-- /stamp -->
 <p>Run it yourself:</p>
 <pre><code>git clone https://github.com/Aui76/two-doors

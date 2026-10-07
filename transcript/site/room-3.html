@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Room 3, the Balancer room · Two Doors</title>
 <meta name="description" content="A museum where you stand inside a real hack at the block before it happened and find the loophole yourself.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap">
 <link rel="stylesheet" href="style.css">
 <script>document.documentElement.className = "js";</script>
 <script src="walk.js" defer></script>
@@ -107,7 +110,7 @@
 <section class="door" id="door-one"><h2>Door one</h2>
 <h3>The drain, rebuilt and replayed on the fork</h3>
 <h4><a href="https://github.com/Aui76/two-doors/blob/main/exhibits/balancer-2025-11/replay/Replay.t.sol"><code>exhibits/balancer-2025-11/replay/Replay.t.sol</code></a></h4>
-<div class="test"><p><span class="pass">passed</span> <code>ContractTest.testPoC()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>ContractTest.testPoC()</code></p>
 <pre><code>museum: fork block: 23717396
 museum: before pool A osETH/wETH 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2: 4922.356564867078856521
 museum: before pool A osETH/wETH 0xf1C9acDc66974dFB6dEcB12aA385b9cD01190E38: 6851.581236039298760900
@@ -130,7 +133,7 @@ museum: after pool B wstETH/WETH 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2: 12.
 </div>
 <h3>The chain&#x27;s own drain transaction, run on the fork</h3>
 <h4><a href="https://github.com/Aui76/two-doors/blob/main/exhibits/balancer-2025-11/Transact.t.sol"><code>exhibits/balancer-2025-11/Transact.t.sol</code></a></h4>
-<div class="test"><p><span class="pass">passed</span> <code>BalancerTransactTest.test_theChainsOwnDrainRunsOnTheFork()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>BalancerTransactTest.test_theChainsOwnDrainRunsOnTheFork()</code></p>
 <pre><code>museum: rule set these transactions run under: prague
 museum: fork block: 23717396
 museum: before pool A osETH/wETH 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2: 4922.356564867078856521
@@ -199,7 +202,7 @@ museum: after pool A osETH/wETH 0xf1C9acDc66974dFB6dEcB12aA385b9cD01190E38: 0.45
 museum: after pool B wstETH/WETH 0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0: 10.997570670807774838
 museum: after pool B wstETH/WETH 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2: 13.218903444387279498</code></pre>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>BalancerTransactTest.test_theEndOfTheBlockIsTheDrainAndOneMoreSwapInPoolA()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>BalancerTransactTest.test_theEndOfTheBlockIsTheDrainAndOneMoreSwapInPoolA()</code></p>
 <pre><code>museum: rule set these transactions run under: prague
 Start.
 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2
@@ -285,16 +288,16 @@ museum: amount in: 1.263893099782980590</code></pre>
 <p class="src">From <a href="https://github.com/Aui76/two-doors/blob/main/exhibits/balancer-2025-11/review/finding.json"><code>exhibits/balancer-2025-11/review/finding.json</code></a>. The cell receives only the keccak256 of each string; the test below reads them from this file.</p>
 <h3>The finding filed in review, and the re-run that upholds it, in memory</h3>
 <h4><a href="https://github.com/Aui76/two-doors/blob/main/exhibits/balancer-2025-11/Review.t.sol"><code>exhibits/balancer-2025-11/Review.t.sol</code></a></h4>
-<div class="test"><p><span class="pass">passed</span> <code>BalancerReviewTest.test_theFindingsWordsPointAtTheirSources()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>BalancerReviewTest.test_theFindingsWordsPointAtTheirSources()</code></p>
 <p class="muted">It prints nothing; it asserts.</p>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>BalancerReviewTest.test_theSpecNeverSaysIt()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>BalancerReviewTest.test_theSpecNeverSaysIt()</code></p>
 <p class="muted">It prints nothing; it asserts.</p>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>BalancerReviewTest.test_standRegistersTheRoomsToolsAndFundsOneReview()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>BalancerReviewTest.test_standRegistersTheRoomsToolsAndFundsOneReview()</code></p>
 <p class="muted">It prints nothing; it asserts.</p>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>BalancerReviewTest.test_theAuditorFilesInReviewAndIsPaid()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>BalancerReviewTest.test_theAuditorFilesInReviewAndIsPaid()</code></p>
 <pre><code>The Balancer room: a witness claim filed in review, in memory - not the network&#x27;s cell
   row                      0
   row state                Claimed
@@ -313,7 +316,7 @@ the auditor holds after: 30.000000000000000000
 returned to the protocol: 20.000000000000000000
 the re-run&#x27;s auditor holds after: 20.000000000000000000</code></pre>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>BalancerReviewTest.test_theReRunWaitsForItsWindow()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>BalancerReviewTest.test_theReRunWaitsForItsWindow()</code></p>
 <pre><code>The Balancer room: a witness claim filed in review, in memory - not the network&#x27;s cell
   row                      0
   row state                Claimed
@@ -327,19 +330,19 @@ the re-run&#x27;s auditor holds after: 20.000000000000000000</code></pre>
   result root
 0x5b657d874fe0957bbe39a42dd5ab9c22759309bd1cf65f5e1a0f3a29684bbf31</code></pre>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>BalancerReviewTest.test_refusesThreeSeatsOnTwoKeys()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>BalancerReviewTest.test_refusesThreeSeatsOnTwoKeys()</code></p>
 <p class="muted">It prints nothing; it asserts.</p>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>BalancerReviewTest.test_refusesAnAuditorTheStandDidNotName()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>BalancerReviewTest.test_refusesAnAuditorTheStandDidNotName()</code></p>
 <p class="muted">It prints nothing; it asserts.</p>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>BalancerReviewTest.test_refusesAKeyThatDidNotStandTheFixture()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>BalancerReviewTest.test_refusesAKeyThatDidNotStandTheFixture()</code></p>
 <p class="muted">It prints nothing; it asserts.</p>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>BalancerReviewTest.test_refusesAnyChainButMemory()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>BalancerReviewTest.test_refusesAnyChainButMemory()</code></p>
 <p class="muted">It prints nothing; it asserts.</p>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>BalancerReviewTest.test_filesOnce()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>BalancerReviewTest.test_filesOnce()</code></p>
 <pre><code>The Balancer room: a witness claim filed in review, in memory - not the network&#x27;s cell
   row                      0
   row state                Claimed
@@ -357,26 +360,26 @@ the re-run&#x27;s auditor holds after: 20.000000000000000000</code></pre>
 <details><summary>Where the room stands</summary>
 <h3>Balancer&#x27;s Vault on Ethereum, the block before it was drained</h3>
 <h4><a href="https://github.com/Aui76/two-doors/blob/main/exhibits/balancer-2025-11/Fork.t.sol"><code>exhibits/balancer-2025-11/Fork.t.sol</code></a></h4>
-<div class="test"><p><span class="pass">passed</span> <code>BalancerForkTest.test_forkStandsAtTheNamedBlock()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>BalancerForkTest.test_forkStandsAtTheNamedBlock()</code></p>
 <p class="muted">It prints nothing; it asserts.</p>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>BalancerForkTest.test_vaultCodeIsTheCodeTheRoomNames()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>BalancerForkTest.test_vaultCodeIsTheCodeTheRoomNames()</code></p>
 <p class="muted">It prints nothing; it asserts.</p>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>BalancerForkTest.test_theDrainerHasNotBeenDeployedYet()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>BalancerForkTest.test_theDrainerHasNotBeenDeployedYet()</code></p>
 <p class="muted">It prints nothing; it asserts.</p>
 </div>
 <h4><a href="https://github.com/Aui76/two-doors/blob/main/exhibits/balancer-2025-11/Provenance.t.sol"><code>exhibits/balancer-2025-11/Provenance.t.sol</code></a></h4>
-<div class="test"><p><span class="pass">passed</span> <code>BalancerProvenanceTest.test_vendoredSourcesAreUnmodified()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>BalancerProvenanceTest.test_vendoredSourcesAreUnmodified()</code></p>
 <p class="muted">It prints nothing; it asserts.</p>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>BalancerProvenanceTest.test_roundingWordsAreTheOnesTheSpecCites()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>BalancerProvenanceTest.test_roundingWordsAreTheOnesTheSpecCites()</code></p>
 <p class="muted">It prints nothing; it asserts.</p>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>BalancerProvenanceTest.test_everyInvariantNamesItsSource()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>BalancerProvenanceTest.test_everyInvariantNamesItsSource()</code></p>
 <p class="muted">It prints nothing; it asserts.</p>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>BalancerProvenanceTest.test_specNamesThePoolTheRoomForks()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>BalancerProvenanceTest.test_specNamesThePoolTheRoomForks()</code></p>
 <p class="muted">It prints nothing; it asserts.</p>
 </div>
 </details>
@@ -386,8 +389,8 @@ the re-run&#x27;s auditor holds after: 20.000000000000000000</code></pre>
 <footer><div class="bar">
 <p><strong>63 passed, 0 failed.</strong> Every line of output on this page is what <code>forge test --json -vv</code> returned. The plaques, specs, findings and code are read from the same commit.</p>
 <!-- stamp -->
-<p>Made from commit <code>a58f81c9f07cdf2f6f53ade7ab44c9b1cbf7443e</code>, tree clean, on 2026-10-07 10:22 UTC.</p>
-<ul><li><code>forge --version</code>: forge Version: 1.7.1</li><li><code>forge build</code>: No files changed, compilation skipped, 5 s</li><li><code>forge test --json -vv</code>: 5 s</li></ul>
+<p>Made from commit <code>e461af3373f5da5f5996df7c3c55706355bb29b0</code>, tree clean, on 2026-10-07 10:31 UTC.</p>
+<ul><li><code>forge --version</code>: forge Version: 1.7.1</li><li><code>forge build</code>: No files changed, compilation skipped, 1 s</li><li><code>forge test --json -vv</code>: 5 s</li></ul>
 <!-- /stamp -->
 <p>Run it yourself:</p>
 <pre><code>git clone https://github.com/Aui76/two-doors

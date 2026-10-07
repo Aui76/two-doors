@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Room 1, the auditor&#x27;s room · Two Doors</title>
 <meta name="description" content="A museum where you stand inside a real hack at the block before it happened and find the loophole yourself.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap">
 <link rel="stylesheet" href="style.css">
 <script>document.documentElement.className = "js";</script>
 <script src="walk.js" defer></script>
@@ -75,7 +78,7 @@
 <section class="door" id="door-one"><h2>Door one</h2>
 <h3>What the spec never says: the attack it allows, replayed on the fork</h3>
 <h4><a href="https://github.com/Aui76/two-doors/blob/main/exhibits/beanstalk-2022-04/replay/Replay.t.sol"><code>exhibits/beanstalk-2022-04/replay/Replay.t.sol</code></a></h4>
-<div class="test"><p><span class="pass">passed</span> <code>ContractTest.testExploit()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>ContractTest.testExploit()</code></p>
 <pre><code>museum: door one: the April 2022 Beanstalk drain, replayed on the fork
 museum: the fork block: 14595905
 museum: attacker USDC before the drain: 0.000000
@@ -109,13 +112,13 @@ museum: attacker USDC after the drain: 42062065.615197</code></pre>
 <p class="src">From <a href="https://github.com/Aui76/two-doors/blob/main/exhibits/beanstalk-2022-04/review/finding.json"><code>exhibits/beanstalk-2022-04/review/finding.json</code></a>. The cell receives only the keccak256 of each string; the test below reads them from this file.</p>
 <h3>The finding filed in review, and the re-run that upholds it, in memory</h3>
 <h4><a href="https://github.com/Aui76/two-doors/blob/main/exhibits/beanstalk-2022-04/Review.t.sol"><code>exhibits/beanstalk-2022-04/Review.t.sol</code></a></h4>
-<div class="test"><p><span class="pass">passed</span> <code>ReviewTest.test_theFindingsWordsPointAtTheirSources()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>ReviewTest.test_theFindingsWordsPointAtTheirSources()</code></p>
 <p class="muted">It prints nothing; it asserts.</p>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>ReviewTest.test_theFindingIsTheGapsWords()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>ReviewTest.test_theFindingIsTheGapsWords()</code></p>
 <p class="muted">It prints nothing; it asserts.</p>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>ReviewTest.test_standRegistersTheRoomsToolsAndFundsOneReview()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>ReviewTest.test_standRegistersTheRoomsToolsAndFundsOneReview()</code></p>
 <pre><code>The auditor&#x27;s room fixture: the DAN hull at 7fd937a - not the network&#x27;s cell
   chain id                 31337
   fixture key (protocol)   0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
@@ -130,7 +133,7 @@ museum: attacker USDC after the drain: 42062065.615197</code></pre>
   claim filing stake (wei) 10000000000000000000
   fixture key AUDIT (wei)  70000000000000000000</code></pre>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>ReviewTest.test_theAuditorFilesInReviewAndIsPaid()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>ReviewTest.test_theAuditorFilesInReviewAndIsPaid()</code></p>
 <pre><code>The auditor&#x27;s room fixture: the DAN hull at 7fd937a - not the network&#x27;s cell
   chain id                 31337
   fixture key (protocol)   0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
@@ -164,7 +167,7 @@ the auditor holds after: 30.000000000000000000
 returned to the protocol: 20.000000000000000000
 the re-run&#x27;s auditor holds after: 20.000000000000000000</code></pre>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>ReviewTest.test_theReRunWaitsForItsWindow()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>ReviewTest.test_theReRunWaitsForItsWindow()</code></p>
 <pre><code>The auditor&#x27;s room fixture: the DAN hull at 7fd937a - not the network&#x27;s cell
   chain id                 31337
   fixture key (protocol)   0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
@@ -193,7 +196,7 @@ The auditor&#x27;s room: a witness claim filed in review - not the network&#x27;
   result root
 0x0f00f111557e69da997a934b11450fc1c68964761db51264b16fe1c23d265974</code></pre>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>ReviewTest.test_refusesThreeSeatsOnTwoKeys()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>ReviewTest.test_refusesThreeSeatsOnTwoKeys()</code></p>
 <pre><code>The auditor&#x27;s room fixture: the DAN hull at 7fd937a - not the network&#x27;s cell
   chain id                 31337
   fixture key (protocol)   0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
@@ -208,7 +211,7 @@ The auditor&#x27;s room: a witness claim filed in review - not the network&#x27;
   claim filing stake (wei) 10000000000000000000
   fixture key AUDIT (wei)  70000000000000000000</code></pre>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>ReviewTest.test_refusesAnAuditorTheStandDidNotName()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>ReviewTest.test_refusesAnAuditorTheStandDidNotName()</code></p>
 <pre><code>The auditor&#x27;s room fixture: the DAN hull at 7fd937a - not the network&#x27;s cell
   chain id                 31337
   fixture key (protocol)   0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
@@ -223,7 +226,7 @@ The auditor&#x27;s room: a witness claim filed in review - not the network&#x27;
   claim filing stake (wei) 10000000000000000000
   fixture key AUDIT (wei)  70000000000000000000</code></pre>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>ReviewTest.test_refusesAKeyThatDidNotStandTheFixture()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>ReviewTest.test_refusesAKeyThatDidNotStandTheFixture()</code></p>
 <pre><code>The auditor&#x27;s room fixture: the DAN hull at 7fd937a - not the network&#x27;s cell
   chain id                 31337
   fixture key (protocol)   0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
@@ -238,10 +241,10 @@ The auditor&#x27;s room: a witness claim filed in review - not the network&#x27;
   claim filing stake (wei) 10000000000000000000
   fixture key AUDIT (wei)  70000000000000000000</code></pre>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>ReviewTest.test_refusesFindingWordsTheStandDidNotFreeze()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>ReviewTest.test_refusesFindingWordsTheStandDidNotFreeze()</code></p>
 <p class="muted">It prints nothing; it asserts.</p>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>ReviewTest.test_filesOnce()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>ReviewTest.test_filesOnce()</code></p>
 <pre><code>The auditor&#x27;s room fixture: the DAN hull at 7fd937a - not the network&#x27;s cell
   chain id                 31337
   fixture key (protocol)   0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
@@ -274,23 +277,23 @@ The auditor&#x27;s room: a witness claim filed in review - not the network&#x27;
 <details><summary>Where the room stands</summary>
 <h3>Beanstalk on Ethereum, the block before it was drained</h3>
 <h4><a href="https://github.com/Aui76/two-doors/blob/main/exhibits/beanstalk-2022-04/Fork.t.sol"><code>exhibits/beanstalk-2022-04/Fork.t.sol</code></a></h4>
-<div class="test"><p><span class="pass">passed</span> <code>BeanstalkForkTest.test_forkStandsAtTheNamedBlock()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>BeanstalkForkTest.test_forkStandsAtTheNamedBlock()</code></p>
 <p class="muted">It prints nothing; it asserts.</p>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>BeanstalkForkTest.test_beanstalkCodeIsTheCodeTheVerdictNames()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>BeanstalkForkTest.test_beanstalkCodeIsTheCodeTheVerdictNames()</code></p>
 <p class="muted">It prints nothing; it asserts.</p>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>BeanstalkForkTest.test_theAttackHasNotBeenWrittenYet()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>BeanstalkForkTest.test_theAttackHasNotBeenWrittenYet()</code></p>
 <p class="muted">It prints nothing; it asserts.</p>
 </div>
 <h4><a href="https://github.com/Aui76/two-doors/blob/main/exhibits/beanstalk-2022-04/Provenance.t.sol"><code>exhibits/beanstalk-2022-04/Provenance.t.sol</code></a></h4>
-<div class="test"><p><span class="pass">passed</span> <code>ProvenanceTest.test_vendoredSourcesAreUnmodified()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>ProvenanceTest.test_vendoredSourcesAreUnmodified()</code></p>
 <p class="muted">It prints nothing; it asserts.</p>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>ProvenanceTest.test_governanceConstantsAreTheOnesTheSpecCites()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>ProvenanceTest.test_governanceConstantsAreTheOnesTheSpecCites()</code></p>
 <p class="muted">It prints nothing; it asserts.</p>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>ProvenanceTest.test_everyInvariantNamesItsSource()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>ProvenanceTest.test_everyInvariantNamesItsSource()</code></p>
 <p class="muted">It prints nothing; it asserts.</p>
 </div>
 </details>
@@ -300,8 +303,8 @@ The auditor&#x27;s room: a witness claim filed in review - not the network&#x27;
 <footer><div class="bar">
 <p><strong>63 passed, 0 failed.</strong> Every line of output on this page is what <code>forge test --json -vv</code> returned. The plaques, specs, findings and code are read from the same commit.</p>
 <!-- stamp -->
-<p>Made from commit <code>a58f81c9f07cdf2f6f53ade7ab44c9b1cbf7443e</code>, tree clean, on 2026-10-07 10:22 UTC.</p>
-<ul><li><code>forge --version</code>: forge Version: 1.7.1</li><li><code>forge build</code>: No files changed, compilation skipped, 5 s</li><li><code>forge test --json -vv</code>: 5 s</li></ul>
+<p>Made from commit <code>e461af3373f5da5f5996df7c3c55706355bb29b0</code>, tree clean, on 2026-10-07 10:31 UTC.</p>
+<ul><li><code>forge --version</code>: forge Version: 1.7.1</li><li><code>forge build</code>: No files changed, compilation skipped, 1 s</li><li><code>forge test --json -vv</code>: 5 s</li></ul>
 <!-- /stamp -->
 <p>Run it yourself:</p>
 <pre><code>git clone https://github.com/Aui76/two-doors

@@ -43,78 +43,80 @@ ROOMS = {
 SHORT = {"room-1": "Room 1", "room-2": "Room 2", "room-3": "Room 3", "exit": "The exit", "record": "On file"}
 
 CSS = """:root {
-  --bg: #f6f3ec; --fg: #1d1b16; --muted: #6b6457; --rule: #d8d1c2; --card: #fffdf8;
-  --code-bg: #efe9dc; --accent: #8a3b12; --accent-fg: #fffdf8; --ok: #2f6b2f; --bad: #a12a1a;
-  --door: #ebe4d4;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #15140f; --fg: #ebe6da; --muted: #a39b8a; --rule: #3a362d; --card: #1d1b16;
-    --code-bg: #24221b; --accent: #e08a52; --accent-fg: #15140f; --ok: #8cc58c; --bad: #ef8a78;
-    --door: #26231b;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #15140f; --fg: #ebe6da; --muted: #a39b8a; --rule: #3a362d; --card: #1d1b16;
-  --code-bg: #24221b; --accent: #e08a52; --accent-fg: #15140f; --ok: #8cc58c; --bad: #ef8a78;
-  --door: #26231b;
+  color-scheme: dark;
+  --bg: #0d0f12; --fg: #d4d7dd; --muted: #7d8590; --rule: #262b33; --card: #12151a;
+  --code-bg: #080a0d; --accent: #4fc1d9; --accent-fg: #0d0f12; --ok: #3fd07a; --bad: #f2584f;
+  --warn: #e6c26a; --door: #12151a;
+  --mono: "JetBrains Mono", ui-monospace, "Cascadia Mono", "SF Mono", Menlo, Consolas, monospace;
 }
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; }
-body { margin: 0; background: var(--bg); color: var(--fg);
-  font: 17px/1.6 system-ui, -apple-system, "Segoe UI", sans-serif; }
-main, header .bar, footer .bar { max-width: 46rem; margin: 0 auto; padding: 0 16px; }
-header { border-bottom: 1px solid var(--rule); }
-header .bar { display: flex; flex-wrap: wrap; gap: .25rem 1rem; align-items: baseline; padding-top: .8rem; padding-bottom: .8rem; }
-header .home { font-family: Georgia, "Times New Roman", serif; font-weight: bold; color: var(--fg); text-decoration: none; margin-right: auto; }
-header nav a { color: var(--muted); text-decoration: none; font-size: .9rem; }
-header nav a[aria-current] { color: var(--accent); font-weight: 600; }
+body { margin: 0; background: var(--bg); color: var(--fg); font: 15px/1.65 var(--mono); }
+main, header .bar, footer .bar { max-width: 50rem; margin: 0 auto; padding: 0 16px; }
+header { border-bottom: 1px solid var(--rule); background: var(--code-bg); }
+header .bar { display: flex; flex-wrap: wrap; gap: .25rem 1rem; align-items: baseline; padding-top: .7rem; padding-bottom: .7rem; }
+header .home { font-weight: 700; color: var(--ok); text-decoration: none; margin-right: auto; }
+header .home::before { content: "$ "; color: var(--muted); }
+header nav a { color: var(--muted); text-decoration: none; font-size: .85rem; }
+header nav a:hover { color: var(--fg); }
+header nav a[aria-current] { color: var(--accent); font-weight: 700; }
 header nav { display: flex; flex-wrap: wrap; gap: .2rem .9rem; }
-h1, h2, h3 { font-family: Georgia, "Times New Roman", serif; line-height: 1.25; }
-h1 { font-size: 2rem; margin: 2rem 0 1rem; }
-h2 { font-size: 1.35rem; margin: 2.4rem 0 .6rem; padding-top: .8rem; border-top: 1px solid var(--rule); }
-h3 { font-size: 1.1rem; margin: 1.6rem 0 .4rem; }
-h4 { font-size: .95rem; margin: 1.4rem 0 .3rem; font-weight: 600; }
-a { color: var(--accent); }
-code { font: .86em/1.4 ui-monospace, "Cascadia Mono", Consolas, monospace; background: var(--code-bg); padding: .08em .3em; border-radius: 3px; overflow-wrap: anywhere; }
-pre { background: var(--code-bg); padding: .8rem 1rem; border-radius: 6px; overflow-x: auto; font-size: .82rem; line-height: 1.45; }
-pre code { background: none; padding: 0; overflow-wrap: normal; }
-blockquote { margin: 1rem 0; padding: .1rem 1rem; border-left: 3px solid var(--rule); color: var(--muted); }
-table { border-collapse: collapse; font-size: .82rem; display: block; overflow-x: auto; }
+h1, h2, h3, h4 { font-family: var(--mono); line-height: 1.3; color: #f2f4f7; }
+h1 { font-size: 1.6rem; margin: 2rem 0 1rem; }
+h1::before { content: "$ "; color: var(--ok); }
+h2 { font-size: 1.15rem; margin: 2.4rem 0 .6rem; padding-top: .8rem; border-top: 1px dashed var(--rule); }
+h2::before { content: "# "; color: var(--muted); }
+h3 { font-size: 1rem; margin: 1.6rem 0 .4rem; color: var(--warn); }
+h4 { font-size: .9rem; margin: 1.4rem 0 .3rem; font-weight: 600; }
+a { color: var(--accent); text-underline-offset: 2px; }
+code { font: .92em/1.4 var(--mono); background: var(--code-bg); color: #e8eaee; padding: .05em .3em; border-radius: 3px; overflow-wrap: anywhere; }
+h4 a code, h4 code { background: none; padding: 0; color: var(--accent); }
+pre { background: var(--code-bg); border: 1px solid var(--rule); padding: .8rem 1rem; border-radius: 4px; overflow-x: auto; font-size: .8rem; line-height: 1.5; color: #c9cdd4; }
+pre code { background: none; padding: 0; overflow-wrap: normal; color: inherit; }
+blockquote { margin: 1rem 0; padding: .1rem 1rem; border-left: 2px solid var(--rule); color: var(--muted); }
+table { border-collapse: collapse; font-size: .8rem; display: block; overflow-x: auto; }
 th, td { border: 1px solid var(--rule); padding: .3rem .5rem; text-align: left; vertical-align: top; }
-.lede { font-size: 1.12rem; }
-.muted, .src { color: var(--muted); font-size: .88rem; }
-.plaque { background: var(--card); border: 1px solid var(--rule); border-radius: 8px; padding: .4rem 1.2rem; }
-.spec ol { padding-left: 1.4rem; }
+th { color: var(--warn); }
+.lede { font-size: 1rem; }
+.muted, .src { color: var(--muted); font-size: .85rem; }
+.plaque { background: var(--card); border: 1px solid var(--rule); border-radius: 4px; padding: .4rem 1.2rem; }
+.spec ol { padding-left: 1.6rem; }
 .spec li { margin: .5rem 0; }
-.spec li code.id { font-size: .78em; }
+.spec li::marker { color: var(--muted); }
+.spec li code.id { font-size: .85em; }
 .excerpt pre { counter-reset: none; }
-.ln { color: var(--muted); user-select: none; }
+.ln { color: #4a525d; user-select: none; }
 .test { margin: .5rem 0 .9rem; }
 .test p { margin: .2rem 0; }
-.pass { color: var(--ok); font-weight: 600; }
-.fail { color: var(--bad); font-weight: 600; }
-details { background: var(--card); border: 1px solid var(--rule); border-radius: 8px; padding: .6rem 1rem; margin: 1rem 0; }
-details > summary { cursor: pointer; font-weight: 600; }
-details.hunt > summary { color: var(--accent); }
-details.hunt blockquote { color: var(--fg); border-left-color: var(--accent); font-size: 1.05rem; }
-.btn { display: inline-block; background: var(--accent); color: var(--accent-fg); border: 0; border-radius: 6px;
-  padding: .7rem 1.2rem; font: 600 1rem/1.2 system-ui, sans-serif; text-decoration: none; cursor: pointer; }
-.btn:focus-visible, details > summary:focus-visible { outline: 3px solid var(--fg); outline-offset: 2px; }
+.test p code { background: none; padding: 0; }
+.pass { color: var(--ok); font-weight: 700; }
+.fail { color: var(--bad); font-weight: 700; }
+details { background: var(--card); border: 1px solid var(--rule); border-radius: 4px; padding: .6rem 1rem; margin: 1rem 0; }
+details > summary { cursor: pointer; font-weight: 700; }
+details.hunt > summary { color: var(--warn); }
+details.hunt blockquote { color: var(--fg); border-left-color: var(--warn); }
+.btn { display: inline-block; background: transparent; color: var(--ok); border: 1px solid var(--ok); border-radius: 4px;
+  padding: .6rem 1.1rem; font: 700 .95rem/1.2 var(--mono); text-decoration: none; cursor: pointer; }
+.btn::before { content: "> "; }
+.btn:hover { background: var(--ok); color: var(--bg); }
+.btn:focus-visible, details > summary:focus-visible, .doors button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .doors { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem; margin: 1rem 0; }
 @media (max-width: 560px) { .doors { grid-template-columns: 1fr; } }
 .doors button { text-align: left; background: var(--door); color: var(--fg); border: 1px solid var(--rule);
-  border-radius: 8px; padding: .9rem 1rem; font: inherit; cursor: pointer; }
-.doors button strong { display: block; font-family: Georgia, serif; font-size: 1.1rem; }
-.doors button[aria-pressed="true"] { border-color: var(--accent); box-shadow: inset 0 0 0 2px var(--accent); }
-.door { border-left: 3px solid var(--accent); padding-left: 1rem; margin: 1.5rem 0; }
+  border-radius: 4px; padding: .9rem 1rem; font: inherit; cursor: pointer; }
+.doors button:hover { border-color: var(--muted); }
+.doors button strong { display: block; font-size: 1rem; color: var(--accent); }
+.doors button[aria-pressed="true"] { border-color: var(--ok); box-shadow: inset 0 0 0 1px var(--ok); }
+.doors button[aria-pressed="true"] strong { color: var(--ok); }
+.door { border-left: 2px solid var(--ok); padding-left: 1rem; margin: 1.5rem 0; }
 .js .door:not(.open) { display: none; }
-dl.filed dt { font-weight: 600; margin-top: .6rem; }
+dl.filed dt { font-weight: 700; margin-top: .6rem; color: var(--warn); }
 dl.filed dd { margin: 0; }
 .next { margin: 2.5rem 0 1rem; }
-footer { border-top: 1px solid var(--rule); margin-top: 3rem; }
-footer .bar { padding-top: 1rem; padding-bottom: 2rem; font-size: .85rem; color: var(--muted); }
-footer pre { font-size: .78rem; }
+footer { border-top: 1px solid var(--rule); margin-top: 3rem; background: var(--code-bg); }
+footer .bar { padding-top: 1rem; padding-bottom: 2rem; font-size: .8rem; color: var(--muted); }
+footer strong { color: var(--ok); }
+footer pre { font-size: .76rem; }
 """
 
 JS = """document.addEventListener("click", function (e) {
@@ -245,7 +247,7 @@ def test_html(results, files, base):
         for contract, name, res in results[path]:
             ok = res["status"] == "Success"
             out.append('<div class="test"><p><span class="%s">%s</span> <code>%s.%s</code>%s</p>' % (
-                "pass" if ok else "fail", "passed" if ok else "FAILED", esc(contract), esc(name),
+                "pass" if ok else "fail", "[PASS]" if ok else "[FAIL]", esc(contract), esc(name),
                 "" if ok else ": " + esc(res.get("reason"))))
             logs = res.get("decoded_logs") or []
             if logs:
@@ -318,6 +320,9 @@ def page(slug, title, body, stamp, tally):
         '<meta name="viewport" content="width=device-width, initial-scale=1">',
         "<title>%s</title>" % esc(title if slug == "index" else title + " · Two Doors"),
         '<meta name="description" content="A museum where you stand inside a real hack at the block before it happened and find the loophole yourself.">',
+        '<link rel="preconnect" href="https://fonts.googleapis.com">',
+        '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>',
+        '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap">',
         '<link rel="stylesheet" href="style.css">',
         '<script>document.documentElement.className = "js";</script>',
         '<script src="walk.js" defer></script>',

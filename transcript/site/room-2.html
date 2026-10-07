@@ -5,6 +5,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Room 2, the room with no seat · Two Doors</title>
 <meta name="description" content="A museum where you stand inside a real hack at the block before it happened and find the loophole yourself.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&display=swap">
 <link rel="stylesheet" href="style.css">
 <script>document.documentElement.className = "js";</script>
 <script src="walk.js" defer></script>
@@ -34,10 +37,10 @@
 <h2>What the room prints</h2>
 <h3>Bybit&#x27;s wallet on Ethereum, February 2025</h3>
 <h4><a href="https://github.com/Aui76/two-doors/blob/main/exhibits/bybit-2025-02/Fork.t.sol"><code>exhibits/bybit-2025-02/Fork.t.sol</code></a></h4>
-<div class="test"><p><span class="pass">passed</span> <code>BybitForkTest.test_theForkIsTheBlockBefore()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>BybitForkTest.test_theForkIsTheBlockBefore()</code></p>
 <p class="muted">It prints nothing; it asserts.</p>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>BybitForkTest.test_theWalletAsItStood()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>BybitForkTest.test_theWalletAsItStood()</code></p>
 <pre><code>fork block: 21895237
 fork timestamp: 1740147203
 wallet: 0x1Db92e2EeBC8E0c075a02BeA49a2935BcD2dFCF4
@@ -51,7 +54,7 @@ nonce: 71
 balance (ETH): 401346.768858404671846374</code></pre>
 </div>
 <h4><a href="https://github.com/Aui76/two-doors/blob/main/exhibits/bybit-2025-02/NoSeat.t.sol"><code>exhibits/bybit-2025-02/NoSeat.t.sol</code></a></h4>
-<div class="test"><p><span class="pass">passed</span> <code>BybitNoSeatTest.test_threeOwnersSignedThisTransaction()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>BybitNoSeatTest.test_threeOwnersSignedThisTransaction()</code></p>
 <pre><code>signed transaction: 0x46deef0f52e3a983b67abf4714448a41dd7ffd6d32d32da69d62081c68ad7882
 Safe nonce: 71
 Safe transaction hash: 0xb3476d061aeb8fc1d605a873c483a2402d88a68a9cdd1a8b47655dd55ba004f8
@@ -62,7 +65,7 @@ signed by owner: 0x3Cc3A225769900e003E264dd4CB43E90896BC21A
 signed by owner: 0xe3dF2cCEAc61B1aFA311372ecC5B40A3A6585a9E
 signatures required (threshold): 3</code></pre>
 </div>
-<div class="test"><p><span class="pass">passed</span> <code>BybitNoSeatTest.test_theCheckPassesAndTheMoneyLeaves()</code></p>
+<div class="test"><p><span class="pass">[PASS]</span> <code>BybitNoSeatTest.test_theCheckPassesAndTheMoneyLeaves()</code></p>
 <pre><code>sweep transaction: 0xb61413c495fdad6114a7aa863a00b2e3c28945979a10885b12b30316ea9f072c
 fork block: 21895237
 cell: 0x2e234DAe75C793f67A35089C9d99245E1C58470b
@@ -84,8 +87,8 @@ state after (6 = InBlock): 6</code></pre>
 <footer><div class="bar">
 <p><strong>63 passed, 0 failed.</strong> Every line of output on this page is what <code>forge test --json -vv</code> returned. The plaques, specs, findings and code are read from the same commit.</p>
 <!-- stamp -->
-<p>Made from commit <code>a58f81c9f07cdf2f6f53ade7ab44c9b1cbf7443e</code>, tree clean, on 2026-10-07 10:22 UTC.</p>
-<ul><li><code>forge --version</code>: forge Version: 1.7.1</li><li><code>forge build</code>: No files changed, compilation skipped, 5 s</li><li><code>forge test --json -vv</code>: 5 s</li></ul>
+<p>Made from commit <code>e461af3373f5da5f5996df7c3c55706355bb29b0</code>, tree clean, on 2026-10-07 10:31 UTC.</p>
+<ul><li><code>forge --version</code>: forge Version: 1.7.1</li><li><code>forge build</code>: No files changed, compilation skipped, 1 s</li><li><code>forge test --json -vv</code>: 5 s</li></ul>
 <!-- /stamp -->
 <p>Run it yourself:</p>
 <pre><code>git clone https://github.com/Aui76/two-doors
