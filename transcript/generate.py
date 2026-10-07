@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: MIT
 """Writes the museum's transcript: what every room prints, page by page, stamped with the commit.
 
 Nothing on these pages is typed. The rooms' lines are what `forge test --json -vv` returns
@@ -42,6 +43,7 @@ OUT = ROOT / "transcript"
 RECORDS = "exhibits/beanstalk-2022-04/fixture/record/"
 BASE_RPC = os.environ.get("BASE_SEPOLIA_RPC_URL", "").strip() or "https://sepolia.base.org"
 EXPLORER = "https://sepolia.basescan.org/tx/"
+SPDX = "<!-- SPDX-License-Identifier: MIT -->"
 STAMP = ("<!-- stamp -->", "<!-- /stamp -->")
 LIVE = ("<!-- live -->", "<!-- /live -->")
 
@@ -277,7 +279,7 @@ def pages(suites, offline, tally):
         die("forge ran nothing from %s" % sorted(claimed - ran))
     built, layout = {}, []
     for slug, title, sections in PAGES:
-        lines = ["# " + title, "", "[The transcript](README.md)"]
+        lines = [SPDX, "# " + title, "", "[The transcript](README.md)"]
         laid = []
         for heading, files in sections:
             lines += ["", "## " + heading]
@@ -309,7 +311,7 @@ def stamp_lines(commit, dirty, build, test_s, offline):
 
 
 def index(stamp, tally):
-    lines = ["# The transcript", "",
+    lines = [SPDX, "# The transcript", "",
              "What every room prints, and nothing typed. Each page is the output of the commands named on it,",
              "written by `transcript/generate.py`. Run the same commit and you get the same lines, apart from",
              "the times and the live read of Base Sepolia:", "",

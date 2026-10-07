@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: Apache-2.0
+// Changed by Two Doors from DeFiHackLabs' src/test/2025-11/BalancerV2_exp.sol (Apache-2.0, LICENSE beside this file):
+// the imports, and the lines marked museum:.
 pragma solidity ^0.8.0;
 
 import "forge-std/Test.sol";

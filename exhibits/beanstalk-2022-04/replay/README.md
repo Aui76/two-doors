@@ -1,3 +1,4 @@
+<!-- SPDX-License-Identifier: MIT -->
 # The replay — Room 1, door one
 
 This directory holds the exploit replay: the April-2022 Beanstalk attack, rebuilt

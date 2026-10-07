@@ -1,3 +1,4 @@
+<!-- SPDX-License-Identifier: MIT -->
 # Attribution — the replay is a port with credit
 
 The replay in this directory is a port of the public exploit test carried by
@@ -14,7 +15,11 @@ The replay in this directory is a port of the public exploit test carried by
 - Its constructor forks at the block this museum forks at, 23,717,396 — to be
   confirmed against the fetched file (see `README.md`, "Footing").
 
-The Apache-2.0 licence and NOTICE are carried with the port, and every room that
+DeFiHackLabs' own licence file is carried beside the port as `LICENSE`, byte for byte
+(fetched 2026-10-07 from the repository's `main`: 11,347 bytes, sha256
+`aa728951f2cd7399efd5fcb214cde9e8c12a4ebb3cf08222e7256b933a102bae`). The repository has no
+NOTICE file to carry. `Replay.t.sol` is changed from the original, and says so at its top:
+the imports, and the lines marked `museum:`, both listed in `README.md`. Every room that
 shows the replay credits DeFiHackLabs by name.
 
 This is not new. It is the exploit of 3 November 2025, on-chain and permanent,

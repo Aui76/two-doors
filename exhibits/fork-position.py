@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: MIT
 """Shows that each room's fork block is the state its attack met, not only the block before it.
 
 A fork by block number, createSelectFork(url, N), is the state at the end of block N. Each

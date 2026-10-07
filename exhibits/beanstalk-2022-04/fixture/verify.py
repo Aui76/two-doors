@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# SPDX-License-Identifier: MIT
 """Verify the fixture's sixteen contracts on Basescan, after proving each one locally.
 
 The fixture's contracts are the DAN hull compiled with via_ir. Under via_ir the code solc

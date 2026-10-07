@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 """The transcript as a walk a judge can click through: transcript/site/, written by generate.py.
 
 Nothing here runs a room or reads a chain. generate.py hands over the same forge results and the
@@ -42,7 +43,8 @@ ROOMS = {
 }
 SHORT = {"room-1": "Room 1", "room-2": "Room 2", "room-3": "Room 3", "exit": "The exit", "record": "On file"}
 
-CSS = """:root {
+CSS = """/* SPDX-License-Identifier: MIT */
+:root {
   color-scheme: dark;
   --bg: #0d0f12; --fg: #d4d7dd; --muted: #7d8590; --rule: #262b33; --card: #12151a;
   --code-bg: #080a0d; --accent: #4fc1d9; --accent-fg: #0d0f12; --ok: #3fd07a; --bad: #f2584f;
@@ -119,7 +121,8 @@ footer strong { color: var(--ok); }
 footer pre { font-size: .76rem; }
 """
 
-JS = """document.addEventListener("click", function (e) {
+JS = """// SPDX-License-Identifier: MIT
+document.addEventListener("click", function (e) {
   var b = e.target.closest("[data-door]");
   if (!b) return;
   document.querySelectorAll(".door").forEach(function (d) { d.classList.toggle("open", d.id === b.dataset.door); });
@@ -314,6 +317,7 @@ def page(slug, title, body, stamp, tally):
                   for s in SHORT)
     return "\n".join([
         "<!doctype html>",
+        "<!-- SPDX-License-Identifier: MIT -->",
         '<html lang="en">',
         "<head>",
         '<meta charset="utf-8">',

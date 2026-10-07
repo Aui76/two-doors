@@ -1,3 +1,4 @@
+<!-- SPDX-License-Identifier: MIT -->
 # The replay — the Balancer room, the attacker's door
 
 This directory holds the exploit replay: the 3-November-2025 Balancer V2 drain,

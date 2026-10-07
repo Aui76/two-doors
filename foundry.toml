@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: MIT
 # The museum's harness. Every exhibit is a Foundry test that forks a public chain
 # at a named block and prints what it finds.
 

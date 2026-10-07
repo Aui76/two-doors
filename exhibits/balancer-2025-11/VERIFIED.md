@@ -1,3 +1,4 @@
+<!-- SPDX-License-Identifier: MIT -->
 # Balancer V2, 3 November 2025: the facts, read at their sources
 
 This file records the fetch-and-verify that VD-307(5) requires before any room code is written. Each fact below was
