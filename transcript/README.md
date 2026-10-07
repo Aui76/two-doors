@@ -9,11 +9,11 @@ python transcript/generate.py --check
 ```
 
 <!-- stamp -->
-Made from commit `67e2f1aa40d1345f34b9a9323274208fb8814678`, tree clean, on 2026-10-06 21:25 UTC.
+Made from commit `a58f81c9f07cdf2f6f53ade7ab44c9b1cbf7443e`, tree clean, on 2026-10-07 10:22 UTC.
 
 - `forge --version`: forge Version: 1.7.1
-- `forge build`: No files changed, compilation skipped, 1 s
-- `forge test --json -vv`: 3 s
+- `forge build`: No files changed, compilation skipped, 5 s
+- `forge test --json -vv`: 5 s
 <!-- /stamp -->
 
 **63 passed, 0 failed.**
@@ -23,3 +23,5 @@ Made from commit `67e2f1aa40d1345f34b9a9323274208fb8814678`, tree clean, on 2026
 - [Room 3, the Balancer room](room-3.md)
 - [The exit](exit.md)
 - [On file: the row passed, and the gap filed after it](record.md)
+
+The same run, laid out as the walk a visitor clicks through, is `transcript/site/`.

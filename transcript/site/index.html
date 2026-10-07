@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Two Doors</title>
+<meta name="description" content="A museum where you stand inside a real hack at the block before it happened and find the loophole yourself.">
+<link rel="stylesheet" href="style.css">
+<script>document.documentElement.className = "js";</script>
+<script src="walk.js" defer></script>
+</head>
+<body>
+<header><div class="bar"><a class="home" href="index.html">Two Doors</a><nav><a href="room-1.html">Room 1</a><a href="room-2.html">Room 2</a><a href="room-3.html">Room 3</a><a href="exit.html">The exit</a><a href="record.html">On file</a></nav></div></header>
+<main>
+<h1>Two doors</h1>
+<div class="lede">
+<p>A museum where you stand inside a real hack at the block before it happened and find the loophole yourself. Then you have two doors. One is the attack. The other is filing what you found on DAN, and DAN pays you for it.</p>
+<p>Every room is a Foundry test on a fork of a public chain at a named block. I typed none of the numbers on the walls. The tests read them off the chain and print them, and each README puts the command next to the number.</p>
+</div>
+<p class="next"><a class="btn" href="room-1.html">Enter Room 1</a></p>
+<h2>The walk</h2>
+<ol>
+<li><a href="room-1.html">Room 1, the auditor&#x27;s room</a></li>
+<li><a href="room-2.html">Room 2, the room with no seat</a></li>
+<li><a href="room-3.html">Room 3, the Balancer room</a></li>
+<li><a href="exit.html">The exit</a></li>
+<li><a href="record.html">On file: the row passed, and the gap filed after it</a></li>
+</ol>
+<p class="muted">The same pages as plain text, with the stamp of the run that wrote them: <a href="https://github.com/Aui76/two-doors/blob/main/transcript/README.md">transcript/README.md</a>.</p>
+</main>
+<footer><div class="bar">
+<p><strong>63 passed, 0 failed.</strong> Every line of output on this page is what <code>forge test --json -vv</code> returned. The plaques, specs, findings and code are read from the same commit.</p>
+<!-- stamp -->
+<p>Made from commit <code>a58f81c9f07cdf2f6f53ade7ab44c9b1cbf7443e</code>, tree clean, on 2026-10-07 10:22 UTC.</p>
+<ul><li><code>forge --version</code>: forge Version: 1.7.1</li><li><code>forge build</code>: No files changed, compilation skipped, 5 s</li><li><code>forge test --json -vv</code>: 5 s</li></ul>
+<!-- /stamp -->
+<p>Run it yourself:</p>
+<pre><code>git clone https://github.com/Aui76/two-doors
+cd two-doors
+python transcript/generate.py --check</code></pre>
+<p><a href="https://github.com/Aui76/two-doors">The repository</a></p>
+</div></footer>
+</body>
+</html>

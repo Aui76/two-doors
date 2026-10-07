@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Room 1, the auditor&#x27;s room · Two Doors</title>
+<meta name="description" content="A museum where you stand inside a real hack at the block before it happened and find the loophole yourself.">
+<link rel="stylesheet" href="style.css">
+<script>document.documentElement.className = "js";</script>
+<script src="walk.js" defer></script>
+</head>
+<body>
+<header><div class="bar"><a class="home" href="index.html">Two Doors</a><nav><a href="room-1.html" aria-current="page">Room 1</a><a href="room-2.html">Room 2</a><a href="room-3.html">Room 3</a><a href="exit.html">The exit</a><a href="record.html">On file</a></nav></div></header>
+<main>
+<h1>Room 1, the auditor&#x27;s room</h1>
+<div class="plaque">
+<p>Beanstalk is staked in DAN. Its diamond&#x27;s code and its governance spec sit on a row with a bounty of 40 AUDIT, and the draw gives the row to you. You are the auditor. The contracts land in front of you and you read them while the row is in review, before you give any verdict.</p>
+<p>The spec says a vote counts with the voter&#x27;s Stalk at the moment of the vote, and that an emergency commit needs a day and a supermajority, counted from the proposal. Read <code>VotingBooth.sol</code> lines 32 to 35 and <code>GovernanceFacet.sol</code> lines 180 to 191 next to it and the code does exactly that. What the spec never says is that the weight has to be held before the proposal. So a position bought after the proposal votes with full weight, and that is the attack: flash loan, deposit, vote, commit, in one transaction. Door one of this exhibit is that sentence run on a fork of block 14,595,905.</p>
+<p>You don&#x27;t pass the row and you don&#x27;t fail it. You file what you found as a witness claim on the row, with a stake. The cell sends the finding to a drawn stranger to run again with the evaluator. If the stranger gets the same FAIL, the row is Exploited once the re-run&#x27;s window closes, and you are paid as anyone who found it would be. If the re-run reads PASS, you lose the stake. If it reads neither, nobody judged anything, the stake comes back and the clock you lost is given back.</p>
+<p>A discoverer who is not on the row files the same finding the same way after a PASS. The finding, the stake and the pay are the same. The only difference is when you file it.</p>
+</div>
+<h2>The row in front of you</h2>
+<div class="spec">
+<p>The row names <strong>Beanstalk governance (GovernanceFacet, VotingBooth, Bip)</strong>, <code>0xC1E088fC1323b20BCBee9bd1B9fC9546db5624C5</code> on chain 1 at block 14,595,905, runtime codehash <code>0x2ff59388cd5e1842a3d057338010945a779a6c7d57abfb5e9ddc697838700870</code>.</p>
+<p>The spec on the row, <a href="https://github.com/Aui76/two-doors/blob/main/exhibits/beanstalk-2022-04/spec/governance-v0.json"><code>governance-v0.json</code></a>: 14 invariants, each with the line it was read from.</p>
+<ol>
+<li>propose reverts unless the caller&#x27;s share of total Roots is strictly greater than the 0.1% proposal threshold<br><span class="src"><code class="id">propose-requires-threshold-stake</code> · whitepaper 6.5.1; GovernanceFacet.sol:43; Bip.sol:161; C.sol:52</span></li>
+<li>propose reverts when the caller already has 5 active BIPs<br><span class="src"><code class="id">propose-caps-active-propositions</code> · GovernanceFacet.sol:44; Bip.sol:169; C.sol:54</span></li>
+<li>propose reverts when the init address, the diamond cut and the pause flag are all empty<br><span class="src"><code class="id">propose-rejects-empty-proposition</code> · GovernanceFacet.sol:45-48; whitepaper 6.5.4</span></li>
+<li>proposing casts the proposer&#x27;s vote in the same call, and the proposer may not unvote their own BIP<br><span class="src"><code class="id">proposer-votes-and-is-bound</code> · whitepaper 6.5.1 closing paragraph; GovernanceFacet.sol:62, :109, :129, :152</span></li>
+<li>vote reverts when the caller&#x27;s Roots balance is zero<br><span class="src"><code class="id">vote-requires-silo-membership</code> · whitepaper 6.5.1; GovernanceFacet.sol:70</span></li>
+<li>vote reverts on a BIP that was never proposed, already executed, or whose voting period has ended, and reverts on a second vote from the same account<br><span class="src"><code class="id">vote-only-while-nominated-and-active</code> · GovernanceFacet.sol:71-73; Bip.sol:139, :143; whitepaper 6.5.2</span></li>
+<li>a vote adds exactly the voter&#x27;s Roots balance to the BIP&#x27;s tally, and Roots track the voter&#x27;s share of Stalk; only votes in favour are recorded<br><span class="src"><code class="id">vote-weight-is-proportional-to-stalk</code> · whitepaper 6.5.1, the participation paragraph; VotingBooth.sol:32; Bip.sol:188</span></li>
+<li>voting raises the voter&#x27;s votedUntil to the end of the BIP&#x27;s voting period, and unvoting recomputes it from the voter&#x27;s remaining active votes<br><span class="src"><code class="id">voting-locks-the-voter-until-the-period-ends</code> · VotingBooth.sol:42-60; whitepaper 6.5.1 closing paragraph</span></li>
+<li>commit reverts while the voting period is still open, reverts once the BIP has expired, and otherwise requires more than half of the Roots outstanding at the end of the period<br><span class="src"><code class="id">commit-requires-ended-period-and-majority</code> · whitepaper 6.5.2; GovernanceFacet.sol:170-176; Bip.sol:147, :155; C.sol:48, :51</span></li>
+<li>emergencyCommit reverts before 24 hours have passed since the BIP was submitted, reverts after the voting period has ended, and otherwise requires at least two-thirds of the total outstanding Roots<br><span class="src"><code class="id">emergency-commit-requires-day-and-supermajority</code> · whitepaper 6.5.2, the supermajority sentence quoted in full in SOURCES.md; GovernanceFacet.sol:181-189; C.sol:47, :49-50</span></li>
+<li>pauseOrUnpause reverts on any BIP that carries a diamond cut or an init address, and otherwise requires the same two-thirds supermajority<br><span class="src"><code class="id">pause-bip-carries-no-code</code> · whitepaper 6.5.3 and 6.5.4; GovernanceFacet.sol:194-200; Bip.sol:60</span></li>
+<li>ownerPause and ownerUnpause revert for every caller except the diamond owner, and no other function in the facet changes the paused flag without a committed BIP<br><span class="src"><code class="id">owner-pause-is-the-only-unilateral-power</code> · whitepaper 6.5.4 closing paragraph; GovernanceFacet.sol:225-233, :252-255</span></li>
+<li>execution sets the BIP executed and removes it from the active list, after which every governance entry point rejects it<br><span class="src"><code class="id">a-bip-executes-at-most-once</code> · GovernanceFacet.sol:205-213; Bip.sol:107, :139</span></li>
+<li>the sole Bean mint reachable from the governance facet is the committer&#x27;s award, 100 Beans compounding 1% per six seconds elapsed past the end of the voting period, capped at 1800 seconds<br><span class="src"><code class="id">the-only-mint-is-the-commit-incentive</code> · whitepaper 6.5.5; GovernanceFacet.sol:215-219; Bip.sol:183; C.sol:53</span></li>
+</ol>
+</div>
+<h2>The code the spec points at</h2>
+<p>The code does what each invariant says. Read it beside the list above. What does the spec never say?</p>
+<div class="excerpt"><h4><a href="https://github.com/Aui76/two-doors/blob/main/specimens/beanstalk-2022-04/VotingBooth.sol#L32-L35"><code>specimens/beanstalk-2022-04/VotingBooth.sol</code></a> lines 32 to 35</h4>
+<pre><code><span class="ln">32</span>      function recordVote(address account, uint32 bipId) internal {
+<span class="ln">33</span>          s.g.voted[bipId][account] = true;
+<span class="ln">34</span>          s.g.bips[bipId].roots = s.g.bips[bipId].roots.add(balanceOfRoots(account));
+<span class="ln">35</span>      }</code></pre>
+<p class="src">The whole file's sha256 is <code>0x8f4bc3b86403814495490089e4300da66f42b34bdd4210d82bbf9abf7e2fe484</code>, the one the finding names.</p></div>
+<div class="excerpt"><h4><a href="https://github.com/Aui76/two-doors/blob/main/specimens/beanstalk-2022-04/GovernanceFacet.sol#L180-L191"><code>specimens/beanstalk-2022-04/GovernanceFacet.sol</code></a> lines 180 to 191</h4>
+<pre><code><span class="ln">180</span>      function emergencyCommit(uint32 bip) external {
+<span class="ln">181</span>          require(isNominated(bip), &quot;Governance: Not nominated.&quot;);
+<span class="ln">182</span>          require(
+<span class="ln">183</span>              block.timestamp &gt;= timestamp(bip).add(C.getGovernanceEmergencyPeriod()),
+<span class="ln">184</span>              &quot;Governance: Too early.&quot;);
+<span class="ln">185</span>          require(isActive(bip), &quot;Governance: Ended.&quot;);
+<span class="ln">186</span>          require(
+<span class="ln">187</span>              bipVotePercent(bip).greaterThanOrEqualTo(C.getGovernanceEmergencyThreshold()),
+<span class="ln">188</span>              &quot;Governance: Must have super majority.&quot;
+<span class="ln">189</span>          );
+<span class="ln">190</span>          _execute(msg.sender, bip, false, true); 
+<span class="ln">191</span>      }</code></pre>
+<p class="src">The whole file's sha256 is <code>0x27938091a8fd181e62246d9f365e3d5523d8b825b1c562243ffa9d6db908efad</code>, the one the finding names.</p></div>
+<details class="hunt"><summary>Show me</summary>
+<p>The invariant the spec is missing:</p>
+<blockquote><p>a vote adds to a BIP&#x27;s tally only Roots the voter already held when the BIP was proposed; Roots acquired after the proposal add nothing to it</p></blockquote>
+<p>It is missing from <code>spec/governance-v0.json</code>. Its vote-weight-is-proportional-to-stalk reads the weight at the instant of the vote, and its emergency-commit-requires-day-and-supermajority counts 24 hours from the proposal. Nothing in it ties the weight to any moment before the vote.</p>
+</details>
+<h2>Choose a door</h2>
+<div class="doors">
+<button type="button" data-door="door-one" aria-pressed="false"><strong>Door one</strong>The attack the gap allows, run on the fork.</button>
+<button type="button" data-door="door-two" aria-pressed="false"><strong>Door two</strong>File the finding in review, and be paid for it.</button>
+</div>
+<section class="door" id="door-one"><h2>Door one</h2>
+<h3>What the spec never says: the attack it allows, replayed on the fork</h3>
+<h4><a href="https://github.com/Aui76/two-doors/blob/main/exhibits/beanstalk-2022-04/replay/Replay.t.sol"><code>exhibits/beanstalk-2022-04/replay/Replay.t.sol</code></a></h4>
+<div class="test"><p><span class="pass">passed</span> <code>ContractTest.testExploit()</code></p>
+<pre><code>museum: door one: the April 2022 Beanstalk drain, replayed on the fork
+museum: the fork block: 14595905
+museum: attacker USDC before the drain: 0.000000
+Initial USDC balancer of attacker: 0
+After initial ETH -&gt; BEAN swap, Bean balance of attacker:: 217860
+After BEAN deposit to SiloV2Facet, Bean balance of attacker:: 0
+After deposit, Bean balance of attacker:: 0
+After adding 3crv liquidity , bean3Crv_f balance of attacker:: 787617662720228963344921175
+After Curvebean3Crv_f balance of attacker:: 787617662720228963344921175
+After calling beanstalkgov.emergencyCommit() , bean3Crv_f balance of attacker:: 860843389256029477974324118
+After removing liquidity from crvbean pool , bean3Crv_f balance of attacker:: 0
+premiums[0]:: 315000000000000000000000
+premiums[1]:: 450000000000
+premiums[2]:: 135000000000
+tempAmounts[0]:: 350315000000000000000000000
+tempAmounts[1]:: 500450000000000
+tempAmounts[2]:: 150135000000000
+After removing 3crv liquidity from 3crv pool, usdc balance of attacker:: 542512065615197
+After Flashloan repay, usdc balance of attacker:: 42062065615197
+museum: attacker USDC after the drain: 42062065.615197</code></pre>
+</div>
+</section>
+<section class="door" id="door-two"><h2>Door two</h2>
+<h3>What you file</h3>
+<dl class="filed">
+<dt>The invariant</dt><dd><code>vote-weight-was-held-before-the-proposal</code>: a vote adds to a BIP&#x27;s tally only Roots the voter already held when the BIP was proposed; Roots acquired after the proposal add nothing to it</dd>
+<dt>Where it fails</dt><dd>specimens/beanstalk-2022-04/VotingBooth.sol lines 32-35, recordVote, which adds balanceOfRoots(account) as it stands at the vote (sha256 0x8f4bc3b86403814495490089e4300da66f42b34bdd4210d82bbf9abf7e2fe484); specimens/beanstalk-2022-04/GovernanceFacet.sol lines 180-191, emergencyCommit (sha256 0x27938091a8fd181e62246d9f365e3d5523d8b825b1c562243ffa9d6db908efad)</dd>
+<dt>The witness</dt><dd>door one of this room: the replay of DeFiHackLabs src/test/2022-04/Beanstalk_exp.sol (sha256 07c9396063f71acd5e6b4e688adb7bc1ebdd1022083cb05cfc997b3312b42256) on a fork of chain 1 at block 14595905, with its proposal contract 0xE5eCF73603D98A0128F05ed30506ac7A663dBb69 (BIP 18) still empty at that block</dd>
+<dt>The context</dt><dd>chain 1 at block 14595905: the Beanstalk diamond 0xC1E088fC1323b20BCBee9bd1B9fC9546db5624C5, runtime codehash 0x2ff59388cd5e1842a3d057338010945a779a6c7d57abfb5e9ddc697838700870</dd>
+</dl>
+<p class="src">From <a href="https://github.com/Aui76/two-doors/blob/main/exhibits/beanstalk-2022-04/review/finding.json"><code>exhibits/beanstalk-2022-04/review/finding.json</code></a>. The cell receives only the keccak256 of each string; the test below reads them from this file.</p>
+<h3>The finding filed in review, and the re-run that upholds it, in memory</h3>
+<h4><a href="https://github.com/Aui76/two-doors/blob/main/exhibits/beanstalk-2022-04/Review.t.sol"><code>exhibits/beanstalk-2022-04/Review.t.sol</code></a></h4>
+<div class="test"><p><span class="pass">passed</span> <code>ReviewTest.test_theFindingsWordsPointAtTheirSources()</code></p>
+<p class="muted">It prints nothing; it asserts.</p>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>ReviewTest.test_theFindingIsTheGapsWords()</code></p>
+<p class="muted">It prints nothing; it asserts.</p>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>ReviewTest.test_standRegistersTheRoomsToolsAndFundsOneReview()</code></p>
+<pre><code>The auditor&#x27;s room fixture: the DAN hull at 7fd937a - not the network&#x27;s cell
+  chain id                 31337
+  fixture key (protocol)   0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
+  genesis auditor          0x5B8461f0Ee439E70a75220f965F9A162c809BF41
+  AuditCell                0x4fe58B74404E7A54849CD6b434240FA55E52f06C
+  CellToken                0x4E94bc6BEe56055EE08325d3c327DC99cDD45ab8
+  ClaimDisputeModule       0xB210725ffcda9B1091BF5dD6995E2389e97B4470
+  AuditCell runtime bytes  20909
+  decision window (s)      300
+  in-audit window (s)      600
+  min audit window (s)     600
+  claim filing stake (wei) 10000000000000000000
+  fixture key AUDIT (wei)  70000000000000000000</code></pre>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>ReviewTest.test_theAuditorFilesInReviewAndIsPaid()</code></p>
+<pre><code>The auditor&#x27;s room fixture: the DAN hull at 7fd937a - not the network&#x27;s cell
+  chain id                 31337
+  fixture key (protocol)   0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
+  genesis auditor          0x5B8461f0Ee439E70a75220f965F9A162c809BF41
+  AuditCell                0x4fe58B74404E7A54849CD6b434240FA55E52f06C
+  CellToken                0x4E94bc6BEe56055EE08325d3c327DC99cDD45ab8
+  ClaimDisputeModule       0xB210725ffcda9B1091BF5dD6995E2389e97B4470
+  AuditCell runtime bytes  20909
+  decision window (s)      300
+  in-audit window (s)      600
+  min audit window (s)     600
+  claim filing stake (wei) 10000000000000000000
+  fixture key AUDIT (wei)  70000000000000000000
+The auditor&#x27;s room: a witness claim filed in review - not the network&#x27;s cell
+  chain id                 31337
+  AuditCell                0x4fe58B74404E7A54849CD6b434240FA55E52f06C
+  row                      0
+  row state                Claimed
+  protocol (Beanstalk)     0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
+  auditor (the visitor)    0x5B8461f0Ee439E70a75220f965F9A162c809BF41
+  claim stake (wei)        10000000000000000000
+  re-run row               1
+  re-run state             AwaitingWindow
+  re-run auditor           0x658b2BE8068F3BC36e234CE7c616840f63E51840
+  re-run bounty (wei)      20000000000000000000
+  result root
+0x0f00f111557e69da997a934b11450fc1c68964761db51264b16fe1c23d265974
+the pot: 40.000000000000000000
+the pool before the confirmation: 0.000000000000000000
+the auditor holds after: 30.000000000000000000
+returned to the protocol: 20.000000000000000000
+the re-run&#x27;s auditor holds after: 20.000000000000000000</code></pre>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>ReviewTest.test_theReRunWaitsForItsWindow()</code></p>
+<pre><code>The auditor&#x27;s room fixture: the DAN hull at 7fd937a - not the network&#x27;s cell
+  chain id                 31337
+  fixture key (protocol)   0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
+  genesis auditor          0x5B8461f0Ee439E70a75220f965F9A162c809BF41
+  AuditCell                0x4fe58B74404E7A54849CD6b434240FA55E52f06C
+  CellToken                0x4E94bc6BEe56055EE08325d3c327DC99cDD45ab8
+  ClaimDisputeModule       0xB210725ffcda9B1091BF5dD6995E2389e97B4470
+  AuditCell runtime bytes  20909
+  decision window (s)      300
+  in-audit window (s)      600
+  min audit window (s)     600
+  claim filing stake (wei) 10000000000000000000
+  fixture key AUDIT (wei)  70000000000000000000
+The auditor&#x27;s room: a witness claim filed in review - not the network&#x27;s cell
+  chain id                 31337
+  AuditCell                0x4fe58B74404E7A54849CD6b434240FA55E52f06C
+  row                      0
+  row state                Claimed
+  protocol (Beanstalk)     0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
+  auditor (the visitor)    0x5B8461f0Ee439E70a75220f965F9A162c809BF41
+  claim stake (wei)        10000000000000000000
+  re-run row               1
+  re-run state             AwaitingWindow
+  re-run auditor           0x658b2BE8068F3BC36e234CE7c616840f63E51840
+  re-run bounty (wei)      20000000000000000000
+  result root
+0x0f00f111557e69da997a934b11450fc1c68964761db51264b16fe1c23d265974</code></pre>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>ReviewTest.test_refusesThreeSeatsOnTwoKeys()</code></p>
+<pre><code>The auditor&#x27;s room fixture: the DAN hull at 7fd937a - not the network&#x27;s cell
+  chain id                 31337
+  fixture key (protocol)   0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
+  genesis auditor          0x5B8461f0Ee439E70a75220f965F9A162c809BF41
+  AuditCell                0x4fe58B74404E7A54849CD6b434240FA55E52f06C
+  CellToken                0x4E94bc6BEe56055EE08325d3c327DC99cDD45ab8
+  ClaimDisputeModule       0xB210725ffcda9B1091BF5dD6995E2389e97B4470
+  AuditCell runtime bytes  20909
+  decision window (s)      300
+  in-audit window (s)      600
+  min audit window (s)     600
+  claim filing stake (wei) 10000000000000000000
+  fixture key AUDIT (wei)  70000000000000000000</code></pre>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>ReviewTest.test_refusesAnAuditorTheStandDidNotName()</code></p>
+<pre><code>The auditor&#x27;s room fixture: the DAN hull at 7fd937a - not the network&#x27;s cell
+  chain id                 31337
+  fixture key (protocol)   0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
+  genesis auditor          0x5B8461f0Ee439E70a75220f965F9A162c809BF41
+  AuditCell                0x4fe58B74404E7A54849CD6b434240FA55E52f06C
+  CellToken                0x4E94bc6BEe56055EE08325d3c327DC99cDD45ab8
+  ClaimDisputeModule       0xB210725ffcda9B1091BF5dD6995E2389e97B4470
+  AuditCell runtime bytes  20909
+  decision window (s)      300
+  in-audit window (s)      600
+  min audit window (s)     600
+  claim filing stake (wei) 10000000000000000000
+  fixture key AUDIT (wei)  70000000000000000000</code></pre>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>ReviewTest.test_refusesAKeyThatDidNotStandTheFixture()</code></p>
+<pre><code>The auditor&#x27;s room fixture: the DAN hull at 7fd937a - not the network&#x27;s cell
+  chain id                 31337
+  fixture key (protocol)   0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
+  genesis auditor          0x5B8461f0Ee439E70a75220f965F9A162c809BF41
+  AuditCell                0x4fe58B74404E7A54849CD6b434240FA55E52f06C
+  CellToken                0x4E94bc6BEe56055EE08325d3c327DC99cDD45ab8
+  ClaimDisputeModule       0xB210725ffcda9B1091BF5dD6995E2389e97B4470
+  AuditCell runtime bytes  20909
+  decision window (s)      300
+  in-audit window (s)      600
+  min audit window (s)     600
+  claim filing stake (wei) 10000000000000000000
+  fixture key AUDIT (wei)  70000000000000000000</code></pre>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>ReviewTest.test_refusesFindingWordsTheStandDidNotFreeze()</code></p>
+<p class="muted">It prints nothing; it asserts.</p>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>ReviewTest.test_filesOnce()</code></p>
+<pre><code>The auditor&#x27;s room fixture: the DAN hull at 7fd937a - not the network&#x27;s cell
+  chain id                 31337
+  fixture key (protocol)   0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
+  genesis auditor          0x5B8461f0Ee439E70a75220f965F9A162c809BF41
+  AuditCell                0x4fe58B74404E7A54849CD6b434240FA55E52f06C
+  CellToken                0x4E94bc6BEe56055EE08325d3c327DC99cDD45ab8
+  ClaimDisputeModule       0xB210725ffcda9B1091BF5dD6995E2389e97B4470
+  AuditCell runtime bytes  20909
+  decision window (s)      300
+  in-audit window (s)      600
+  min audit window (s)     600
+  claim filing stake (wei) 10000000000000000000
+  fixture key AUDIT (wei)  70000000000000000000
+The auditor&#x27;s room: a witness claim filed in review - not the network&#x27;s cell
+  chain id                 31337
+  AuditCell                0x4fe58B74404E7A54849CD6b434240FA55E52f06C
+  row                      0
+  row state                Claimed
+  protocol (Beanstalk)     0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
+  auditor (the visitor)    0x5B8461f0Ee439E70a75220f965F9A162c809BF41
+  claim stake (wei)        10000000000000000000
+  re-run row               1
+  re-run state             AwaitingWindow
+  re-run auditor           0x658b2BE8068F3BC36e234CE7c616840f63E51840
+  re-run bounty (wei)      20000000000000000000
+  result root
+0x0f00f111557e69da997a934b11450fc1c68964761db51264b16fe1c23d265974</code></pre>
+</div>
+</section>
+<details><summary>Where the room stands</summary>
+<h3>Beanstalk on Ethereum, the block before it was drained</h3>
+<h4><a href="https://github.com/Aui76/two-doors/blob/main/exhibits/beanstalk-2022-04/Fork.t.sol"><code>exhibits/beanstalk-2022-04/Fork.t.sol</code></a></h4>
+<div class="test"><p><span class="pass">passed</span> <code>BeanstalkForkTest.test_forkStandsAtTheNamedBlock()</code></p>
+<p class="muted">It prints nothing; it asserts.</p>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>BeanstalkForkTest.test_beanstalkCodeIsTheCodeTheVerdictNames()</code></p>
+<p class="muted">It prints nothing; it asserts.</p>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>BeanstalkForkTest.test_theAttackHasNotBeenWrittenYet()</code></p>
+<p class="muted">It prints nothing; it asserts.</p>
+</div>
+<h4><a href="https://github.com/Aui76/two-doors/blob/main/exhibits/beanstalk-2022-04/Provenance.t.sol"><code>exhibits/beanstalk-2022-04/Provenance.t.sol</code></a></h4>
+<div class="test"><p><span class="pass">passed</span> <code>ProvenanceTest.test_vendoredSourcesAreUnmodified()</code></p>
+<p class="muted">It prints nothing; it asserts.</p>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>ProvenanceTest.test_governanceConstantsAreTheOnesTheSpecCites()</code></p>
+<p class="muted">It prints nothing; it asserts.</p>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>ProvenanceTest.test_everyInvariantNamesItsSource()</code></p>
+<p class="muted">It prints nothing; it asserts.</p>
+</div>
+</details>
+<p class="src">This room's source: <a href="https://github.com/Aui76/two-doors/tree/main/exhibits/beanstalk-2022-04"><code>exhibits/beanstalk-2022-04/</code></a></p>
+<p class="next"><a class="btn" href="room-2.html">Walk on to Room 2</a></p>
+</main>
+<footer><div class="bar">
+<p><strong>63 passed, 0 failed.</strong> Every line of output on this page is what <code>forge test --json -vv</code> returned. The plaques, specs, findings and code are read from the same commit.</p>
+<!-- stamp -->
+<p>Made from commit <code>a58f81c9f07cdf2f6f53ade7ab44c9b1cbf7443e</code>, tree clean, on 2026-10-07 10:22 UTC.</p>
+<ul><li><code>forge --version</code>: forge Version: 1.7.1</li><li><code>forge build</code>: No files changed, compilation skipped, 5 s</li><li><code>forge test --json -vv</code>: 5 s</li></ul>
+<!-- /stamp -->
+<p>Run it yourself:</p>
+<pre><code>git clone https://github.com/Aui76/two-doors
+cd two-doors
+python transcript/generate.py --check</code></pre>
+<p><a href="https://github.com/Aui76/two-doors">The repository</a></p>
+</div></footer>
+</body>
+</html>

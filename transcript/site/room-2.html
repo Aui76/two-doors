@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Room 2, the room with no seat · Two Doors</title>
+<meta name="description" content="A museum where you stand inside a real hack at the block before it happened and find the loophole yourself.">
+<link rel="stylesheet" href="style.css">
+<script>document.documentElement.className = "js";</script>
+<script src="walk.js" defer></script>
+</head>
+<body>
+<header><div class="bar"><a class="home" href="index.html">Two Doors</a><nav><a href="room-1.html">Room 1</a><a href="room-2.html" aria-current="page">Room 2</a><a href="room-3.html">Room 3</a><a href="exit.html">The exit</a><a href="record.html">On file</a></nav></div></header>
+<main>
+<h1>Room 2, the room with no seat</h1>
+<div class="plaque">
+<p>Bybit. On 21 February 2025 its cold wallet on Ethereum held 401,346.768858404671846374 ETH. Three of its six owners signed a transaction, the wallet checked the three signatures and did what the transaction said, and thirteen blocks later the ETH was gone.</p>
+<p>The wallet is a Safe v1.1.1, and I wrote its spec from Safe&#x27;s own words of 2019 (<code>spec/SOURCES.md</code>). The check passes, and it is right to pass: the wallet&#x27;s code did exactly what those words say. The money left anyway. In Room 1 you can file the gap yourself. Here there is no gap to file, so this room has no button, and I won&#x27;t hand you a door that isn&#x27;t there.</p>
+<p>This one we could not have caught, and I will not pretend otherwise.</p>
+</div>
+<h2>The spec the check runs</h2>
+<div class="spec">
+<p>The check reads <strong>Bybit cold wallet 1 (Safe v1.1.1 proxy over the v1.1.1 singleton)</strong>, <code>0x1Db92e2EeBC8E0c075a02BeA49a2935BcD2dFCF4</code> on chain 1 at block 21,895,237, runtime codehash <code>0xaea7d4252f6245f301e540cfbee27d3a88de543af8e49c5c62405d5499fab7e5</code>.</p>
+<p>The spec, <a href="https://github.com/Aui76/two-doors/blob/main/exhibits/bybit-2025-02/spec/safe-v1.1.1.json"><code>safe-v1.1.1.json</code></a>: 6 invariants, each with the line it was read from.</p>
+<ol>
+<li>every call other than masterCopy() is delegatecalled to the address held in storage slot 0, and its return data or revert is passed back unchanged<br><span class="src"><code class="id">proxy-forwards-to-slot-zero</code> · Proxy.sol:14-16, :27-44</span></li>
+<li>execTransaction reverts unless the first threshold signatures each recover to an owner over the hash of this transaction and the current nonce, in strictly ascending owner order<br><span class="src"><code class="id">exec-requires-threshold-owner-signatures</code> · GnosisSafe.sol:102, :129-140, :189-258</span></li>
+<li>each execTransaction that passes the signature check increments the nonce before it executes, so one set of signatures executes at most once<br><span class="src"><code class="id">exec-consumes-the-nonce</code> · GnosisSafe.sol:137-140</span></li>
+<li>operation 0 calls the destination; operation 1 runs the destination&#x27;s code against the wallet&#x27;s own storage, so that code can write any slot the wallet has, slot 0 included<br><span class="src"><code class="id">operation-one-is-delegatecall</code> · Enum.sol:6-11; Executor.sol:9-19, :31-39; GnosisSafe.sol:107; Proxy.sol:14-16</span></li>
+<li>the master copy changes only through a Safe transaction: changeMasterCopy may be called by the wallet itself and by no one else<br><span class="src"><code class="id">upgrade-only-by-safe-transaction</code> · MasterCopy.sol:16-25; SelfAuthorized.sol:7-10</span></li>
+<li>owners and the threshold change only through a Safe transaction, and the threshold can never exceed the owner count or fall to zero<br><span class="src"><code class="id">owners-and-threshold-change-only-by-safe-transaction</code> · OwnerManager.sol:52-54, :74-76, :97-99, :115-128; SelfAuthorized.sol:7-10</span></li>
+</ol>
+</div>
+<h2>What the room prints</h2>
+<h3>Bybit&#x27;s wallet on Ethereum, February 2025</h3>
+<h4><a href="https://github.com/Aui76/two-doors/blob/main/exhibits/bybit-2025-02/Fork.t.sol"><code>exhibits/bybit-2025-02/Fork.t.sol</code></a></h4>
+<div class="test"><p><span class="pass">passed</span> <code>BybitForkTest.test_theForkIsTheBlockBefore()</code></p>
+<p class="muted">It prints nothing; it asserts.</p>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>BybitForkTest.test_theWalletAsItStood()</code></p>
+<pre><code>fork block: 21895237
+fork timestamp: 1740147203
+wallet: 0x1Db92e2EeBC8E0c075a02BeA49a2935BcD2dFCF4
+wallet code hash: 0xaea7d4252f6245f301e540cfbee27d3a88de543af8e49c5c62405d5499fab7e5
+wallet code length (bytes): 170
+slot 0 (master copy): 0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F
+master copy code hash: 0x56b8be58b5ad629a621593a2e5e5e8e9a28408dc06e95597497b303902772e45
+threshold: 3
+owners: 6
+nonce: 71
+balance (ETH): 401346.768858404671846374</code></pre>
+</div>
+<h4><a href="https://github.com/Aui76/two-doors/blob/main/exhibits/bybit-2025-02/NoSeat.t.sol"><code>exhibits/bybit-2025-02/NoSeat.t.sol</code></a></h4>
+<div class="test"><p><span class="pass">passed</span> <code>BybitNoSeatTest.test_threeOwnersSignedThisTransaction()</code></p>
+<pre><code>signed transaction: 0x46deef0f52e3a983b67abf4714448a41dd7ffd6d32d32da69d62081c68ad7882
+Safe nonce: 71
+Safe transaction hash: 0xb3476d061aeb8fc1d605a873c483a2402d88a68a9cdd1a8b47655dd55ba004f8
+operation (1 = delegatecall): 1
+destination: 0x96221423681A6d52E184D440a8eFCEbB105C7242
+signed by owner: 0x1F4EB0a903619ac168b19A82F1a6e2e426522211
+signed by owner: 0x3Cc3A225769900e003E264dd4CB43E90896BC21A
+signed by owner: 0xe3dF2cCEAc61B1aFA311372ecC5B40A3A6585a9E
+signatures required (threshold): 3</code></pre>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>BybitNoSeatTest.test_theCheckPassesAndTheMoneyLeaves()</code></p>
+<pre><code>sweep transaction: 0xb61413c495fdad6114a7aa863a00b2e3c28945979a10885b12b30316ea9f072c
+fork block: 21895237
+cell: 0x2e234DAe75C793f67A35089C9d99245E1C58470b
+audit id: 0
+artifact hash (wallet code): 0xaea7d4252f6245f301e540cfbee27d3a88de543af8e49c5c62405d5499fab7e5
+spec hash (safe-v1.1.1.json): 0xe1fa770433719a987352b2d2dbcf84c14c847b2100e845aa419649a4e2ae001e
+state (6 = InBlock): 6
+wallet holds (ETH): 401346.768858404671846374
+slot 0 after the signed transaction: 0xbDd077f651EBe7f7b3cE16fe5F2b025BE2969516
+wallet holds after the sweep (ETH): 0.000000000000000000
+sweep destination: 0x47666Fab8bd0Ac7003bce3f5C3585383F09486E2
+moved to the sweep&#x27;s destination (ETH): 401346.768858404671846374
+artifact hash after (wallet code): 0xaea7d4252f6245f301e540cfbee27d3a88de543af8e49c5c62405d5499fab7e5
+state after (6 = InBlock): 6</code></pre>
+</div>
+<p class="src">This room's source: <a href="https://github.com/Aui76/two-doors/tree/main/exhibits/bybit-2025-02"><code>exhibits/bybit-2025-02/</code></a></p>
+<p class="next"><a class="btn" href="room-3.html">Walk on to Room 3</a></p>
+</main>
+<footer><div class="bar">
+<p><strong>63 passed, 0 failed.</strong> Every line of output on this page is what <code>forge test --json -vv</code> returned. The plaques, specs, findings and code are read from the same commit.</p>
+<!-- stamp -->
+<p>Made from commit <code>a58f81c9f07cdf2f6f53ade7ab44c9b1cbf7443e</code>, tree clean, on 2026-10-07 10:22 UTC.</p>
+<ul><li><code>forge --version</code>: forge Version: 1.7.1</li><li><code>forge build</code>: No files changed, compilation skipped, 5 s</li><li><code>forge test --json -vv</code>: 5 s</li></ul>
+<!-- /stamp -->
+<p>Run it yourself:</p>
+<pre><code>git clone https://github.com/Aui76/two-doors
+cd two-doors
+python transcript/generate.py --check</code></pre>
+<p><a href="https://github.com/Aui76/two-doors">The repository</a></p>
+</div></footer>
+</body>
+</html>

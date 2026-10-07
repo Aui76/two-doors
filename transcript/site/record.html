@@ -1,0 +1,555 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>On file: the row passed, and the gap filed after it · Two Doors</title>
+<meta name="description" content="A museum where you stand inside a real hack at the block before it happened and find the loophole yourself.">
+<link rel="stylesheet" href="style.css">
+<script>document.documentElement.className = "js";</script>
+<script src="walk.js" defer></script>
+</head>
+<body>
+<header><div class="bar"><a class="home" href="index.html">Two Doors</a><nav><a href="room-1.html">Room 1</a><a href="room-2.html">Room 2</a><a href="room-3.html">Room 3</a><a href="exit.html">The exit</a><a href="record.html" aria-current="page">On file</a></nav></div></header>
+<main>
+<h1>On file: the row passed, and the gap filed after it</h1>
+<div class="plaque">
+<p>This was Room 1 until 3 October 2026, when the auditor&#x27;s room (<code>../review/</code>) took its place. Its tests still run, and the transcript keeps them on its page after the exit.</p>
+<p>The last safe moment. Ethereum at block 14,595,905, Saturday 16 April 2022, 10:54 UTC, the night before Beanstalk was drained. The cured hull stands beside the diamond, a row is filed against the diamond&#x27;s code — the hash of the bytes, no address behind it — the auditor&#x27;s PASS is proven, the window closes, and the door is asked. It says CLEAN.</p>
+<p>Nothing here is a promise. The plaque sentence, ruled before the harness existed:</p>
+<blockquote><p>produced by the auditor against the Gate A spec written from pre-hack words, settled by a local deploy of the cured hull at 0f3eaf8, and read back by dan-check</p></blockquote>
+<p>Never &quot;DAN found it clean&quot;. The auditor is one of anvil&#x27;s default accounts, the cell is a local deploy, and every number below is printed by the commands beside it. On the fork the row sits on a block in 2026-shaped time; the only 2022 thing about it is the code it names.</p>
+</div>
+<h2>What the room prints</h2>
+<h3>The verdict on the fork: the row passed and the door read CLEAN</h3>
+<h4><a href="https://github.com/Aui76/two-doors/blob/main/exhibits/beanstalk-2022-04/Verdict.t.sol"><code>exhibits/beanstalk-2022-04/Verdict.t.sol</code></a></h4>
+<div class="test"><p><span class="pass">passed</span> <code>BeanstalkVerdictTest.test_theRowIsFiledSettledAndFoundByTheCodeHash()</code></p>
+<pre><code>fork block: 14595905
+cell: 0x2e234DAe75C793f67A35089C9d99245E1C58470b
+audit id: 0
+artifact hash (Beanstalk diamond code): 0x2ff59388cd5e1842a3d057338010945a779a6c7d57abfb5e9ddc697838700870
+spec hash (governance-v0.json): 0x67134c2f4385d783b8d7bf0833d9e8ef2d0dac0a4c3e78acc038405b27d0088a
+case root: 0xbc7d4587db7059b977be92237c92d706145251f896f1909fe4e69e5b066b838d
+min audit window (seconds): 1209600
+state (6 = InBlock): 6</code></pre>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>BeanstalkVerdictTest.test_aDifferentHashFindsNoRow()</code></p>
+<p class="muted">It prints nothing; it asserts.</p>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>BeanstalkVerdictTest.test_theWindowCannotBeSkipped()</code></p>
+<p class="muted">It prints nothing; it asserts.</p>
+</div>
+<h3>The second fixture: the same words filed as a gap after the PASS</h3>
+<h4><a href="https://github.com/Aui76/two-doors/blob/main/exhibits/beanstalk-2022-04/Fixture.t.sol"><code>exhibits/beanstalk-2022-04/Fixture.t.sol</code></a></h4>
+<div class="test"><p><span class="pass">passed</span> <code>FixtureTest.test_standsTheHullUnderTheTestnetProfile()</code></p>
+<pre><code>Room 2 fixture: the DAN hull at 0f3eaf8 - not the network&#x27;s cell
+  chain id                 31337
+  fixture key              0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
+  genesis auditor          0xC37aacEDc6AD1Ca2c0aCf9B5f268D480bE31187D
+  AuditCell                0x4fe58B74404E7A54849CD6b434240FA55E52f06C
+  CellToken                0x4E94bc6BEe56055EE08325d3c327DC99cDD45ab8
+  SpecGapModule            0x4DAB1c1794Ed63C914C2cd64be4E63C8945E29e1
+  StructuralUpgradeModule  0x08022159A0A78a189229E96C684D4629E418C36c
+  AuditCell runtime bytes  20909
+  decision window (s)      300
+  protocol decision (s)    300
+  in-audit window (s)      600
+  min audit window (s)     600
+  claim resolution (s)     1800
+  claim filing stake (wei) 10000000000000000000
+  fixture key AUDIT (wei)  50000000000000000000
+fixture key AUDIT (wei): 50000000000000000000
+AuditCell runtime bytes: 20909</code></pre>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>FixtureTest.test_mintIsOneRowAndTheClaimStakeAgainstIt()</code></p>
+<pre><code>Room 2 fixture: the DAN hull at 0f3eaf8 - not the network&#x27;s cell
+  chain id                 31337
+  fixture key              0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
+  genesis auditor          0xC37aacEDc6AD1Ca2c0aCf9B5f268D480bE31187D
+  AuditCell                0x4fe58B74404E7A54849CD6b434240FA55E52f06C
+  CellToken                0x4E94bc6BEe56055EE08325d3c327DC99cDD45ab8
+  SpecGapModule            0x4DAB1c1794Ed63C914C2cd64be4E63C8945E29e1
+  StructuralUpgradeModule  0x08022159A0A78a189229E96C684D4629E418C36c
+  AuditCell runtime bytes  20909
+  decision window (s)      300
+  protocol decision (s)    300
+  in-audit window (s)      600
+  min audit window (s)     600
+  claim resolution (s)     1800
+  claim filing stake (wei) 10000000000000000000
+  fixture key AUDIT (wei)  50000000000000000000
+requiredClaimStake (wei): 10000000000000000000</code></pre>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>FixtureTest.test_theOpenSeatIsAChoice()</code></p>
+<pre><code>Room 2 fixture: the DAN hull at 0f3eaf8 - not the network&#x27;s cell
+  chain id                 31337
+  fixture key              0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
+  genesis auditor          0x0000000000000000000000000000000000000000
+  AuditCell                0x4fe58B74404E7A54849CD6b434240FA55E52f06C
+  CellToken                0x4E94bc6BEe56055EE08325d3c327DC99cDD45ab8
+  SpecGapModule            0xB210725ffcda9B1091BF5dD6995E2389e97B4470
+  StructuralUpgradeModule  0xc6F5a8D29AB8Cb8e87A5A44764193bb84A2262B6
+  AuditCell runtime bytes  20909
+  decision window (s)      300
+  protocol decision (s)    300
+  in-audit window (s)      600
+  min audit window (s)     600
+  claim resolution (s)     1800
+  claim filing stake (wei) 10000000000000000000
+  fixture key AUDIT (wei)  50000000000000000000</code></pre>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>FixtureTest.test_refusesTheFixtureKeyAsItsOwnAuditor()</code></p>
+<p class="muted">It prints nothing; it asserts.</p>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>FixtureTest.test_refusesEveryNetworkKeyInTheAuditorSeat()</code></p>
+<p class="muted">It prints nothing; it asserts.</p>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>FixtureTest.test_standsOnlyOnBaseSepoliaOrTheRehearsal()</code></p>
+<pre><code>Room 2 fixture: the DAN hull at 0f3eaf8 - not the network&#x27;s cell
+  chain id                 84532
+  fixture key              0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
+  genesis auditor          0xC37aacEDc6AD1Ca2c0aCf9B5f268D480bE31187D
+  AuditCell                0x4fe58B74404E7A54849CD6b434240FA55E52f06C
+  CellToken                0x4E94bc6BEe56055EE08325d3c327DC99cDD45ab8
+  SpecGapModule            0x4DAB1c1794Ed63C914C2cd64be4E63C8945E29e1
+  StructuralUpgradeModule  0x08022159A0A78a189229E96C684D4629E418C36c
+  AuditCell runtime bytes  20909
+  decision window (s)      300
+  protocol decision (s)    300
+  in-audit window (s)      600
+  min audit window (s)     600
+  claim resolution (s)     1800
+  claim filing stake (wei) 10000000000000000000
+  fixture key AUDIT (wei)  50000000000000000000</code></pre>
+</div>
+<h4><a href="https://github.com/Aui76/two-doors/blob/main/exhibits/beanstalk-2022-04/Filing.t.sol"><code>exhibits/beanstalk-2022-04/Filing.t.sol</code></a></h4>
+<div class="test"><p><span class="pass">passed</span> <code>FilingTest.test_theGapsWordsPointAtTheirSources()</code></p>
+<p class="muted">It prints nothing; it asserts.</p>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>FilingTest.test_standMakesDoorTwosAdminActsInItsOneBroadcast()</code></p>
+<pre><code>Room 2 fixture: the DAN hull at 0f3eaf8 - not the network&#x27;s cell
+  chain id                 31337
+  fixture key              0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
+  genesis auditor          0x34FDFDF44132766B224fE4F738F8F4311D3E86Fc
+  AuditCell                0x4fe58B74404E7A54849CD6b434240FA55E52f06C
+  CellToken                0x4E94bc6BEe56055EE08325d3c327DC99cDD45ab8
+  SpecGapModule            0x4DAB1c1794Ed63C914C2cd64be4E63C8945E29e1
+  StructuralUpgradeModule  0x08022159A0A78a189229E96C684D4629E418C36c
+  AuditCell runtime bytes  20909
+  decision window (s)      300
+  protocol decision (s)    300
+  in-audit window (s)      600
+  min audit window (s)     600
+  claim resolution (s)     1800
+  claim filing stake (wei) 10000000000000000000
+  fixture key AUDIT (wei)  50000000000000000000</code></pre>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>FilingTest.test_filesWithTheFixtureKeyAsProtocol()</code></p>
+<pre><code>Room 2 fixture: the DAN hull at 0f3eaf8 - not the network&#x27;s cell
+  chain id                 31337
+  fixture key              0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
+  genesis auditor          0x34FDFDF44132766B224fE4F738F8F4311D3E86Fc
+  AuditCell                0x4fe58B74404E7A54849CD6b434240FA55E52f06C
+  CellToken                0x4E94bc6BEe56055EE08325d3c327DC99cDD45ab8
+  SpecGapModule            0x4DAB1c1794Ed63C914C2cd64be4E63C8945E29e1
+  StructuralUpgradeModule  0x08022159A0A78a189229E96C684D4629E418C36c
+  AuditCell runtime bytes  20909
+  decision window (s)      300
+  protocol decision (s)    300
+  in-audit window (s)      600
+  min audit window (s)     600
+  claim resolution (s)     1800
+  claim filing stake (wei) 10000000000000000000
+  fixture key AUDIT (wei)  50000000000000000000
+Room 2, door two: a spec gap on the fixture - not the network&#x27;s cell
+  chain id                 31337
+  AuditCell                0x4fe58B74404E7A54849CD6b434240FA55E52f06C
+  SpecGapModule            0x4DAB1c1794Ed63C914C2cd64be4E63C8945E29e1
+  row                      0
+  protocol                 0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
+  auditor                  0x34FDFDF44132766B224fE4F738F8F4311D3E86Fc
+  discoverer               0xbEf90eBc5ACBa59135460e426f10A107495F646E
+  fixture key&#x27;s seat       protocol
+  row state                4
+  gap status               Filed
+  filing stake (wei)       10000000000000000000
+  filed at                 ReadTheFiling prints it once the filing is mined
+  gap class
+0xf265280a77ba6123996963ca5c8304643796f2443d1c448144d3f41c86c139b3
+  result root
+0x41922cf47145f448a316089973c55a15409ff973e5c68c50115cbd598d759b1e
+filing stake (wei): 10000000000000000000
+result root: 0x41922cf47145f448a316089973c55a15409ff973e5c68c50115cbd598d759b1e</code></pre>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>FilingTest.test_filesWithTheFixtureKeyAsDiscoverer()</code></p>
+<pre><code>Room 2 fixture: the DAN hull at 0f3eaf8 - not the network&#x27;s cell
+  chain id                 31337
+  fixture key              0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
+  genesis auditor          0x34FDFDF44132766B224fE4F738F8F4311D3E86Fc
+  AuditCell                0x4fe58B74404E7A54849CD6b434240FA55E52f06C
+  CellToken                0x4E94bc6BEe56055EE08325d3c327DC99cDD45ab8
+  SpecGapModule            0x4DAB1c1794Ed63C914C2cd64be4E63C8945E29e1
+  StructuralUpgradeModule  0x08022159A0A78a189229E96C684D4629E418C36c
+  AuditCell runtime bytes  20909
+  decision window (s)      300
+  protocol decision (s)    300
+  in-audit window (s)      600
+  min audit window (s)     600
+  claim resolution (s)     1800
+  claim filing stake (wei) 10000000000000000000
+  fixture key AUDIT (wei)  50000000000000000000
+Room 2, door two: a spec gap on the fixture - not the network&#x27;s cell
+  chain id                 31337
+  AuditCell                0x4fe58B74404E7A54849CD6b434240FA55E52f06C
+  SpecGapModule            0x4DAB1c1794Ed63C914C2cd64be4E63C8945E29e1
+  row                      0
+  protocol                 0xbEf90eBc5ACBa59135460e426f10A107495F646E
+  auditor                  0x34FDFDF44132766B224fE4F738F8F4311D3E86Fc
+  discoverer               0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
+  fixture key&#x27;s seat       discoverer
+  row state                4
+  gap status               Filed
+  filing stake (wei)       10000000000000000000
+  filed at                 ReadTheFiling prints it once the filing is mined
+  gap class
+0xf265280a77ba6123996963ca5c8304643796f2443d1c448144d3f41c86c139b3
+  result root
+0x41922cf47145f448a316089973c55a15409ff973e5c68c50115cbd598d759b1e</code></pre>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>FilingTest.test_silenceConfirmsTheGapAndReturnsTheStake()</code></p>
+<pre><code>Room 2 fixture: the DAN hull at 0f3eaf8 - not the network&#x27;s cell
+  chain id                 31337
+  fixture key              0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
+  genesis auditor          0x34FDFDF44132766B224fE4F738F8F4311D3E86Fc
+  AuditCell                0x4fe58B74404E7A54849CD6b434240FA55E52f06C
+  CellToken                0x4E94bc6BEe56055EE08325d3c327DC99cDD45ab8
+  SpecGapModule            0x4DAB1c1794Ed63C914C2cd64be4E63C8945E29e1
+  StructuralUpgradeModule  0x08022159A0A78a189229E96C684D4629E418C36c
+  AuditCell runtime bytes  20909
+  decision window (s)      300
+  protocol decision (s)    300
+  in-audit window (s)      600
+  min audit window (s)     600
+  claim resolution (s)     1800
+  claim filing stake (wei) 10000000000000000000
+  fixture key AUDIT (wei)  50000000000000000000
+Room 2, door two: a spec gap on the fixture - not the network&#x27;s cell
+  chain id                 31337
+  AuditCell                0x4fe58B74404E7A54849CD6b434240FA55E52f06C
+  SpecGapModule            0x4DAB1c1794Ed63C914C2cd64be4E63C8945E29e1
+  row                      0
+  protocol                 0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
+  auditor                  0x34FDFDF44132766B224fE4F738F8F4311D3E86Fc
+  discoverer               0xbEf90eBc5ACBa59135460e426f10A107495F646E
+  fixture key&#x27;s seat       protocol
+  row state                4
+  gap status               Filed
+  filing stake (wei)       10000000000000000000
+  filed at                 ReadTheFiling prints it once the filing is mined
+  gap class
+0xf265280a77ba6123996963ca5c8304643796f2443d1c448144d3f41c86c139b3
+  result root
+0x41922cf47145f448a316089973c55a15409ff973e5c68c50115cbd598d759b1e</code></pre>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>FilingTest.test_adoptionIsPaidFromTheProtocol()</code></p>
+<pre><code>Room 2 fixture: the DAN hull at 0f3eaf8 - not the network&#x27;s cell
+  chain id                 31337
+  fixture key              0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
+  genesis auditor          0x34FDFDF44132766B224fE4F738F8F4311D3E86Fc
+  AuditCell                0x4fe58B74404E7A54849CD6b434240FA55E52f06C
+  CellToken                0x4E94bc6BEe56055EE08325d3c327DC99cDD45ab8
+  SpecGapModule            0x4DAB1c1794Ed63C914C2cd64be4E63C8945E29e1
+  StructuralUpgradeModule  0x08022159A0A78a189229E96C684D4629E418C36c
+  AuditCell runtime bytes  20909
+  decision window (s)      300
+  protocol decision (s)    300
+  in-audit window (s)      600
+  min audit window (s)     600
+  claim resolution (s)     1800
+  claim filing stake (wei) 10000000000000000000
+  fixture key AUDIT (wei)  50000000000000000000
+Room 2, door two: a spec gap on the fixture - not the network&#x27;s cell
+  chain id                 31337
+  AuditCell                0x4fe58B74404E7A54849CD6b434240FA55E52f06C
+  SpecGapModule            0x4DAB1c1794Ed63C914C2cd64be4E63C8945E29e1
+  row                      0
+  protocol                 0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
+  auditor                  0x34FDFDF44132766B224fE4F738F8F4311D3E86Fc
+  discoverer               0xbEf90eBc5ACBa59135460e426f10A107495F646E
+  fixture key&#x27;s seat       protocol
+  row state                4
+  gap status               Filed
+  filing stake (wei)       10000000000000000000
+  filed at                 ReadTheFiling prints it once the filing is mined
+  gap class
+0xf265280a77ba6123996963ca5c8304643796f2443d1c448144d3f41c86c139b3
+  result root
+0x41922cf47145f448a316089973c55a15409ff973e5c68c50115cbd598d759b1e</code></pre>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>FilingTest.test_theRowSettlesBesideTheGap()</code></p>
+<pre><code>Room 2 fixture: the DAN hull at 0f3eaf8 - not the network&#x27;s cell
+  chain id                 31337
+  fixture key              0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
+  genesis auditor          0x34FDFDF44132766B224fE4F738F8F4311D3E86Fc
+  AuditCell                0x4fe58B74404E7A54849CD6b434240FA55E52f06C
+  CellToken                0x4E94bc6BEe56055EE08325d3c327DC99cDD45ab8
+  SpecGapModule            0x4DAB1c1794Ed63C914C2cd64be4E63C8945E29e1
+  StructuralUpgradeModule  0x08022159A0A78a189229E96C684D4629E418C36c
+  AuditCell runtime bytes  20909
+  decision window (s)      300
+  protocol decision (s)    300
+  in-audit window (s)      600
+  min audit window (s)     600
+  claim resolution (s)     1800
+  claim filing stake (wei) 10000000000000000000
+  fixture key AUDIT (wei)  50000000000000000000
+Room 2, door two: a spec gap on the fixture - not the network&#x27;s cell
+  chain id                 31337
+  AuditCell                0x4fe58B74404E7A54849CD6b434240FA55E52f06C
+  SpecGapModule            0x4DAB1c1794Ed63C914C2cd64be4E63C8945E29e1
+  row                      0
+  protocol                 0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
+  auditor                  0x34FDFDF44132766B224fE4F738F8F4311D3E86Fc
+  discoverer               0xbEf90eBc5ACBa59135460e426f10A107495F646E
+  fixture key&#x27;s seat       protocol
+  row state                4
+  gap status               Filed
+  filing stake (wei)       10000000000000000000
+  filed at                 ReadTheFiling prints it once the filing is mined
+  gap class
+0xf265280a77ba6123996963ca5c8304643796f2443d1c448144d3f41c86c139b3
+  result root
+0x41922cf47145f448a316089973c55a15409ff973e5c68c50115cbd598d759b1e
+row state after its window: 6
+auditor AUDIT after its window (wei): 40625000000000000000</code></pre>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>FilingTest.test_refusesThreeSeatsOnTwoKeys()</code></p>
+<pre><code>Room 2 fixture: the DAN hull at 0f3eaf8 - not the network&#x27;s cell
+  chain id                 31337
+  fixture key              0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
+  genesis auditor          0x34FDFDF44132766B224fE4F738F8F4311D3E86Fc
+  AuditCell                0x4fe58B74404E7A54849CD6b434240FA55E52f06C
+  CellToken                0x4E94bc6BEe56055EE08325d3c327DC99cDD45ab8
+  SpecGapModule            0x4DAB1c1794Ed63C914C2cd64be4E63C8945E29e1
+  StructuralUpgradeModule  0x08022159A0A78a189229E96C684D4629E418C36c
+  AuditCell runtime bytes  20909
+  decision window (s)      300
+  protocol decision (s)    300
+  in-audit window (s)      600
+  min audit window (s)     600
+  claim resolution (s)     1800
+  claim filing stake (wei) 10000000000000000000
+  fixture key AUDIT (wei)  50000000000000000000</code></pre>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>FilingTest.test_refusesAnAuditorTheStandDidNotName()</code></p>
+<pre><code>Room 2 fixture: the DAN hull at 0f3eaf8 - not the network&#x27;s cell
+  chain id                 31337
+  fixture key              0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
+  genesis auditor          0x34FDFDF44132766B224fE4F738F8F4311D3E86Fc
+  AuditCell                0x4fe58B74404E7A54849CD6b434240FA55E52f06C
+  CellToken                0x4E94bc6BEe56055EE08325d3c327DC99cDD45ab8
+  SpecGapModule            0x4DAB1c1794Ed63C914C2cd64be4E63C8945E29e1
+  StructuralUpgradeModule  0x08022159A0A78a189229E96C684D4629E418C36c
+  AuditCell runtime bytes  20909
+  decision window (s)      300
+  protocol decision (s)    300
+  in-audit window (s)      600
+  min audit window (s)     600
+  claim resolution (s)     1800
+  claim filing stake (wei) 10000000000000000000
+  fixture key AUDIT (wei)  50000000000000000000</code></pre>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>FilingTest.test_refusesAKeyThatDidNotStandTheFixture()</code></p>
+<pre><code>Room 2 fixture: the DAN hull at 0f3eaf8 - not the network&#x27;s cell
+  chain id                 31337
+  fixture key              0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
+  genesis auditor          0x34FDFDF44132766B224fE4F738F8F4311D3E86Fc
+  AuditCell                0x4fe58B74404E7A54849CD6b434240FA55E52f06C
+  CellToken                0x4E94bc6BEe56055EE08325d3c327DC99cDD45ab8
+  SpecGapModule            0x4DAB1c1794Ed63C914C2cd64be4E63C8945E29e1
+  StructuralUpgradeModule  0x08022159A0A78a189229E96C684D4629E418C36c
+  AuditCell runtime bytes  20909
+  decision window (s)      300
+  protocol decision (s)    300
+  in-audit window (s)      600
+  min audit window (s)     600
+  claim resolution (s)     1800
+  claim filing stake (wei) 10000000000000000000
+  fixture key AUDIT (wei)  50000000000000000000</code></pre>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>FilingTest.test_refusesGapWordsTheStandDidNotFreeze()</code></p>
+<p class="muted">It prints nothing; it asserts.</p>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>FilingTest.test_filesOnce()</code></p>
+<pre><code>Room 2 fixture: the DAN hull at 0f3eaf8 - not the network&#x27;s cell
+  chain id                 31337
+  fixture key              0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
+  genesis auditor          0x34FDFDF44132766B224fE4F738F8F4311D3E86Fc
+  AuditCell                0x4fe58B74404E7A54849CD6b434240FA55E52f06C
+  CellToken                0x4E94bc6BEe56055EE08325d3c327DC99cDD45ab8
+  SpecGapModule            0x4DAB1c1794Ed63C914C2cd64be4E63C8945E29e1
+  StructuralUpgradeModule  0x08022159A0A78a189229E96C684D4629E418C36c
+  AuditCell runtime bytes  20909
+  decision window (s)      300
+  protocol decision (s)    300
+  in-audit window (s)      600
+  min audit window (s)     600
+  claim resolution (s)     1800
+  claim filing stake (wei) 10000000000000000000
+  fixture key AUDIT (wei)  50000000000000000000
+Room 2, door two: a spec gap on the fixture - not the network&#x27;s cell
+  chain id                 31337
+  AuditCell                0x4fe58B74404E7A54849CD6b434240FA55E52f06C
+  SpecGapModule            0x4DAB1c1794Ed63C914C2cd64be4E63C8945E29e1
+  row                      0
+  protocol                 0xB4f6a60Cb9fE65A2E90ddd02e47f5c139B1C14a3
+  auditor                  0x34FDFDF44132766B224fE4F738F8F4311D3E86Fc
+  discoverer               0xbEf90eBc5ACBa59135460e426f10A107495F646E
+  fixture key&#x27;s seat       protocol
+  row state                4
+  gap status               Filed
+  filing stake (wei)       10000000000000000000
+  filed at                 ReadTheFiling prints it once the filing is mined
+  gap class
+0xf265280a77ba6123996963ca5c8304643796f2443d1c448144d3f41c86c139b3
+  result root
+0x41922cf47145f448a316089973c55a15409ff973e5c68c50115cbd598d759b1e</code></pre>
+</div>
+<h4>The second fixture on Base Sepolia, from the committed records</h4>
+<p><code>exhibits/beanstalk-2022-04/fixture/record/84532.json</code>, which the stand wrote:</p>
+<pre><code class="language-text">Room 2 fixture: an instance of the DAN hull at 0f3eaf8, deployed on Base Sepolia by the museum for one filing. Not the network&#x27;s cell.
+
+AssignmentModule          0xA1b36137ee4039C3844f1830f35040B0a3709E23
+AuditCell                 0x5D76C2127Ea49F1f6cc4b7228608d4ccD9c62016
+BlockhashEntropy          0xF931753eCCA3beAEca3dFa05609208DF7e394f9b
+CellEscrow                0x4d953DC5d5c773D169fc01b82541763Aa0aD982B
+CellToken                 0xC694fd2e77465B3133485e402b9a2cc18BFAEB7c
+ClaimDisputeModule        0x5aB566Ed5C5af94cdb71B140b709DF09Fa7b0392
+FmeaRegistry              0x1aA596748f13346052830daC3807C662d2d3787a
+IntegrityReviewModule     0x6FA8Da30EA3D2760ef0B10B8FC48c0166Aa90743
+IssuanceModule            0x44ee11787BD55cE6d29CCcaD14B84b43865f58bd
+SpecArbiterModule         0x2AA7e65f56473BEc2A96929123b4215DB0227565
+SpecGapModule             0xf618111097e302dF6Db5378122715c2Aed9214C6
+StructuralUpgradeModule   0xF3143C33bf0073165464ED3fFe8E87953E0870e7
+auditCellRuntimeBytes     20909
+auditCellRuntimeCodehash  0x268d9d15a3544c2b58db188784dbce9514de6a9add99e44b903f3973f4f2dfed
+chainId                   84532
+fixtureKey                0x85F9549e4fdCa52fF56742B27b6C037ae5B06966
+gapClassId                0xf265280a77ba6123996963ca5c8304643796f2443d1c448144d3f41c86c139b3
+gapContext                0xd1ad769dcd6d5c9503a2c0c16566ead2c91b07af6da3664dec2113071299f87d
+gapInvariantId            0xdf72d13f08e815ecf21fe62b2f24a6283826a0b12cc5bb1769ab5288b175bc95
+gapLocation               0x1fd9a9d992908f2c1107d52442c6023f868a043c13698b6b6ad64915f4f4ad66
+gapWitness                0x67ac345b341006be892721e935bfc71542d27e8ca67dabe79a150ca90743e53c
+gapWords                  exhibits/beanstalk-2022-04/filing/gap.json
+genesisAuditor            0xEdB37f4C862fC94A63Fe826baCefF2fF17016839
+genesisMint               50000000000000000000
+hull                      0f3eaf8
+standCommit               55511e4dff671a7e3f81be683d2a6c1d99458b0b</code></pre>
+<p><code>exhibits/beanstalk-2022-04/fixture/record/84532.filing.json</code>, which the filing wrote:</p>
+<pre><code class="language-text">Room 2, door two: a spec gap filed on the fixture, an instance of the DAN hull at 0f3eaf8 on Base Sepolia. Not the network&#x27;s cell.
+
+AuditCell           0x5D76C2127Ea49F1f6cc4b7228608d4ccD9c62016
+SpecGapModule       0xf618111097e302dF6Db5378122715c2Aed9214C6
+artifactHash        0x2ff59388cd5e1842a3d057338010945a779a6c7d57abfb5e9ddc697838700870
+auditId             0
+auditor             0xEdB37f4C862fC94A63Fe826baCefF2fF17016839
+chainId             84532
+classId             0xf265280a77ba6123996963ca5c8304643796f2443d1c448144d3f41c86c139b3
+contextRoot         0xd1ad769dcd6d5c9503a2c0c16566ead2c91b07af6da3664dec2113071299f87d
+discoverer          0xfEE57981D498a5b3882ac464344687A12c8d4cC9
+evaluatorToolId     0xac6b12f92c30ef9b42ba27fa763e9753304bc08051b4fe21a9cbe1e7e9faec71
+filingStake         10000000000000000000
+finderToolId        0x3a05af87d6078f203b5cb12dfa6a1b76fe4c3567ce1026302e580a4bd50dbb92
+fixtureKeySeat      protocol
+gapWords            exhibits/beanstalk-2022-04/filing/gap.json
+hull                0f3eaf8
+invariantId         0xdf72d13f08e815ecf21fe62b2f24a6283826a0b12cc5bb1769ab5288b175bc95
+locationCommitment  0x1fd9a9d992908f2c1107d52442c6023f868a043c13698b6b6ad64915f4f4ad66
+protocol            0x85F9549e4fdCa52fF56742B27b6C037ae5B06966
+resultRoot          0x41922cf47145f448a316089973c55a15409ff973e5c68c50115cbd598d759b1e
+specHash            0x67134c2f4385d783b8d7bf0833d9e8ef2d0dac0a4c3e78acc038405b27d0088a
+witnessCommitment   0x67ac345b341006be892721e935bfc71542d27e8ca67dabe79a150ca90743e53c</code></pre>
+<p><code>exhibits/beanstalk-2022-04/fixture/record/84532.confirm.json</code>, the transaction that closed the gap:</p>
+<pre><code class="language-text">Room 2, door two: silence confirmed the spec gap on the fixture, an instance of the DAN hull at 0f3eaf8 on Base Sepolia. Not the network&#x27;s cell.
+
+chainId           84532
+SpecGapModule     0xf618111097e302dF6Db5378122715c2Aed9214C6
+auditId           0
+classId           0xf265280a77ba6123996963ca5c8304643796f2443d1c448144d3f41c86c139b3
+status            Confirmed
+confirmedBy       0xfEE57981D498a5b3882ac464344687A12c8d4cC9
+tx                0xc57c1c1f8de7a7e7ecf945bf469d64266807e8eaf7c9acfe7eff89ff19840b46
+block             47448860
+timestamp         1790666008
+stakeReturnedTo   0xfEE57981D498a5b3882ac464344687A12c8d4cC9
+stakeReturnedWei  10000000000000000000</code></pre>
+<p><code>exhibits/beanstalk-2022-04/fixture/record/84532.transactions.json</code>: 75 transactions the stand and the filing sent, 0 of them failed.</p>
+<table><thead><tr><th>#</th><th>script</th><th>type</th><th>contract</th><th>function</th><th>block</th><th>tx</th></tr></thead><tbody><tr><td>0</td><td>stand</td><td>CREATE2</td><td>DiscovererPayoutLib</td><td></td><td>47447921</td><td><a href="https://sepolia.basescan.org/tx/0xae45370c3c7da4054b3d45075a2c03f236a93ae0786fa112f37536866f8d3a4c">0xae45370c…</a></td></tr><tr><td>1</td><td>stand</td><td>CREATE2</td><td>ToolUseLib</td><td></td><td>47447922</td><td><a href="https://sepolia.basescan.org/tx/0xd795dd95f5b35714d741fbebe1e4ca5c911d9e68f45e0e6b63dc6a063562d0d4">0xd795dd95…</a></td></tr><tr><td>2</td><td>stand</td><td>CREATE2</td><td>CellLogicLib</td><td></td><td>47447923</td><td><a href="https://sepolia.basescan.org/tx/0x26235de3b3876d7e6b92dbc154737fec625a20a0f66f0126a520b32eb19b54c5">0x26235de3…</a></td></tr><tr><td>3</td><td>stand</td><td>CREATE2</td><td>SubmitAuditLib</td><td></td><td>47447924</td><td><a href="https://sepolia.basescan.org/tx/0x1defc8b7a0dc431552b35ee3535ee356a104b3b4d6d598aa59e50e4426a109f5">0x1defc8b7…</a></td></tr><tr><td>4</td><td>stand</td><td>CREATE</td><td>CellToken</td><td></td><td>47447925</td><td><a href="https://sepolia.basescan.org/tx/0x28a8b4253ed56192c7d7a0c7c8049c59254b9ac001dc0beedda46cbaf571c815">0x28a8b425…</a></td></tr><tr><td>5</td><td>stand</td><td>CREATE</td><td>AuditCell</td><td></td><td>47447926</td><td><a href="https://sepolia.basescan.org/tx/0x6a869677248b64f71898f093c29f4d593e2bac84bdb7f14d936dc18cc1249609">0x6a869677…</a></td></tr><tr><td>6</td><td>stand</td><td>CALL</td><td>AuditCell</td><td>setGenesisBootstrap</td><td>47447927</td><td><a href="https://sepolia.basescan.org/tx/0xd42dd948794021370d71ae041b403c915f045c9b4ac2dccf7e1a4aaa5f782f10">0xd42dd948…</a></td></tr><tr><td>7</td><td>stand</td><td>CREATE</td><td>CellEscrow</td><td></td><td>47447928</td><td><a href="https://sepolia.basescan.org/tx/0xc5b0d37926863f9cebba0af03baa066a1b4cb61390b70f89fb5e57ccdb552b07">0xc5b0d379…</a></td></tr><tr><td>8</td><td>stand</td><td>CREATE</td><td>IssuanceModule</td><td></td><td>47447929</td><td><a href="https://sepolia.basescan.org/tx/0xde11a711cb17dfc1cb280384c444d8a19ce30f3f8a71e0a411d26e0282b15910">0xde11a711…</a></td></tr><tr><td>9</td><td>stand</td><td>CREATE</td><td>ClaimDisputeModule</td><td></td><td>47447930</td><td><a href="https://sepolia.basescan.org/tx/0xac84310d44bcc3f81aee9543077ddf56d51e400313925458d54d2e19590dc7dd">0xac84310d…</a></td></tr><tr><td>10</td><td>stand</td><td>CREATE</td><td>SpecGapModule</td><td></td><td>47447931</td><td><a href="https://sepolia.basescan.org/tx/0x1d78784f0488aad1fd7ca1b9a93de5b80f1203e5c1b3e3090d77e48311726306">0x1d78784f…</a></td></tr><tr><td>11</td><td>stand</td><td>CREATE</td><td>SpecArbiterModule</td><td></td><td>47447932</td><td><a href="https://sepolia.basescan.org/tx/0x0d585d3711e72c83b232a74ea093643d045fbf16b7b3329a156050d9f4427c96">0x0d585d37…</a></td></tr><tr><td>12</td><td>stand</td><td>CREATE</td><td>IntegrityReviewModule</td><td></td><td>47447933</td><td><a href="https://sepolia.basescan.org/tx/0x4d3a510b195f7451472c7541b8a60a55bd88f780be31c4aae556b551ae12f742">0x4d3a510b…</a></td></tr><tr><td>13</td><td>stand</td><td>CREATE</td><td>StructuralUpgradeModule</td><td></td><td>47447934</td><td><a href="https://sepolia.basescan.org/tx/0xae9ca4cedbdc29aba5f69b551e63163f0165276930c94506366a0fea88a4ab8d">0xae9ca4ce…</a></td></tr><tr><td>14</td><td>stand</td><td>CREATE</td><td>FmeaRegistry</td><td></td><td>47447935</td><td><a href="https://sepolia.basescan.org/tx/0xd21317edc44e53f9786749bd93d83624de3bf8ab974c2797f777fc2d0ae5e08e">0xd21317ed…</a></td></tr><tr><td>15</td><td>stand</td><td>CREATE</td><td>AssignmentModule</td><td></td><td>47447936</td><td><a href="https://sepolia.basescan.org/tx/0x86eda0f71cf6d583ea63da748a3d286053adbc440cdb5a2d4d81b29b2a1017eb">0x86eda0f7…</a></td></tr><tr><td>16</td><td>stand</td><td>CREATE</td><td>BlockhashEntropy</td><td></td><td>47447937</td><td><a href="https://sepolia.basescan.org/tx/0x644ddaa19f522a610df7de6d7e4d71c2cc8b1890fd2613a9d0caf649c359a4f7">0x644ddaa1…</a></td></tr><tr><td>17</td><td>stand</td><td>CALL</td><td>IssuanceModule</td><td>wire</td><td>47447938</td><td><a href="https://sepolia.basescan.org/tx/0x48e5ec0e6d288e26c72665c7666858f6ff0fe9b0ba94a92a6865f0ee1c632989">0x48e5ec0e…</a></td></tr><tr><td>18</td><td>stand</td><td>CALL</td><td>IssuanceModule</td><td>setEmaToMintBps</td><td>47447939</td><td><a href="https://sepolia.basescan.org/tx/0x5b005820d2e3845e433504762621247fc3e42a1a0149ab8dee1316262692351b">0x5b005820…</a></td></tr><tr><td>19</td><td>stand</td><td>CALL</td><td>IssuanceModule</td><td>setMintLpCapBps</td><td>47447940</td><td><a href="https://sepolia.basescan.org/tx/0x6b8e698e8b15a09433fa3ae241eac0decefdda0fcb20e1511434b022b3231f7a">0x6b8e698e…</a></td></tr><tr><td>20</td><td>stand</td><td>CALL</td><td>ClaimDisputeModule</td><td>wire</td><td>47447941</td><td><a href="https://sepolia.basescan.org/tx/0xb952b93977b646875ca6307a6568f47038695a3239f06bda4ec3f7a2e017ea64">0xb952b939…</a></td></tr><tr><td>21</td><td>stand</td><td>CALL</td><td>FmeaRegistry</td><td>wireClaimModule</td><td>47447942</td><td><a href="https://sepolia.basescan.org/tx/0x6b19a03f1dfac3acbb47599fe1a17ac21bac2cb0c5eb2c9766079b1071705cec">0x6b19a03f…</a></td></tr><tr><td>22</td><td>stand</td><td>CALL</td><td>ClaimDisputeModule</td><td>wireFmeaRegistry</td><td>47447943</td><td><a href="https://sepolia.basescan.org/tx/0xfca9c683c469d219561cbc7973c2af781e478607af3d4e1c4e7cce8b096bcacf">0xfca9c683…</a></td></tr><tr><td>23</td><td>stand</td><td>CALL</td><td>AssignmentModule</td><td>wire</td><td>47447944</td><td><a href="https://sepolia.basescan.org/tx/0x08b09aa1424140a12c18644a98116f899f126a7550dfc8868a406abd1a0c217a">0x08b09aa1…</a></td></tr><tr><td>24</td><td>stand</td><td>CALL</td><td>SpecGapModule</td><td>wire</td><td>47447945</td><td><a href="https://sepolia.basescan.org/tx/0x02354b1deb1112974d2ebf5cad28b7e86c6100fd3bb6b02eabacd15a34835fbb">0x02354b1d…</a></td></tr><tr><td>25</td><td>stand</td><td>CALL</td><td>SpecArbiterModule</td><td>wire</td><td>47447946</td><td><a href="https://sepolia.basescan.org/tx/0x9caf00565a902bf29d4bc7641edff0f42d52ecac85eec753c8df785c7cd63065">0x9caf0056…</a></td></tr><tr><td>26</td><td>stand</td><td>CALL</td><td>IntegrityReviewModule</td><td>wire</td><td>47447947</td><td><a href="https://sepolia.basescan.org/tx/0x5786d134bdda52b8f6de2062a7043e5a4818e44b2767dc065e9749df893341ef">0x5786d134…</a></td></tr><tr><td>27</td><td>stand</td><td>CALL</td><td>StructuralUpgradeModule</td><td>wire</td><td>47447948</td><td><a href="https://sepolia.basescan.org/tx/0xe381050e62805fd761aee4a4f5704438569af0e879d3462bdfe9e09e5e7c867f">0xe381050e…</a></td></tr><tr><td>28</td><td>stand</td><td>CALL</td><td>IssuanceModule</td><td>setStructuralModule</td><td>47447949</td><td><a href="https://sepolia.basescan.org/tx/0xf9fd8fb733753a5a9b03fe678948e6d68d864d20ab4661933225d6c68a1899a9">0xf9fd8fb7…</a></td></tr><tr><td>29</td><td>stand</td><td>CALL</td><td>CellEscrow</td><td>setFounderReleaseTarget</td><td>47447950</td><td><a href="https://sepolia.basescan.org/tx/0x107d4534457cc93a75625791447a0c77b7b9063af3160001927940b1ddcf228d">0x107d4534…</a></td></tr><tr><td>30</td><td>stand</td><td>CALL</td><td>CellEscrow</td><td>setNetwork</td><td>47447951</td><td><a href="https://sepolia.basescan.org/tx/0x3fa65cd4e73e536c87a4bd0268399f48090edbf79fe31b2f7ae1fd4fb6ff50c9">0x3fa65cd4…</a></td></tr><tr><td>31</td><td>stand</td><td>CALL</td><td>CellEscrow</td><td>setIssuanceModule</td><td>47447952</td><td><a href="https://sepolia.basescan.org/tx/0xcd13b849134a9f684ae32ba465ea8c5e0d2d7557f9abe5611f4917f8337cf988">0xcd13b849…</a></td></tr><tr><td>32</td><td>stand</td><td>CALL</td><td>CellEscrow</td><td>setStructuralUpgradeModule</td><td>47447953</td><td><a href="https://sepolia.basescan.org/tx/0x749d9e58a82a436f46f68d53192c1c75f27726a156814bad24bfb8a97dcf6a2d">0x749d9e58…</a></td></tr><tr><td>33</td><td>stand</td><td>CALL</td><td>CellEscrow</td><td>setIntegrityReviewModule</td><td>47447954</td><td><a href="https://sepolia.basescan.org/tx/0x90b19cf6c065d702e4049f9c196f2ba28b5ad95414220f116b7d5ca72711802a">0x90b19cf6…</a></td></tr><tr><td>34</td><td>stand</td><td>CALL</td><td>AuditCell</td><td>setTreasuryEscrow</td><td>47447955</td><td><a href="https://sepolia.basescan.org/tx/0xf48a8483c295ad132c3a7c22d9acf9814c6af8eadd60b7a657f2d8bfe282ee40">0xf48a8483…</a></td></tr><tr><td>35</td><td>stand</td><td>CALL</td><td>AuditCell</td><td>setIssuanceModule</td><td>47447956</td><td><a href="https://sepolia.basescan.org/tx/0x37d027af4d497a8a34f08bc61246761f5972aca5597252d16fe5be723b851eef">0x37d027af…</a></td></tr><tr><td>36</td><td>stand</td><td>CALL</td><td>AuditCell</td><td>setDisputeModule</td><td>47447957</td><td><a href="https://sepolia.basescan.org/tx/0xa1d8abe42048b8b36e7eebd5194cb7704ced2e90c73f8d7dd066f9dbbf5f2867">0xa1d8abe4…</a></td></tr><tr><td>37</td><td>stand</td><td>CALL</td><td>AuditCell</td><td>setDisputeModule</td><td>47447958</td><td><a href="https://sepolia.basescan.org/tx/0xdbebb1f32c3aa30e33c8e3de88dcc5b18df349e107f57849f912687d1b8c8be7">0xdbebb1f3…</a></td></tr><tr><td>38</td><td>stand</td><td>CALL</td><td>AuditCell</td><td>setDisputeModule</td><td>47447959</td><td><a href="https://sepolia.basescan.org/tx/0xae621493855119083cb660704a566374d1fbc606716ff5b020f325e7c2a4bdd5">0xae621493…</a></td></tr><tr><td>39</td><td>stand</td><td>CALL</td><td>AuditCell</td><td>setDisputeModule</td><td>47447960</td><td><a href="https://sepolia.basescan.org/tx/0x24e285007b300d8e2b53ea5061f934c3c4496f045a5316f6a2d4faafb6cfe427">0x24e28500…</a></td></tr><tr><td>40</td><td>stand</td><td>CALL</td><td>AuditCell</td><td>setDisputeModule</td><td>47447961</td><td><a href="https://sepolia.basescan.org/tx/0xe1d9694b2b16dbf67038345aab50578855e1f0dac1d0b8b4c7657a14cbf5f910">0xe1d9694b…</a></td></tr><tr><td>41</td><td>stand</td><td>CALL</td><td>AuditCell</td><td>setAssignmentModule</td><td>47447962</td><td><a href="https://sepolia.basescan.org/tx/0x5c2c79ee593d9dd04b5c30ea8f16bd8f55d9eec9ccb9c20365ca2509e650e256">0x5c2c79ee…</a></td></tr><tr><td>42</td><td>stand</td><td>CALL</td><td>AuditCell</td><td>setEntropyProvider</td><td>47447963</td><td><a href="https://sepolia.basescan.org/tx/0xf0ece08e09a97f471bddc303d22b496317538bc7dc911d2bfba114e3bda3c16d">0xf0ece08e…</a></td></tr><tr><td>43</td><td>stand</td><td>CALL</td><td>AuditCell</td><td>setParam</td><td>47447964</td><td><a href="https://sepolia.basescan.org/tx/0x9fb06e6174e3f8b3098e496cb87e5864c80705521203db289af367e5621b0474">0x9fb06e61…</a></td></tr><tr><td>44</td><td>stand</td><td>CALL</td><td>AuditCell</td><td>setParam</td><td>47447965</td><td><a href="https://sepolia.basescan.org/tx/0x8682ddc2c2d1b02933e18a31e9d5275c8c7a92e34e3fe37ec3d85cc598cd2722">0x8682ddc2…</a></td></tr><tr><td>45</td><td>stand</td><td>CALL</td><td>AuditCell</td><td>setParam</td><td>47447966</td><td><a href="https://sepolia.basescan.org/tx/0x2d8e64a4bb0fe5dc4f38b63dad10388da3f86ad4d39ac07015fc078d4a1e822d">0x2d8e64a4…</a></td></tr><tr><td>46</td><td>stand</td><td>CALL</td><td>AuditCell</td><td>setParam</td><td>47447967</td><td><a href="https://sepolia.basescan.org/tx/0xe9787d186356ad5d1dbda5b2f4eb139b081008ac1ae20bdef8223b7565efdd75">0xe9787d18…</a></td></tr><tr><td>47</td><td>stand</td><td>CALL</td><td>AuditCell</td><td>setParam</td><td>47447968</td><td><a href="https://sepolia.basescan.org/tx/0x730812159c34e0f11b80981d203d6c5e876da9fd5e75d3d6d59863e338f1258f">0x73081215…</a></td></tr><tr><td>48</td><td>stand</td><td>CALL</td><td>ClaimDisputeModule</td><td>setProtocolClaimDecisionWindow</td><td>47447969</td><td><a href="https://sepolia.basescan.org/tx/0x5b975a04fc664c344ef56d6681b66b39450e2cbd0827a3464d44fcca91909fb6">0x5b975a04…</a></td></tr><tr><td>49</td><td>stand</td><td>CALL</td><td>AuditCell</td><td>setParam</td><td>47447970</td><td><a href="https://sepolia.basescan.org/tx/0x4411fe7d49f1ed253039d934fa75ce966142683c3280ec2d109f2f680145c990">0x4411fe7d…</a></td></tr><tr><td>50</td><td>stand</td><td>CALL</td><td>SpecArbiterModule</td><td>setSpecChallengeStake</td><td>47447971</td><td><a href="https://sepolia.basescan.org/tx/0xbddcee64be1254432238ffebd1235b1afa1b0e544e0d1cac7eea3228dbd05c81">0xbddcee64…</a></td></tr><tr><td>51</td><td>stand</td><td>CALL</td><td>IntegrityReviewModule</td><td>setIntegrityFilingStake</td><td>47447972</td><td><a href="https://sepolia.basescan.org/tx/0x28e5ca84e1f2dd9223f79fb718afd9506607f8930a1edc3ee51b42597527a7c9">0x28e5ca84…</a></td></tr><tr><td>52</td><td>stand</td><td>CALL</td><td>IntegrityReviewModule</td><td>setIntegrityContestStake</td><td>47447973</td><td><a href="https://sepolia.basescan.org/tx/0x598595da08577ca6df2e85bac4a567b63f9444f655d70f5d8e6637654c95439f">0x598595da…</a></td></tr><tr><td>53</td><td>stand</td><td>CALL</td><td>StructuralUpgradeModule</td><td>setGapFilingStake</td><td>47447974</td><td><a href="https://sepolia.basescan.org/tx/0x8a374e7edc760df4b207e6ebbd3d0e420cb1495c394ab5d0efeb17a5aa98dfe4">0x8a374e7e…</a></td></tr><tr><td>54</td><td>stand</td><td>CALL</td><td>SpecArbiterModule</td><td>setSpecChallengeFee</td><td>47447975</td><td><a href="https://sepolia.basescan.org/tx/0x8cce40b23c48c1613d9f11487663060576e43acf95ea7715d967f02fe1db6475">0x8cce40b2…</a></td></tr><tr><td>55</td><td>stand</td><td>CALL</td><td>AuditCell</td><td>registerTool</td><td>47447976</td><td><a href="https://sepolia.basescan.org/tx/0x24cfc0016b21d274a1d5e10820a9949b8fb9605dfe66059a8391bfebc901e3b1">0x24cfc001…</a></td></tr><tr><td>56</td><td>stand</td><td>CALL</td><td>AuditCell</td><td>registerTool</td><td>47447977</td><td><a href="https://sepolia.basescan.org/tx/0x9d757bd17f96d279207e676501b3a5b062317335c20a60c37c31cdf6d30775fa">0x9d757bd1…</a></td></tr><tr><td>57</td><td>stand</td><td>CALL</td><td>AuditCell</td><td>registerTool</td><td>47447978</td><td><a href="https://sepolia.basescan.org/tx/0x7b3acda3745ecfcfa5f9b7f5e33383b56d178afb1062c5a5b8385aeb4365f5cf">0x7b3acda3…</a></td></tr><tr><td>58</td><td>stand</td><td>CALL</td><td>AuditCell</td><td>registerTool</td><td>47447979</td><td><a href="https://sepolia.basescan.org/tx/0x5ada51466ec72890a565a404f5351957b0e2e48b06a397bcd790c0c9869df72c">0x5ada5146…</a></td></tr><tr><td>59</td><td>stand</td><td>CALL</td><td>AuditCell</td><td>registerTool</td><td>47447980</td><td><a href="https://sepolia.basescan.org/tx/0x48aa923c181e2a6600fa3f6e331c8d783f7858d567d9e4234b1e10b271884972">0x48aa923c…</a></td></tr><tr><td>60</td><td>stand</td><td>CALL</td><td>AuditCell</td><td>registerTool</td><td>47447981</td><td><a href="https://sepolia.basescan.org/tx/0xb177101ef03348cd4e17596377df3f2ac9b50e218ff54ee54ed2fd354f949060">0xb177101e…</a></td></tr><tr><td>61</td><td>stand</td><td>CALL</td><td>AuditCell</td><td>setToolWitnessFlags</td><td>47447982</td><td><a href="https://sepolia.basescan.org/tx/0x41feea4c67c434d146dcf5ecece2184f095c6b369df88fa54b26a1b155df118a">0x41feea4c…</a></td></tr><tr><td>62</td><td>stand</td><td>CALL</td><td>SpecGapModule</td><td>registerClass</td><td>47447983</td><td><a href="https://sepolia.basescan.org/tx/0xa9a1369776840665add96864471cfe525621e713c5976a0abbdc2c5fc22ada73">0xa9a13697…</a></td></tr><tr><td>63</td><td>stand</td><td>CALL</td><td>CellToken</td><td>genesisMint</td><td>47447984</td><td><a href="https://sepolia.basescan.org/tx/0x7a1d27eec9cdc051c39a67d81dae9ff359e656661326e6302f781c1c80e2a85f">0x7a1d27ee…</a></td></tr><tr><td>64</td><td>stand</td><td>CALL</td><td>CellToken</td><td>setMinter</td><td>47447985</td><td><a href="https://sepolia.basescan.org/tx/0x3318a5675aa46c7581f67541a366177d0974c6057201eb522f3ac8e189773e0c">0x3318a567…</a></td></tr><tr><td>65</td><td>filing</td><td>CALL</td><td></td><td>register</td><td>47448683</td><td><a href="https://sepolia.basescan.org/tx/0xe2ede1de0e5357a267df2222ad6bdcebd28cffcf9ae4c79bb7b8dc6e17b3a9db">0xe2ede1de…</a></td></tr><tr><td>66</td><td>filing</td><td>CALL</td><td></td><td>approve</td><td>47448683</td><td><a href="https://sepolia.basescan.org/tx/0x3801c3b881917191e6c4a8484e418a5cd2c7bde6b6e6f453e8002acc4af6ed6e">0x3801c3b8…</a></td></tr><tr><td>67</td><td>filing</td><td>CALL</td><td></td><td>submitArtifactAudit</td><td>47448684</td><td><a href="https://sepolia.basescan.org/tx/0x370c6d8fe841bd8fceceee758113254c17c9dc30abc7212e8174627984a127aa">0x370c6d8f…</a></td></tr><tr><td>68</td><td>filing</td><td>CALL</td><td></td><td>protocolAcceptAuditor</td><td>47448685</td><td><a href="https://sepolia.basescan.org/tx/0xa705b6d20099b4153e6bff330f052586fe5d34ac9d80e604b6d4932a2f9e2524">0xa705b6d2…</a></td></tr><tr><td>69</td><td>filing</td><td>CALL</td><td></td><td>acceptAudit</td><td>47448685</td><td><a href="https://sepolia.basescan.org/tx/0x8f3f1f36cd74a6417be52fc24e5d5aba93226a7e3e2ac88faa31de7864e5cce4">0x8f3f1f36…</a></td></tr><tr><td>70</td><td>filing</td><td>CALL</td><td></td><td>provePass</td><td>47448686</td><td><a href="https://sepolia.basescan.org/tx/0xa6a4b3d10c0a39aa23a1bedf41d7f9f0c1bafb3cb509cb17fb3297c887f7f87b">0xa6a4b3d1…</a></td></tr><tr><td>71</td><td>filing</td><td>CALL</td><td></td><td>transfer</td><td>47448686</td><td><a href="https://sepolia.basescan.org/tx/0x38c6191265bb86cfd7277f606cbd78d78acc70133d580f7b4da5aa311eb4fe45">0x38c61912…</a></td></tr><tr><td>72</td><td>filing</td><td>CALL</td><td></td><td>register</td><td>47448687</td><td><a href="https://sepolia.basescan.org/tx/0x428b0e2080e9e9e175d500394aa6a14efd7afd16d6b52b2be44ff809aeb26fba">0x428b0e20…</a></td></tr><tr><td>73</td><td>filing</td><td>CALL</td><td></td><td>approve</td><td>47448688</td><td><a href="https://sepolia.basescan.org/tx/0x560d10991616896bcd3772e8521773de841592e5131d8bdb5eaf88469b00a62e">0x560d1099…</a></td></tr><tr><td>74</td><td>filing</td><td>CALL</td><td></td><td>openSpecGap</td><td>47448689</td><td><a href="https://sepolia.basescan.org/tx/0xd5cc45f3d58578a0e652f4bb000a87682373a67dff5aa6d4e0cd01c3cb8898bf">0xd5cc45f3…</a></td></tr></tbody></table>
+<h4>The second fixture on Base Sepolia, read from the chain in this run</h4>
+<!-- live -->
+<p><code>ReadTheFixture</code> and <code>ReadTheFiling</code> read the chain from https://sepolia.base.org and send nothing:</p>
+<pre><code class="language-text">Room 2 fixture: the DAN hull at 0f3eaf8 - not the network&#x27;s cell
+  chain id                 84532
+  fixture key              0x85F9549e4fdCa52fF56742B27b6C037ae5B06966
+  genesis auditor          0xEdB37f4C862fC94A63Fe826baCefF2fF17016839
+  AuditCell                0x5D76C2127Ea49F1f6cc4b7228608d4ccD9c62016
+  CellToken                0xC694fd2e77465B3133485e402b9a2cc18BFAEB7c
+  SpecGapModule            0xf618111097e302dF6Db5378122715c2Aed9214C6
+  StructuralUpgradeModule  0xF3143C33bf0073165464ED3fFe8E87953E0870e7
+  AuditCell runtime bytes  20909
+  decision window (s)      300
+  protocol decision (s)    300
+  in-audit window (s)      600
+  min audit window (s)     600
+  claim resolution (s)     1800
+  claim filing stake (wei) 10000000000000000000
+  fixture key AUDIT (wei)  0
+  read back from           exhibits/beanstalk-2022-04/fixture/record/84532.json</code></pre>
+<pre><code class="language-text">Room 2, door two: a spec gap on the fixture - not the network&#x27;s cell
+  chain id                 84532
+  AuditCell                0x5D76C2127Ea49F1f6cc4b7228608d4ccD9c62016
+  SpecGapModule            0xf618111097e302dF6Db5378122715c2Aed9214C6
+  row                      0
+  protocol                 0x85F9549e4fdCa52fF56742B27b6C037ae5B06966
+  auditor                  0xEdB37f4C862fC94A63Fe826baCefF2fF17016839
+  discoverer               0xfEE57981D498a5b3882ac464344687A12c8d4cC9
+  fixture key&#x27;s seat       protocol
+  row state                6
+  gap status               Confirmed
+  filing stake (wei)       10000000000000000000
+  filed at                 1790665666
+  silence confirms from    1790665966
+  gap class
+0xf265280a77ba6123996963ca5c8304643796f2443d1c448144d3f41c86c139b3
+  result root
+0x41922cf47145f448a316089973c55a15409ff973e5c68c50115cbd598d759b1e
+  row bounty (wei)         40000000000000000000
+  row window opened        1790665660
+  row window (s)           600
+  row window closed        1790666260
+  cell holds (wei)         0
+  auditor holds (wei)      40625000000000000000
+  discoverer holds (wei)   10000000000000000000
+  fixture key holds (wei)  0
+  fixture key&#x27;s nonce      140
+  read at block            47800127
+  read at (unix s)         1791368542
+  read back from           exhibits/beanstalk-2022-04/fixture/record/84532.filing.json</code></pre>
+<!-- /live -->
+<p class="src">This room's source: <a href="https://github.com/Aui76/two-doors/tree/main/exhibits/beanstalk-2022-04"><code>exhibits/beanstalk-2022-04/</code></a></p>
+<p class="next"><a class="btn" href="index.html">Back to the door</a></p>
+</main>
+<footer><div class="bar">
+<p><strong>63 passed, 0 failed.</strong> Every line of output on this page is what <code>forge test --json -vv</code> returned. The plaques, specs, findings and code are read from the same commit.</p>
+<!-- stamp -->
+<p>Made from commit <code>a58f81c9f07cdf2f6f53ade7ab44c9b1cbf7443e</code>, tree clean, on 2026-10-07 10:22 UTC.</p>
+<ul><li><code>forge --version</code>: forge Version: 1.7.1</li><li><code>forge build</code>: No files changed, compilation skipped, 5 s</li><li><code>forge test --json -vv</code>: 5 s</li></ul>
+<!-- /stamp -->
+<p>Run it yourself:</p>
+<pre><code>git clone https://github.com/Aui76/two-doors
+cd two-doors
+python transcript/generate.py --check</code></pre>
+<p><a href="https://github.com/Aui76/two-doors">The repository</a></p>
+</div></footer>
+</body>
+</html>

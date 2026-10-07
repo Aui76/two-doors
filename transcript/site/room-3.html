@@ -1,0 +1,399 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Room 3, the Balancer room · Two Doors</title>
+<meta name="description" content="A museum where you stand inside a real hack at the block before it happened and find the loophole yourself.">
+<link rel="stylesheet" href="style.css">
+<script>document.documentElement.className = "js";</script>
+<script src="walk.js" defer></script>
+</head>
+<body>
+<header><div class="bar"><a class="home" href="index.html">Two Doors</a><nav><a href="room-1.html">Room 1</a><a href="room-2.html">Room 2</a><a href="room-3.html" aria-current="page">Room 3</a><a href="exit.html">The exit</a><a href="record.html">On file</a></nav></div></header>
+<main>
+<h1>Room 3, the Balancer room</h1>
+<div class="plaque">
+<p>Balancer is staked in DAN. The code of its osETH/wETH pool, <code>0xDACf…850c</code> on Ethereum, and a spec of its swap rounding sit on a row with a bounty of 40 AUDIT, and the draw gives the row to you. You&#x27;re the auditor, and you read the pool&#x27;s source while the row is in review, before you give any verdict. The source is the one deployed at block 23,717,396 on 3 November 2025, the block before the drain, and <code>../spec/SOURCES.md</code> says where each byte came from.</p>
+<p>The spec has 13 invariants and every one names the line it came from. Most of them are Balancer&#x27;s own comments: exact in rounds the amount out down, exact out rounds the amount in up, the invariant rounds down, a join rounds up and an exit rounds down. One of them is <code>_upscale</code> in <code>BasePool.sol</code>, which multiplies every amount by its scaling factor and rounds down. Balancer&#x27;s comment on it expects the impact to be minimal, because there is no rounding error unless the scaling factor is overridden. This pool overrides it, with a token rate, at <code>ComposableStablePoolRates.sol</code> line 302.</p>
+<p>The code does what each of the 13 says. What the spec never says is that on an exact-out swap every rounding on the path has to favour the pool. The error enters at <code>_upscale</code>, which makes the amount out smaller before the math prices it, and <code>_calcInGivenOut</code> in <code>StableMath.sol</code> carries it into the amount in. Door one of this room is the drain that gets through that gap, run against the fork: DeFiHackLabs&#x27; port, and the chain&#x27;s own first transaction beside it.</p>
+<p>You file what you found as a witness claim on the row, with a stake. The cell sends the finding to a drawn stranger to run again with the evaluator, and when the stranger gets the same FAIL and the re-run&#x27;s window closes, the row is Exploited and you&#x27;re paid as anyone who found it would be. It&#x27;s Room 1&#x27;s door, on Balancer&#x27;s row.</p>
+</div>
+<h2>The row in front of you</h2>
+<div class="spec">
+<p>The row names <strong>Balancer osETH/wETH StablePool (ComposableStablePool v5)</strong>, <code>0xDACf5Fa19b1f720111609043ac67A9818262850c</code> on chain 1 at block 23,717,396, runtime codehash <code>0x72b6e1b187e715820b74d4243533145e6d2d0e168101fd8b27be6f5be80ca441</code>.</p>
+<p>The spec on the row, <a href="https://github.com/Aui76/two-doors/blob/main/exhibits/balancer-2025-11/spec/swap-rounding-v0.json"><code>swap-rounding-v0.json</code></a>: 13 invariants, each with the line it was read from.</p>
+<ol>
+<li>onSwap reverts unless the Balancer Vault calls it for this pool&#x27;s own id<br><span class="src"><code class="id">swaps-come-only-from-the-vault</code> · BaseGeneralPool.sol:37</span></li>
+<li>the swap fee percentage can only be set between 0.0001% and 10%<br><span class="src"><code class="id">swap-fee-is-bounded</code> · BasePool.sol:72-73, :195-196</span></li>
+<li>the pool cannot be created with fewer than two tokens or with more than its maximum<br><span class="src"><code class="id">pool-holds-two-tokens-or-more</code> · BasePool.sol:67, :124-125</span></li>
+<li>on an exact-in swap the fee is taken off the amount in before the amount is scaled, and the fee rounds up<br><span class="src"><code class="id">exact-in-fee-comes-off-before-scaling</code> · BaseGeneralPool.sol:56-57; BasePool.sol:626-629</span></li>
+<li>on an exact-in swap the amount out rounds down, in the stable math and again when it is scaled back to token units<br><span class="src"><code class="id">exact-in-amount-out-rounds-down</code> · StableMath.sol:144, :158; BaseGeneralPool.sol:64-65</span></li>
+<li>on an exact-out swap the amount in rounds up, in the stable math and again when it is scaled back to token units<br><span class="src"><code class="id">exact-out-amount-in-rounds-up</code> · StableMath.sol:184, :198; BaseGeneralPool.sol:80-81</span></li>
+<li>on an exact-out swap the fee is added to the amount in after it is scaled back to token units, and the fee rounds up<br><span class="src"><code class="id">exact-out-fee-is-added-after-scaling</code> · BaseGeneralPool.sol:83-84; BasePool.sol:618-620</span></li>
+<li>before the stable math runs, every balance and the swap&#x27;s given amount are multiplied by their scaling factors and rounded down, whichever way the amount moves<br><span class="src"><code class="id">upscaling-rounds-down-for-every-amount</code> · BasePool.sol:680-686, :692-699; BaseGeneralPool.sol:59-60, :75-76</span></li>
+<li>each token&#x27;s scaling factor is its decimals factor times its current rate, rounded down, and the decimals factor is fixed when the pool is built, from the token&#x27;s own decimals()<br><span class="src"><code class="id">scaling-factor-is-decimals-times-rate</code> · ComposableStablePoolRates.sol:296-306; ComposableStablePoolStorage.sol:54-56, :108-113, :274-280; BasePool.sol:638-649</span></li>
+<li>the stable invariant is computed rounding down<br><span class="src"><code class="id">invariant-rounds-down</code> · StableMath.sol:71</span></li>
+<li>on a join the amounts in are scaled back to token units rounding up<br><span class="src"><code class="id">join-amounts-in-round-up</code> · BasePool.sol:343-344, :364-365</span></li>
+<li>on an exit the amounts out are scaled back to token units rounding down<br><span class="src"><code class="id">exit-amounts-out-round-down</code> · BasePool.sol:417-418</span></li>
+<li>a swap with the pool&#x27;s own BPT on either side is priced as a single-token join or exit, and every other swap goes through the regular stable swap<br><span class="src"><code class="id">bpt-swaps-are-joins-and-exits</code> · ComposableStablePool.sol:202-231</span></li>
+</ol>
+</div>
+<h2>The code the spec points at</h2>
+<p>The code does what each invariant says. Read it beside the list above. What does the spec never say?</p>
+<div class="excerpt"><h4><a href="https://github.com/Aui76/two-doors/blob/main/specimens/balancer-2025-11/BasePool.sol#L680-L686"><code>specimens/balancer-2025-11/BasePool.sol</code></a> lines 680 to 686</h4>
+<pre><code><span class="ln">680</span>      function _upscale(uint256 amount, uint256 scalingFactor) internal pure returns (uint256) {
+<span class="ln">681</span>          // Upscale rounding wouldn&#x27;t necessarily always go in the same direction: in a swap for example the balance of
+<span class="ln">682</span>          // token in should be rounded up, and that of token out rounded down. This is the only place where we round in
+<span class="ln">683</span>          // the same direction for all amounts, as the impact of this rounding is expected to be minimal (and there&#x27;s no
+<span class="ln">684</span>          // rounding error unless `_scalingFactor()` is overriden).
+<span class="ln">685</span>          return FixedPoint.mulDown(amount, scalingFactor);
+<span class="ln">686</span>      }</code></pre>
+<p class="src">The whole file's sha256 is <code>0x9fec78a410cccd9248ff96a075a8766af2d607ae4d08e5b5708cd30b99f01972</code>, the one the finding names.</p></div>
+<div class="excerpt"><h4><a href="https://github.com/Aui76/two-doors/blob/main/specimens/balancer-2025-11/BaseGeneralPool.sol#L75-L76"><code>specimens/balancer-2025-11/BaseGeneralPool.sol</code></a> lines 75 to 76</h4>
+<pre><code><span class="ln">75</span>          _upscaleArray(balances, scalingFactors);
+<span class="ln">76</span>          swapRequest.amount = _upscale(swapRequest.amount, scalingFactors[indexOut]);</code></pre>
+<p class="src">The whole file's sha256 is <code>0xa48d3fe6126e1a49b160d389f27268c848b57127bee13ccf49c9245cb823c5b0</code>, the one the finding names.</p></div>
+<div class="excerpt"><h4><a href="https://github.com/Aui76/two-doors/blob/main/specimens/balancer-2025-11/ComposableStablePoolRates.sol#L302-L302"><code>specimens/balancer-2025-11/ComposableStablePoolRates.sol</code></a> lines 302 to 302</h4>
+<pre><code><span class="ln">302</span>              scalingFactors[i] = _getScalingFactor(i).mulDown(_getTokenRate(i));</code></pre>
+<p class="src">The whole file's sha256 is <code>0xb361d8ff591fcdf6d811c68f1f602db59e0bd26ecb81b6e184a3ce2522e33e61</code>, the one the finding names.</p></div>
+<div class="excerpt"><h4><a href="https://github.com/Aui76/two-doors/blob/main/specimens/balancer-2025-11/StableMath.sol#L164-L198"><code>specimens/balancer-2025-11/StableMath.sol</code></a> lines 164 to 198</h4>
+<pre><code><span class="ln">164</span>      function _calcInGivenOut(
+<span class="ln">165</span>          uint256 amplificationParameter,
+<span class="ln">166</span>          uint256[] memory balances,
+<span class="ln">167</span>          uint256 tokenIndexIn,
+<span class="ln">168</span>          uint256 tokenIndexOut,
+<span class="ln">169</span>          uint256 tokenAmountOut,
+<span class="ln">170</span>          uint256 invariant
+<span class="ln">171</span>      ) internal pure returns (uint256) {
+<span class="ln">172</span>          /**************************************************************************************************************
+<span class="ln">173</span>          // inGivenOut token x for y - polynomial equation to solve                                                   //
+<span class="ln">174</span>          // ax = amount in to calculate                                                                               //
+<span class="ln">175</span>          // bx = balance token in                                                                                     //
+<span class="ln">176</span>          // x = bx + ax (finalBalanceIn)                                                                              //
+<span class="ln">177</span>          // D = invariant                                                D                     D^(n+1)                //
+<span class="ln">178</span>          // A = amplification coefficient               x^2 + ( S - ----------  - D) * x -  ------------- = 0         //
+<span class="ln">179</span>          // n = number of tokens                                     (A * n^n)               A * n^2n * P             //
+<span class="ln">180</span>          // S = sum of final balances but x                                                                           //
+<span class="ln">181</span>          // P = product of final balances but x                                                                       //
+<span class="ln">182</span>          **************************************************************************************************************/
+<span class="ln">183</span>  
+<span class="ln">184</span>          // Amount in, so we round up overall.
+<span class="ln">185</span>          balances[tokenIndexOut] = balances[tokenIndexOut].sub(tokenAmountOut);
+<span class="ln">186</span>  
+<span class="ln">187</span>          uint256 finalBalanceIn = _getTokenBalanceGivenInvariantAndAllOtherBalances(
+<span class="ln">188</span>              amplificationParameter,
+<span class="ln">189</span>              balances,
+<span class="ln">190</span>              invariant,
+<span class="ln">191</span>              tokenIndexIn
+<span class="ln">192</span>          );
+<span class="ln">193</span>  
+<span class="ln">194</span>          // No need to use checked arithmetic since `tokenAmountOut` was actually subtracted from the same balance right
+<span class="ln">195</span>          // before calling `_getTokenBalanceGivenInvariantAndAllOtherBalances` which doesn&#x27;t alter the balances array.
+<span class="ln">196</span>          balances[tokenIndexOut] = balances[tokenIndexOut] + tokenAmountOut;
+<span class="ln">197</span>  
+<span class="ln">198</span>          return finalBalanceIn.sub(balances[tokenIndexIn]).add(1);</code></pre>
+<p class="src">The whole file's sha256 is <code>0x25154c99a13173016d22bf8efbf0a5aeb55cef3cfd96f043489c7f573034bdf8</code>, the one the finding names.</p></div>
+<details class="hunt"><summary>Show me</summary>
+<p>The invariant the spec is missing:</p>
+<blockquote><p>on an exact-out swap every rounding on the path goes in the direction that benefits the pool, the upscaling of the amount out and of the balances included, so the amount in the pool asks for is never less than the trade is worth</p></blockquote>
+<p>It is missing from <code>spec/swap-rounding-v0.json</code>. It states each step&#x27;s rounding as the pool&#x27;s own comments state it, and upscaling-rounds-down-for-every-amount is the step that rounds against the pool on an exact-out swap: the amount out is made smaller before the math prices it. Balancer&#x27;s comment on that line says the impact is expected to be minimal because there is no rounding error unless the scaling factor is overridden, and this pool overrides it (ComposableStablePoolRates.sol line 302). Nothing in the spec says the steps taken together must favour the pool.</p>
+</details>
+<h2>Choose a door</h2>
+<div class="doors">
+<button type="button" data-door="door-one" aria-pressed="false"><strong>Door one</strong>The attack the gap allows, run on the fork.</button>
+<button type="button" data-door="door-two" aria-pressed="false"><strong>Door two</strong>File the finding in review, and be paid for it.</button>
+</div>
+<section class="door" id="door-one"><h2>Door one</h2>
+<h3>The drain, rebuilt and replayed on the fork</h3>
+<h4><a href="https://github.com/Aui76/two-doors/blob/main/exhibits/balancer-2025-11/replay/Replay.t.sol"><code>exhibits/balancer-2025-11/replay/Replay.t.sol</code></a></h4>
+<div class="test"><p><span class="pass">passed</span> <code>ContractTest.testPoC()</code></p>
+<pre><code>museum: fork block: 23717396
+museum: before pool A osETH/wETH 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2: 4922.356564867078856521
+museum: before pool A osETH/wETH 0xf1C9acDc66974dFB6dEcB12aA385b9cD01190E38: 6851.581236039298760900
+museum: before pool B wstETH/WETH 0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0: 4270.841022451395518160
+museum: before pool B wstETH/WETH 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2: 1977.057709608602150017
+before attack: balance of address(beneficiary): 0.000000000000000000
+before attack: balance of address(beneficiary): 0.000000000000000000
+before attack: balance of address(beneficiary): 0.000000000000000000
+before attack: balance of address(beneficiary): 0.000000000000000000
+before attack: balance of address(beneficiary): 0.000000000000000000
+after attack: balance of address(beneficiary): 6588.253514734564770216
+after attack: balance of address(beneficiary): 44.154666372672521145
+after attack: balance of address(beneficiary): 6851.122954230748094260
+after attack: balance of address(beneficiary): 4227.257976115652204400
+after attack: balance of address(beneficiary): 10020.413668455251157822
+museum: after pool A osETH/wETH 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2: 298.755056013795788021
+museum: after pool A osETH/wETH 0xf1C9acDc66974dFB6dEcB12aA385b9cD01190E38: 0.458281808550666640
+museum: after pool B wstETH/WETH 0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0: 43.583046335743313760
+museum: after pool B wstETH/WETH 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2: 12.405703727320448301</code></pre>
+</div>
+<h3>The chain&#x27;s own drain transaction, run on the fork</h3>
+<h4><a href="https://github.com/Aui76/two-doors/blob/main/exhibits/balancer-2025-11/Transact.t.sol"><code>exhibits/balancer-2025-11/Transact.t.sol</code></a></h4>
+<div class="test"><p><span class="pass">passed</span> <code>BalancerTransactTest.test_theChainsOwnDrainRunsOnTheFork()</code></p>
+<pre><code>museum: rule set these transactions run under: prague
+museum: fork block: 23717396
+museum: before pool A osETH/wETH 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2: 4922.356564867078856521
+museum: before pool A osETH/wETH 0xf1C9acDc66974dFB6dEcB12aA385b9cD01190E38: 6851.581236039298760900
+museum: before pool B wstETH/WETH 0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0: 4270.841022451395518160
+museum: before pool B wstETH/WETH 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2: 1977.057709608602150017
+Start.
+0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2
+0xDACf5Fa19b1f720111609043ac67A9818262850c
+0xf1C9acDc66974dFB6dEcB12aA385b9cD01190E38
+sF: 1000000000000000000
+sF: 1000000000000000000
+sF: 1058109553424427048
+trickIndex: 2
+trickRate: 1058109553424427048
+nonTrickIndex: 0
+currentAmp: 200000
+tS: 11882638644986383885507
+Done with amts1
+trickAmt: 17
+Here: 0x54B53503c0e2173Df29f8da735fBd45Ee8aBa30d
+Doing Batch
+startBalancesi: 4922356564867078856521
+Asset Deltasi: -4623601508853283067843
+startBalancesi: 2596148429267421974637745197985291
+Asset Deltasi: -44154666355785411629
+startBalancesi: 6851581236039298760900
+Asset Deltasi: -6851122954235076557965
+Ending Invariant
+end__balances[i]: 298755056013795788678
+end__balances[i]: 2596148429267377819971389412573662
+end__balances[i]: 458281804222202935
+poolRate0: 1027347674695370742
+poolRate1: 20189496181073356
+Start.
+0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0
+0x93d199263632a4EF4Bb438F1feB99e57b4b5f0BD
+0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2
+sF: 1218116415279760760
+sF: 1000000000000000000
+sF: 1000000000000000000
+trickIndex: 0
+trickRate: 1218116415279760760
+nonTrickIndex: 2
+currentAmp: 5000000
+tS: 6846019253517852539419
+Done with amts1
+trickAmt: 4
+Here: 0x54B53503c0e2173Df29f8da735fBd45Ee8aBa30d
+Doing Batch
+startBalancesi: 4270841022451395518160
+Asset Deltasi: -4259843451780587743322
+startBalancesi: 2596148429267825815119599282622812
+Asset Deltasi: -20413668455251157822
+startBalancesi: 1977057709608602150017
+Asset Deltasi: -1963838806164214870519
+Ending Invariant
+end__balances[i]: 10997570670807774838
+end__balances[i]: 2596148429267805401451144031464990
+end__balances[i]: 13218903444387279498
+poolRate0: 1051822276543189290
+poolRate1: 3887495432689447
+museum: drainer code bytes after the chain&#x27;s own transaction: 17337
+museum: after pool A osETH/wETH 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2: 298.755056013795788678
+museum: after pool A osETH/wETH 0xf1C9acDc66974dFB6dEcB12aA385b9cD01190E38: 0.458281804222202935
+museum: after pool B wstETH/WETH 0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0: 10.997570670807774838
+museum: after pool B wstETH/WETH 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2: 13.218903444387279498</code></pre>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>BalancerTransactTest.test_theEndOfTheBlockIsTheDrainAndOneMoreSwapInPoolA()</code></p>
+<pre><code>museum: rule set these transactions run under: prague
+Start.
+0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2
+0xDACf5Fa19b1f720111609043ac67A9818262850c
+0xf1C9acDc66974dFB6dEcB12aA385b9cD01190E38
+sF: 1000000000000000000
+sF: 1000000000000000000
+sF: 1058109553424427048
+trickIndex: 2
+trickRate: 1058109553424427048
+nonTrickIndex: 0
+currentAmp: 200000
+tS: 11882638644986383885507
+Done with amts1
+trickAmt: 17
+Here: 0x54B53503c0e2173Df29f8da735fBd45Ee8aBa30d
+Doing Batch
+startBalancesi: 4922356564867078856521
+Asset Deltasi: -4623601508853283067843
+startBalancesi: 2596148429267421974637745197985291
+Asset Deltasi: -44154666355785411629
+startBalancesi: 6851581236039298760900
+Asset Deltasi: -6851122954235076557965
+Ending Invariant
+end__balances[i]: 298755056013795788678
+end__balances[i]: 2596148429267377819971389412573662
+end__balances[i]: 458281804222202935
+poolRate0: 1027347674695370742
+poolRate1: 20189496181073356
+Start.
+0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0
+0x93d199263632a4EF4Bb438F1feB99e57b4b5f0BD
+0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2
+sF: 1218116415279760760
+sF: 1000000000000000000
+sF: 1000000000000000000
+trickIndex: 0
+trickRate: 1218116415279760760
+nonTrickIndex: 2
+currentAmp: 5000000
+tS: 6846019253517852539419
+Done with amts1
+trickAmt: 4
+Here: 0x54B53503c0e2173Df29f8da735fBd45Ee8aBa30d
+Doing Batch
+startBalancesi: 4270841022451395518160
+Asset Deltasi: -4259843451780587743322
+startBalancesi: 2596148429267825815119599282622812
+Asset Deltasi: -20413668455251157822
+startBalancesi: 1977057709608602150017
+Asset Deltasi: -1963838806164214870519
+Ending Invariant
+end__balances[i]: 10997570670807774838
+end__balances[i]: 2596148429267805401451144031464990
+end__balances[i]: 13218903444387279498
+poolRate0: 1051822276543189290
+poolRate1: 3887495432689447
+museum: end-of-block fork: 23717397
+museum: after the drain alone, pool A osETH/wETH 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2: 298.755056013795788678
+museum: after the drain alone, pool A osETH/wETH 0xf1C9acDc66974dFB6dEcB12aA385b9cD01190E38: 0.458281804222202935
+museum: after the drain and the next transaction, pool A osETH/wETH 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2: 256.225665224466838146
+museum: after the drain and the next transaction, pool A osETH/wETH 0xf1C9acDc66974dFB6dEcB12aA385b9cD01190E38: 1.722174904005183525
+museum: end of block 23,717,397, pool A osETH/wETH 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2: 256.225665224466838146
+museum: end of block 23,717,397, pool A osETH/wETH 0xf1C9acDc66974dFB6dEcB12aA385b9cD01190E38: 1.722174904005183525
+museum: after the drain alone, pool B wstETH/WETH 0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0: 10.997570670807774838
+museum: after the drain alone, pool B wstETH/WETH 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2: 13.218903444387279498
+museum: end of block 23,717,397, pool B wstETH/WETH 0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0: 10.997570670807774838
+museum: end of block 23,717,397, pool B wstETH/WETH 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2: 13.218903444387279498
+museum: pool A asset the next transaction took out: 0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2
+museum: amount out: 42.529390789328950532
+museum: pool A asset the next transaction put in: 0xf1C9acDc66974dFB6dEcB12aA385b9cD01190E38
+museum: amount in: 1.263893099782980590</code></pre>
+</div>
+</section>
+<section class="door" id="door-two"><h2>Door two</h2>
+<h3>What you file</h3>
+<dl class="filed">
+<dt>The invariant</dt><dd><code>every-rounding-on-an-exact-out-swap-favours-the-pool</code>: on an exact-out swap every rounding on the path goes in the direction that benefits the pool, the upscaling of the amount out and of the balances included, so the amount in the pool asks for is never less than the trade is worth</dd>
+<dt>Where it fails</dt><dd>the error enters at specimens/balancer-2025-11/BasePool.sol lines 680-686, _upscale, which multiplies every amount by its scaling factor rounding down (sha256 0x9fec78a410cccd9248ff96a075a8766af2d607ae4d08e5b5708cd30b99f01972), called on the exact-out path at specimens/balancer-2025-11/BaseGeneralPool.sol lines 75-76 (sha256 0xa48d3fe6126e1a49b160d389f27268c848b57127bee13ccf49c9245cb823c5b0) with a scaling factor that is decimals times a token rate at specimens/balancer-2025-11/ComposableStablePoolRates.sol line 302 (sha256 0xb361d8ff591fcdf6d811c68f1f602db59e0bd26ecb81b6e184a3ce2522e33e61); specimens/balancer-2025-11/StableMath.sol lines 164-198, _calcInGivenOut, carries it into the amount in (sha256 0x25154c99a13173016d22bf8efbf0a5aeb55cef3cfd96f043489c7f573034bdf8)</dd>
+<dt>The witness</dt><dd>door one of this room: the replay of DeFiHackLabs src/test/2025-11/BalancerV2_exp.sol (sha256 9cf837fa17a20573fd6df4bdaa28b2e38c0e478e699bf0701efec8be5d8d17dc) on a fork of chain 1 at block 23717396, with the drainer 0x54B53503c0e2173Df29f8da735fBd45Ee8aBa30d still empty at that block</dd>
+<dt>The context</dt><dd>chain 1 at block 23717396: Balancer osETH/wETH StablePool 0xDACf5Fa19b1f720111609043ac67A9818262850c, runtime codehash 0x72b6e1b187e715820b74d4243533145e6d2d0e168101fd8b27be6f5be80ca441, in the Vault 0xBA12222222228d8Ba445958a75a0704d566BF2C8</dd>
+</dl>
+<p class="src">From <a href="https://github.com/Aui76/two-doors/blob/main/exhibits/balancer-2025-11/review/finding.json"><code>exhibits/balancer-2025-11/review/finding.json</code></a>. The cell receives only the keccak256 of each string; the test below reads them from this file.</p>
+<h3>The finding filed in review, and the re-run that upholds it, in memory</h3>
+<h4><a href="https://github.com/Aui76/two-doors/blob/main/exhibits/balancer-2025-11/Review.t.sol"><code>exhibits/balancer-2025-11/Review.t.sol</code></a></h4>
+<div class="test"><p><span class="pass">passed</span> <code>BalancerReviewTest.test_theFindingsWordsPointAtTheirSources()</code></p>
+<p class="muted">It prints nothing; it asserts.</p>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>BalancerReviewTest.test_theSpecNeverSaysIt()</code></p>
+<p class="muted">It prints nothing; it asserts.</p>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>BalancerReviewTest.test_standRegistersTheRoomsToolsAndFundsOneReview()</code></p>
+<p class="muted">It prints nothing; it asserts.</p>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>BalancerReviewTest.test_theAuditorFilesInReviewAndIsPaid()</code></p>
+<pre><code>The Balancer room: a witness claim filed in review, in memory - not the network&#x27;s cell
+  row                      0
+  row state                Claimed
+  protocol (Balancer)      0xdc47BaB3450832D97198bF148B1f08f2416AE5BD
+  auditor (the visitor)    0x5B8461f0Ee439E70a75220f965F9A162c809BF41
+  claim stake (wei)        10000000000000000000
+  re-run row               1
+  re-run state             AwaitingWindow
+  re-run auditor           0x658b2BE8068F3BC36e234CE7c616840f63E51840
+  re-run bounty (wei)      20000000000000000000
+  result root
+0x5b657d874fe0957bbe39a42dd5ab9c22759309bd1cf65f5e1a0f3a29684bbf31
+the pot: 40.000000000000000000
+the pool before the confirmation: 0.000000000000000000
+the auditor holds after: 30.000000000000000000
+returned to the protocol: 20.000000000000000000
+the re-run&#x27;s auditor holds after: 20.000000000000000000</code></pre>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>BalancerReviewTest.test_theReRunWaitsForItsWindow()</code></p>
+<pre><code>The Balancer room: a witness claim filed in review, in memory - not the network&#x27;s cell
+  row                      0
+  row state                Claimed
+  protocol (Balancer)      0xdc47BaB3450832D97198bF148B1f08f2416AE5BD
+  auditor (the visitor)    0x5B8461f0Ee439E70a75220f965F9A162c809BF41
+  claim stake (wei)        10000000000000000000
+  re-run row               1
+  re-run state             AwaitingWindow
+  re-run auditor           0x658b2BE8068F3BC36e234CE7c616840f63E51840
+  re-run bounty (wei)      20000000000000000000
+  result root
+0x5b657d874fe0957bbe39a42dd5ab9c22759309bd1cf65f5e1a0f3a29684bbf31</code></pre>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>BalancerReviewTest.test_refusesThreeSeatsOnTwoKeys()</code></p>
+<p class="muted">It prints nothing; it asserts.</p>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>BalancerReviewTest.test_refusesAnAuditorTheStandDidNotName()</code></p>
+<p class="muted">It prints nothing; it asserts.</p>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>BalancerReviewTest.test_refusesAKeyThatDidNotStandTheFixture()</code></p>
+<p class="muted">It prints nothing; it asserts.</p>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>BalancerReviewTest.test_refusesAnyChainButMemory()</code></p>
+<p class="muted">It prints nothing; it asserts.</p>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>BalancerReviewTest.test_filesOnce()</code></p>
+<pre><code>The Balancer room: a witness claim filed in review, in memory - not the network&#x27;s cell
+  row                      0
+  row state                Claimed
+  protocol (Balancer)      0xdc47BaB3450832D97198bF148B1f08f2416AE5BD
+  auditor (the visitor)    0x5B8461f0Ee439E70a75220f965F9A162c809BF41
+  claim stake (wei)        10000000000000000000
+  re-run row               1
+  re-run state             AwaitingWindow
+  re-run auditor           0x658b2BE8068F3BC36e234CE7c616840f63E51840
+  re-run bounty (wei)      20000000000000000000
+  result root
+0x5b657d874fe0957bbe39a42dd5ab9c22759309bd1cf65f5e1a0f3a29684bbf31</code></pre>
+</div>
+</section>
+<details><summary>Where the room stands</summary>
+<h3>Balancer&#x27;s Vault on Ethereum, the block before it was drained</h3>
+<h4><a href="https://github.com/Aui76/two-doors/blob/main/exhibits/balancer-2025-11/Fork.t.sol"><code>exhibits/balancer-2025-11/Fork.t.sol</code></a></h4>
+<div class="test"><p><span class="pass">passed</span> <code>BalancerForkTest.test_forkStandsAtTheNamedBlock()</code></p>
+<p class="muted">It prints nothing; it asserts.</p>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>BalancerForkTest.test_vaultCodeIsTheCodeTheRoomNames()</code></p>
+<p class="muted">It prints nothing; it asserts.</p>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>BalancerForkTest.test_theDrainerHasNotBeenDeployedYet()</code></p>
+<p class="muted">It prints nothing; it asserts.</p>
+</div>
+<h4><a href="https://github.com/Aui76/two-doors/blob/main/exhibits/balancer-2025-11/Provenance.t.sol"><code>exhibits/balancer-2025-11/Provenance.t.sol</code></a></h4>
+<div class="test"><p><span class="pass">passed</span> <code>BalancerProvenanceTest.test_vendoredSourcesAreUnmodified()</code></p>
+<p class="muted">It prints nothing; it asserts.</p>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>BalancerProvenanceTest.test_roundingWordsAreTheOnesTheSpecCites()</code></p>
+<p class="muted">It prints nothing; it asserts.</p>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>BalancerProvenanceTest.test_everyInvariantNamesItsSource()</code></p>
+<p class="muted">It prints nothing; it asserts.</p>
+</div>
+<div class="test"><p><span class="pass">passed</span> <code>BalancerProvenanceTest.test_specNamesThePoolTheRoomForks()</code></p>
+<p class="muted">It prints nothing; it asserts.</p>
+</div>
+</details>
+<p class="src">This room's source: <a href="https://github.com/Aui76/two-doors/tree/main/exhibits/balancer-2025-11"><code>exhibits/balancer-2025-11/</code></a></p>
+<p class="next"><a class="btn" href="exit.html">Walk on to the exit</a></p>
+</main>
+<footer><div class="bar">
+<p><strong>63 passed, 0 failed.</strong> Every line of output on this page is what <code>forge test --json -vv</code> returned. The plaques, specs, findings and code are read from the same commit.</p>
+<!-- stamp -->
+<p>Made from commit <code>a58f81c9f07cdf2f6f53ade7ab44c9b1cbf7443e</code>, tree clean, on 2026-10-07 10:22 UTC.</p>
+<ul><li><code>forge --version</code>: forge Version: 1.7.1</li><li><code>forge build</code>: No files changed, compilation skipped, 5 s</li><li><code>forge test --json -vv</code>: 5 s</li></ul>
+<!-- /stamp -->
+<p>Run it yourself:</p>
+<pre><code>git clone https://github.com/Aui76/two-doors
+cd two-doors
+python transcript/generate.py --check</code></pre>
+<p><a href="https://github.com/Aui76/two-doors">The repository</a></p>
+</div></footer>
+</body>
+</html>

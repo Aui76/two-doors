@@ -666,8 +666,8 @@ Room 2, door two: a spec gap on the fixture - not the network's cell
   discoverer holds (wei)   10000000000000000000
   fixture key holds (wei)  0
   fixture key's nonce      140
-  read at block            47776824
-  read at (unix s)         1791321936
+  read at block            47800127
+  read at (unix s)         1791368542
   read back from           exhibits/beanstalk-2022-04/fixture/record/84532.filing.json
 ```
 <!-- /live -->
