@@ -330,6 +330,8 @@ def page(slug, title, body, stamp, tally):
         '<link rel="stylesheet" href="style.css">',
         '<script>document.documentElement.className = "js";</script>',
         '<script src="walk.js" defer></script>',
+        '<script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>',
+        '<script src="/_vercel/insights/script.js" defer></script>',
         "</head>",
         "<body>",
         '<header><div class="bar"><a class="home" href="index.html">Two Doors</a><nav>%s</nav></div></header>' % nav,
