@@ -388,9 +388,10 @@ def room(slug, title, sections, results, root, nxt):
         body += ["</section>"]
         body += ['<details><summary>Where the room stands</summary>'] + section_html(sections, r["ground"], results) + ["</details>"]
     else:
-        body += ["<h2>What the room prints</h2>"] + section_html(sections, r["ground"], results)
-    body.append('<p class="src">This room\'s source: <a href="%s"><code>%s/</code></a></p>'
-                % (esc(TREE + r["source"]), esc(r["source"])))
+        body += ["<h2>%s</h2>" % ("What the test checks" if slug == "exit" else "What the room prints")]
+        body += section_html(sections, r["ground"], results)
+    body.append('<p class="src">%s: <a href="%s"><code>%s/</code></a></p>'
+                % ("The tool's source" if slug == "exit" else "This room's source", esc(TREE + r["source"]), esc(r["source"])))
     if nxt:
         body.append('<p class="next"><a class="btn" href="%s.html">%s</a></p>' % (nxt[0], esc(nxt[1])))
     return body

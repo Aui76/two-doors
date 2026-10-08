@@ -1,33 +1,39 @@
 <!-- SPDX-License-Identifier: MIT -->
 # The exit, the empty pedestal
 
-Run the check yourself, on any contract you like:
+This is the last stop, and the only one that isn't in the past. The three rooms went back to old hacks, on
+copies of Ethereum at the block before each one. Here you take DAN's own check home and point it at any contract
+that exists today.
+
+It answers one question: has an auditor on DAN passed this exact code? It reads the code at the address you give
+it, hashes it, and asks DAN's live cell on Base Sepolia whether a settled audit carries that hash. It only reads
+and writes nothing anywhere. You need Node 18 or later and nothing else. I ran it on 24.3.0.
 
 ```
 node exhibits/exit/dan-check/dan-check.mjs --cell 0xb034F198869726c36965B95879eCB65Bdb1076c9 --home-rpc https://sepolia.base.org --deep --target 0xYOURS
 ```
 
-Put any address after `--target`. If it lives on a chain other than Base Sepolia, add `--target-rpc` with an
-endpoint for that chain. You need Node 18 or later, and nothing else. I ran it on 24.3.0. The tool has no
-dependencies, it only reads, and it writes nothing anywhere.
+Put the address after `--target`. If the contract lives on another chain, add `--target-rpc` with an endpoint
+for that chain. You get one of three answers.
 
-## What it can tell you
+- **CLEAN**: an auditor passed this exact code, and the window for anyone to claim a flaw in it closed with no claim.
+- **REFUSE**: nobody has passed this code, or there is no code at the address, or a claim against it is open, it was proved exploited, or its audit was invalidated. If the address is an EIP-7702 delegation, the tool names the contract it points to, so you can ask about that one.
+- **CANNOT VERIFY**: the tool couldn't get an answer. A read failed, the audit is still running, its window is still open, or the only audit of this code is on a different chain.
 
-It hashes the code at your address on your chain, then asks DAN's cell on Base Sepolia whether a settled row
-carries that hash. There are three answers, and each has its exit code.
+CLEAN does not mean safe. It means the code kept the promise its owner wrote down, the spec, and nobody showed
+otherwise in time. Room 1 is about a promise that left something out: Beanstalk's code kept every rule it was
+given and was drained anyway. The check can't see past the spec either, and anyone can still claim a flaw
+against the code after it reads CLEAN.
 
-CLEAN is exit 0. A row passed that exact code, and the window for anyone to claim a flaw closed with no claim.
+Today you will mostly get REFUSE. The live cell has audited one contract so far, the one it was started with,
+`0xE546193fc52faa37413ab74d72092005115F4691`, and that address reads CLEAN. Ask about the Bybit wallet from
+Room 2 and you get REFUSE, because nobody ever filed it. The audits in the rooms run on local copies of the
+chain and on the museum's own test fixtures, so the live cell has never heard of them. That is why this room
+is an empty pedestal. The first thing on it will be a real contract that someone files on DAN and an auditor
+passes.
 
-REFUSE is exit 1. No row carries the hash, or the address has no code, or it is an EIP-7702 delegation (the tool
-names the delegate to ask about instead), or the row went bad: a claim is open, it was exploited, or it was
-invalidated.
-
-CANNOT VERIFY is exit 2. A read failed, or the audit hasn't reached a verdict, or its window is still open, or
-the row is about the same code on a different chain than the one you asked about. The tool won't carry a verdict
-across chains by itself.
-
-CLEAN never means safe. It means the row settled and nobody had claimed a flaw as of the block it prints, and
-the code can still be claimed against after that.
+The test below checks that the tool you take home is the network's own. It hashes the tool's two files and
+fails if one byte differs from the copy in DAN's public repository.
 
 ## What I got, 25 September 2026
 
@@ -49,13 +55,6 @@ The Bybit wallet from Room 2, asked on mainnet with `--target-rpc https://eth.dr
 
 The cell itself gets the same answer, and so does an address with no code at all (`REFUSE: target has no
 code`). The dashes in those lines are the tool's own output.
-
-So the pedestal is empty. A story the record can already show does not get a frame. An address with a settled
-row reads CLEAN, and the row is its record. The pedestal is for the address with no row, and today that is
-almost any address you try. It comes back REFUSE because nobody has filed a row for it yet, and the tool says
-that instead of guessing. The rows the rooms file sit on local forks, in memory and on the museum's own
-fixtures, so this cell doesn't know about them. The first row with your contract's hash in it gets there when
-someone files it and an auditor passes it, the way Room 2 does on its fork.
 
 ## Where the tool came from
 
