@@ -20,11 +20,16 @@
 <main>
 <h1>The exit</h1>
 <div class="plaque">
-<p>Run the check yourself, on any contract you like:</p>
+<p>This is the last stop, and the only one that isn&#x27;t in the past. The three rooms went back to old hacks, on copies of Ethereum at the block before each one. Here you take DAN&#x27;s own check home and point it at any contract that exists today.</p>
+<p>It answers one question: has an auditor on DAN passed this exact code? It reads the code at the address you give it, hashes it, and asks DAN&#x27;s live cell on Base Sepolia whether a settled audit carries that hash. It only reads and writes nothing anywhere. You need Node 18 or later and nothing else. I ran it on 24.3.0.</p>
 <pre><code class="language-text">node exhibits/exit/dan-check/dan-check.mjs --cell 0xb034F198869726c36965B95879eCB65Bdb1076c9 --home-rpc https://sepolia.base.org --deep --target 0xYOURS</code></pre>
-<p>Put any address after <code>--target</code>. If it lives on a chain other than Base Sepolia, add <code>--target-rpc</code> with an endpoint for that chain. You need Node 18 or later, and nothing else. I ran it on 24.3.0. The tool has no dependencies, it only reads, and it writes nothing anywhere.</p>
+<p>Put the address after <code>--target</code>. If the contract lives on another chain, add <code>--target-rpc</code> with an endpoint for that chain. You get one of three answers.</p>
+<ul><li><strong>CLEAN</strong>: an auditor passed this exact code, and the window for anyone to claim a flaw in it closed with no claim.</li><li><strong>REFUSE</strong>: nobody has passed this code, or there is no code at the address, or a claim against it is open, it was proved exploited, or its audit was invalidated. If the address is an EIP-7702 delegation, the tool names the contract it points to, so you can ask about that one.</li><li><strong>CANNOT VERIFY</strong>: the tool couldn&#x27;t get an answer. A read failed, the audit is still running, its window is still open, or the only audit of this code is on a different chain.</li></ul>
+<p>CLEAN does not mean safe. It means the code kept the promise its owner wrote down, the spec, and nobody showed otherwise in time. Room 1 is about a promise that left something out: Beanstalk&#x27;s code kept every rule it was given and was drained anyway. The check can&#x27;t see past the spec either, and anyone can still claim a flaw against the code after it reads CLEAN.</p>
+<p>Today you will mostly get REFUSE. The live cell has audited one contract so far, the one it was started with, <code>0xE546193fc52faa37413ab74d72092005115F4691</code>, and that address reads CLEAN. Ask about the Bybit wallet from Room 2 and you get REFUSE, because nobody ever filed it. The audits in the rooms run on local copies of the chain and on the museum&#x27;s own test fixtures, so the live cell has never heard of them. That is why this room is an empty pedestal. The first thing on it will be a real contract that someone files on DAN and an auditor passes.</p>
+<p>The test below checks that the tool you take home is the network&#x27;s own. It hashes the tool&#x27;s two files and fails if one byte differs from the copy in DAN&#x27;s public repository.</p>
 </div>
-<h2>What the room prints</h2>
+<h2>What the test checks</h2>
 <h3>The tool you leave with</h3>
 <h4><a href="https://github.com/Aui76/two-doors/blob/main/exhibits/exit/Exit.t.sol"><code>exhibits/exit/Exit.t.sol</code></a></h4>
 <div class="test"><p><span class="pass">[PASS]</span> <code>ExitTest.test_theToolIsTheNetworksTool()</code></p>
@@ -32,14 +37,14 @@
 </div>
 <h4>The tool&#x27;s two files, measured in this run</h4>
 <table><thead><tr><th>file</th><th>bytes</th><th>sha256</th></tr></thead><tbody><tr><td><code>exhibits/exit/dan-check/dan-check.mjs</code></td><td>34152</td><td><code>f009360f507b50e7d2703c6251abf061b94905b15430486a410bb1f84a696d85</code></td></tr><tr><td><code>exhibits/exit/dan-check/keccak256.mjs</code></td><td>4494</td><td><code>195c078551e580b099ccdc49a15212373d3eb31f87649aded1b8d3dc1922824b</code></td></tr></tbody></table>
-<p class="src">This room's source: <a href="https://github.com/Aui76/two-doors/tree/main/exhibits/exit"><code>exhibits/exit/</code></a></p>
+<p class="src">The tool's source: <a href="https://github.com/Aui76/two-doors/tree/main/exhibits/exit"><code>exhibits/exit/</code></a></p>
 <p class="next"><a class="btn" href="record.html">What stays on file</a></p>
 </main>
 <footer><div class="bar">
 <p><strong>63 passed, 0 failed.</strong> Every line of output on this page is what <code>forge test --json -vv</code> returned. The plaques, specs, findings and code are read from the same commit.</p>
 <!-- stamp -->
-<p>Made from commit <code>85c036f9ca3ec45895674ff88143f8f914a8e723</code>, tree clean, on 2026-10-07 22:19 UTC.</p>
-<ul><li><code>forge --version</code>: forge Version: 1.7.1</li><li><code>forge build</code>: No files changed, compilation skipped, 3 s</li><li><code>forge test --json -vv</code>: 6 s</li></ul>
+<p>Made from commit <code>9079f879be9fb92d992af70ab4b760bccc2dd063</code>, tree clean, on 2026-10-08 21:30 UTC.</p>
+<ul><li><code>forge --version</code>: forge Version: 1.7.1</li><li><code>forge build</code>: No files changed, compilation skipped, 3 s</li><li><code>forge test --json -vv</code>: 5 s</li></ul>
 <!-- /stamp -->
 <p>Run it yourself:</p>
 <pre><code>git clone https://github.com/Aui76/two-doors
